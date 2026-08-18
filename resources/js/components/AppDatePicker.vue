@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import type { PropType } from 'vue';
+
+const model = defineModel<Date | null>({ default: null });
+
+const props = defineProps({
+    label: {
+        type: String,
+        default: 'Pilih Tanggal',
+    },
+    min: {
+        type: [Date, String] as PropType<Date | string>,
+        default: undefined,
+    },
+});
+
+const menu = ref(false);
+
+const formattedDate = computed(() => {
+    return model.value ? new Date(model.value).toLocaleDateString('id-ID') : '';
+});
+</script>
+
+<template>
+    <v-menu v-model="menu" :close-on-content-click="false">
+        <template v-slot:activator="{ props: menuProps }">
+            <v-text-field
+                v-model="formattedDate"
+                :label="props.label"
+                prepend-inner-icon="mdi-calendar"
+                readonly
+                v-bind="menuProps"
+            />
+        </template>
+        <v-date-picker
+            v-model="model"
+            :min="props.min"
+            @update:model-value="menu = false"
+            color="primary"
+        />
+    </v-menu>
+</template>
+
+<style scoped></style>
