@@ -21,7 +21,7 @@ class ProjectController extends Controller
     {
         $projects = $this->projectService->get();
 
-        return Inertia::render('projects/project', [
+        return Inertia::render('projects/ProjectPage', [
             'page_title' => 'Project',
             'projects' => $projects
 

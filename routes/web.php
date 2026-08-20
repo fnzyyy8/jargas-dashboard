@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProjectController;
+use \App\Http\Controllers\ProjectControlPlanController;
 
 Route::get('/', [DashboardController::class, 'show'])->name('home');
 
@@ -12,6 +13,10 @@ Route::controller(ProjectController::class)->prefix('/projects')->group(function
     Route::post("/", 'store')->name('projects.store');
     Route::put("/{id}", 'update')->name('projects.update');
     Route::delete("/{id}", 'destroy')->name('projects.destroy');
-
 });
 
+Route::prefix('/project-control')->group(function () {
+    Route::controller(ProjectControlPlanController::class)->group(function () {
+        Route::get("/plan", 'index')->name('plan');
+    });
+});

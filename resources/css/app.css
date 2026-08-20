@@ -13,3 +13,7 @@ h1 {
     @apply text-2xl font-semibold
 }
 
+h4 {
+    @apply text-lg font-semibold
+}
+

@@ -27,10 +27,24 @@ const items: ItemType[] = [
                 title: 'SPK Awal',
                 href: '/projects',
             },
+            // {
+            //     title: 'Amandement',
+            //     href: '/projects-amendement',
+            // },
+        ],
+    },
+    {
+        title: 'Project Control',
+        icon: 'mdi-hard-hat',
+        children: [
             {
-                title: 'Amandement',
-                href: '/projects-amendement',
+                title: 'Plan',
+                href: '/project-control/plan',
             },
+            // {
+            //     title: 'Actual',
+            //     href: '/project-control/actual',
+            // },
         ],
     },
 ];

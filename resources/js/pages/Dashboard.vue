@@ -16,9 +16,9 @@ defineProps<{
 <template>
     <div class="grid grid-flow-row grid-cols-4 gap-3">
         <div class="col-span-1">
-            <v-card>
-                <v-card-title>
-                    <h1>PROJECT STATUS</h1>
+            <v-card min-height="450">
+                <v-card-title class="min-h-20">
+                    <h4>PROJECT STATUS</h4>
                 </v-card-title>
                 <v-card-text>
                     <DoughnutChart
@@ -26,6 +26,21 @@ defineProps<{
                         :data="project_statuses"
                     />
                 </v-card-text>
+            </v-card>
+        </div>
+        <div class="col-span-3">
+            <v-card min-height="450">
+                <v-card-title class="min-h-20">
+                    <div class="flex justify-between">
+                        <h4>PROJECT MONITORING</h4>
+                        <v-select
+                            label="Pilih Proyek"
+                            density="compact"
+                            max-width="400"
+                            variant="outlined"
+                        />
+                    </div>
+                </v-card-title>
             </v-card>
         </div>
     </div>

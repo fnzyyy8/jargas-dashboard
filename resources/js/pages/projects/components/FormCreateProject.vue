@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
+import { VTextField } from 'vuetify/components';
 
 import AppDatePicker from '@/components/AppDatePicker.vue';
 
@@ -9,7 +10,8 @@ const dialog = ref(false);
 const form = useForm({
     project_name: '',
     project_code: '',
-    project_number : '',
+    project_number: '',
+    category: '',
     budget: 0,
     area: '',
     client: '',
@@ -17,6 +19,16 @@ const form = useForm({
     end_date: '',
     status: '',
 });
+
+    interface FormSetup {
+        density?: VTextField['$props']['density'];
+        variant?: VTextField['$props']['variant'];
+    }
+
+    const formSetup = withDefaults(defineProps<FormSetup>(), {
+        density: 'comfortable',
+        variant: 'outlined',
+    });
 
 const dateMulai = ref<Date | null>(null);
 const dateSelesai = ref<Date | null>(null);
@@ -55,7 +67,7 @@ const submitData = () => {
 <template>
     <v-dialog
         max-width="700"
-        transition="dialof-center-transition"
+        transition="dialog-center-transition"
         v-model="dialog"
     >
         <template v-slot:activator="{ props: activatorProps }">
@@ -76,23 +88,39 @@ const submitData = () => {
             <v-card-item>
                 <v-form @submit.prevent="submitData" id="project-form">
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
+                        <div class="mt-2">
                             <v-text-field
                                 v-model="form.project_code"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
                                 label="Kode Proyek"
                                 :error-messages="form.errors.project_code"
                             />
                         </div>
-                        <div>
+                        <div class="mt-2">
                             <v-text-field
                                 v-model="form.project_number"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
                                 label="Nomor SPK"
                                 :error-messages="form.errors.project_number"
                             />
                         </div>
                         <div class="col-span-2">
+                            <v-combobox
+                                v-model="form.category"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
+                                :items="['Material','Konstruksi']"
+                                label="Kategori Proyek"
+                                :error-messages="form.errors.category"
+                            />
+                        </div>
+                        <div class="col-span-2">
                             <v-textarea
                                 v-model="form.project_name"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
                                 label="Nama Proyek"
                                 :error-messages="form.errors.project_name"
                             />
@@ -100,6 +128,8 @@ const submitData = () => {
                         <div class="col-span-2">
                             <v-number-input
                                 v-model="form.budget"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
                                 label="Anggaran"
                                 :error-messages="form.errors.budget"
                                 prefix="Rp"
@@ -112,14 +142,18 @@ const submitData = () => {
                         <div class="col-span-2">
                             <v-text-field
                                 v-model="form.area"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
                                 label="Area"
                                 :error-messages="form.errors.area"
                             />
                         </div>
                         <div class="col-span-2">
                             <v-text-field
-                                label="Client"
                                 v-model="form.client"
+                                :variant="formSetup.variant"
+                                :density="formSetup.density"
+                                label="Client"
                                 :error-messages="form.errors.client"
                             />
                         </div>

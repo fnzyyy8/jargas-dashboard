@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { PropType } from 'vue';
+import { VTextField } from 'vuetify/components';
 
 const model = defineModel<Date | null>({ default: null });
 
@@ -12,6 +13,14 @@ const props = defineProps({
     min: {
         type: [Date, String] as PropType<Date | string>,
         default: undefined,
+    },
+    density: {
+        type: String as PropType<VTextField['$props']['density']>,
+        default: 'comfortable',
+    },
+    variant: {
+        type: String as PropType<VTextField['$props']['variant']>,
+        default: 'outlined',
     },
 });
 
@@ -27,6 +36,8 @@ const formattedDate = computed(() => {
         <template v-slot:activator="{ props: menuProps }">
             <v-text-field
                 v-model="formattedDate"
+                :variant="props.variant"
+                :density="props.density"
                 :label="props.label"
                 prepend-inner-icon="mdi-calendar"
                 readonly

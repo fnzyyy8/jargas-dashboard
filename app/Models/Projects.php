@@ -12,6 +12,7 @@ class Projects extends Model
         'project_name',
         'project_code',
         'project_number',
+        'category',
         'area',
         'client',
         'start_date',

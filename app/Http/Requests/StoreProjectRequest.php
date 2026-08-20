@@ -26,11 +26,12 @@ class StoreProjectRequest extends FormRequest
             'project_name' => ['required', 'string'],
             'project_code' => ['required', 'string'],
             'project_number' => ['required', 'string'],
+            'category' => ['required', 'string'],
             'budget' => ['required', 'numeric'],
             'area' => ['required', 'string'],
             'client' => ['required', 'string'],
             'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date','after_or_equal:start_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
         ];
     }
 }

@@ -1,2 +1,1 @@
-select *
-from projects;
+desc project_control_plan;
