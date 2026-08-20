@@ -42,7 +42,7 @@ const onCategoryChange = () => {
             </v-card-title>
             <v-card-item>
                 <div class="mt-3 grid grid-cols-2 gap-3">
-                    <v-select
+                    <v-combobox
                         v-model="form.category"
                         label="Jenis Pekerjaan"
                         :items="props.categories"
@@ -51,7 +51,7 @@ const onCategoryChange = () => {
                         hide-details="auto"
                         @update:model-value="onCategoryChange"
                     />
-                    <v-select
+                    <v-autocomplete
                         label="Pilih Project"
                         v-model="form.project_id"
                         :items="filteredProjects"

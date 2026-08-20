@@ -65,7 +65,7 @@ const isActive = (href?: string) => {
 };
 </script>
 <template>
-    <div class="h-full w-64">
+    <div class="h-full w-72">
         <v-list v-model:opened="open">
             <template v-for="(item, index) in items" :key="index">
                 <v-list-group v-if="item.children" :value="item.title">

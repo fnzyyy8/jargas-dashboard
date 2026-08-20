@@ -61,6 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
                             :density="props.density"
                             :variant="props.variant"
                             :min="0"
+                            grouping="always"
                             label="Volume"
                         />
                         <v-text-field
