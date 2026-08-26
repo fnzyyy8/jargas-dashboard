@@ -2,6 +2,7 @@
 import { router } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { formatNumber } from '@/composable/ConvertRupiah';
+import FormCreatePlan from '@/pages/projectControl/components/FormCreatePlan.vue';
 
 const tHead = ['Item Detail', 'Unit', 'Volume', 'Unit Price'];
 interface ProjectItem {
@@ -104,7 +105,11 @@ const onProjectChange = (val: number | null) => {
             </v-card-item>
         </v-card>
         <v-card>
-            <div></div>
+            <v-card-title>
+                <div class="flex justify-end my-3">
+                    <FormCreatePlan :projectId="selectedProjects" />
+                </div>
+            </v-card-title>
             <v-card-item>
                 <v-table>
                     <thead>
