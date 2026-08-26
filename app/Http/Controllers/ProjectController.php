@@ -5,39 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Models\Projects;
 use App\Services\ProjectService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProjectController extends Controller
 {
-
     public function __construct(
         protected ProjectService $projectService
     )
     {
     }
 
-    public function index()
+    public function index(): Response
     {
         $projects = $this->projectService->get();
 
         return Inertia::render('projects/ProjectPage', [
             'page_title' => 'Project',
-            'projects' => $projects
+            'projects' => $projects,
 
         ]);
     }
 
-    public function store(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request): JsonResponse
     {
 
         Projects::create($request->validated());
 
-        return redirect()->back()->with('success', 'Project Berhasil Ditambahkan');
+        return \response()->json([
+            'status' => 'success',
+            'message' => 'Project created successfully',
+
+        ], 201);
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $validated = $request->validate([
             'project_name' => 'required',
@@ -49,13 +55,18 @@ class ProjectController extends Controller
         ]);
         $project = Projects::findOrFail($id);
         $project->update($validated);
-        return redirect()->back();
+
+        return \response()->json([
+            'status' => 'success',
+            'message' => 'Project updated successfully'],
+        );
     }
 
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $project = Projects::findOrFail($id);
         $project->delete();
+
         return redirect()->back();
     }
 }

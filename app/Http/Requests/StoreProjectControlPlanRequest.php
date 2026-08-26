@@ -12,7 +12,7 @@ class StoreProjectControlPlanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,12 @@ class StoreProjectControlPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => 'required|exists:projects,id',
+            'project_id' => ['required', 'integer', 'exists:projects,id'],
             'section' => 'required|string|between:1,255',
             'category' => 'nullable|string|between:1,255',
             'sub_category' => 'nullable|string|between:1,255',
             'item_detail' => 'required|string|between:1,255',
+            'volume' => 'required|numeric',
             'unit' => 'required|string|between:1,255',
             'unit_price' => 'required|numeric',
         ];

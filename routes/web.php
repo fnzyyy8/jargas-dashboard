@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\DashboardController;
-use \App\Http\Controllers\ProjectController;
-use \App\Http\Controllers\ProjectControlPlanController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectControlPlanController;
 
 Route::get('/', [DashboardController::class, 'show'])->name('home');
 
@@ -18,5 +18,6 @@ Route::controller(ProjectController::class)->prefix('/projects')->group(function
 Route::prefix('/project-control')->group(function () {
     Route::controller(ProjectControlPlanController::class)->group(function () {
         Route::get("/plan", 'index')->name('plan');
+        Route::post("/plan", 'store')->name('plan.store');
     });
 });

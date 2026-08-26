@@ -1,36 +1,70 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
-import FormCreatePlan from '@/pages/projectControl/components/FormCreatePlan.vue';
+import { router } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import { formatNumber } from '@/composable/ConvertRupiah';
 
-const tableHead = ['Item Pekerjaan', 'Satuan', 'Volume', 'Harga Satuan'];
-
+const tHead = ['Item Detail', 'Unit', 'Volume', 'Unit Price'];
 interface ProjectItem {
     id: number;
     project_name: string;
-    category: string;
+    project_categories: string;
+}
+
+const { useRupiah } = formatNumber();
+
+interface PlanItem {
+    id: number;
+    item_detail: string;
+    unit: string;
+    volume: number;
+    unit_price: number;
 }
 
 const props = defineProps<{
-    categories: string[];
+    project_categories: string[];
     projects: ProjectItem[];
+    plans: PlanItem[];
+    filters?: { category?: string; idProject: number };
 }>();
 
-const form = useForm({
-    category: '',
-    project_id: null as number | null,
+const selectedCategory = ref<string | null>(props.filters?.category || null);
+const selectedProjects = ref<number | null>(
+    props.filters?.idProject ? Number(props.filters.idProject) : null,
+);
+
+const projectOption = computed(() => {
+    return props.projects
+        ? props.projects.map((item) => ({
+              id: item.id,
+              name: item.project_name,
+          }))
+        : [];
 });
 
-const filteredProjects = computed(() => {
-    if (!form.category) {
-        return props.projects;
-    } else {
-        return props.projects.filter((p) => p.category === form.category);
-    }
-});
+const onCategoryChange = (val: string | null) => {
+    selectedProjects.value = null;
 
-const onCategoryChange = () => {
-    form.project_id = null;
+    router.get(
+        window.location.pathname,
+        { category: val, idProject: null },
+        {
+            preserveState: true,
+            preserveScroll: true,
+            only: ['projects', 'plans', 'filters'],
+        },
+    );
+};
+
+const onProjectChange = (val: number | null) => {
+    router.get(
+        window.location.pathname,
+        { category: selectedCategory.value, idProject: val },
+        {
+            preserveState: true,
+            preserveScroll: true,
+            only: ['plans', 'filters'],
+        },
+    );
 };
 </script>
 
@@ -43,69 +77,54 @@ const onCategoryChange = () => {
             <v-card-item>
                 <div class="mt-3 grid grid-cols-2 gap-3">
                     <v-combobox
-                        v-model="form.category"
+                        v-model="selectedCategory"
                         label="Jenis Pekerjaan"
-                        :items="props.categories"
+                        :items="props.project_categories"
                         density="comfortable"
                         variant="outlined"
                         hide-details="auto"
+                        clearable
                         @update:model-value="onCategoryChange"
                     />
-                    <v-autocomplete
-                        label="Pilih Project"
-                        v-model="form.project_id"
-                        :items="filteredProjects"
-                        item-title="project_name"
+                    <v-combobox
+                        v-model="selectedProjects"
+                        label="Judul Pekerjaan"
+                        :items="projectOption"
                         item-value="id"
+                        item-title="name"
+                        :return-object="false"
                         density="comfortable"
                         variant="outlined"
                         hide-details="auto"
-                        :disabled="!form.category"
+                        clearable
+                        :disabled="!selectedCategory"
+                        @update:model-value="onProjectChange"
                     />
                 </div>
             </v-card-item>
         </v-card>
         <v-card>
-            <div>
-                <v-card-title class="py-5">
-                    <div class="grid grid-cols-2">
-                        <div class="grid grid-cols-3 gap-2">
-                            <v-autocomplete
-                                label="Section"
-                                variant="outlined"
-                                density="comfortable"
-                            />
-
-                            <v-autocomplete
-                                label="Category"
-                                variant="outlined"
-                                density="comfortable"
-                            />
-
-                            <v-autocomplete
-                                label="Sub Category"
-                                variant="outlined"
-                                density="comfortable"
-                            />
-                        </div>
-                        <div class="flex justify-end">
-                            <FormCreatePlan />
-                        </div>
-                    </div>
-                </v-card-title>
-            </div>
+            <div></div>
             <v-card-item>
                 <v-table>
                     <thead>
                         <tr>
-                            <th v-for="(item, index) in tableHead" :key="index">
+                            <th v-for="(item, index) in tHead" :key="index">
                                 {{ item }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
+                        <tr v-if="!plans || plans.length === 0">
+                            <td :colspan="tHead.length" class="text-center">
+                                Tidak ada data
+                            </td>
+                        </tr>
+                        <tr v-else v-for="plan in plans" :key="plan.id">
+                            <td>{{ plan.item_detail }}</td>
+                            <td>{{ plan.unit }}</td>
+                            <td>{{ plan.volume }}</td>
+                            <td>{{ useRupiah(plan.unit_price) }}</td>
                         </tr>
                     </tbody>
                 </v-table>

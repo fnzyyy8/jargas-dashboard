@@ -1,5 +1,5 @@
-export function useRupiah() {
-    const format = (value: number) => {
+export function formatNumber() {
+    const useRupiah = (value: number) => {
         if (value === null || value === undefined) {
             return 'Rp 0.00';
         }
@@ -13,5 +13,5 @@ export function useRupiah() {
         return formatted.replace(/\./g, ',');
     };
 
-    return { format };
+    return { useRupiah };
 }

@@ -2,12 +2,12 @@
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
-import { useRupiah } from '@/composable/ConvertRupiah';
+import { formatNumber } from '@/composable/ConvertRupiah';
 import FormCreateProject from '@/pages/projects/components/FormCreateProject.vue';
 import FormEditProject from '@/pages/projects/components/FormEditProject.vue';
 
 const formDelete = useForm({});
-const formatRupiah = useRupiah();
+const { useRupiah } = formatNumber();
 
 const tableHead = [
     'Status',
@@ -101,7 +101,7 @@ const handleDelete = () => {
                         {{ project.project_name }}
                     </td>
                     <td>
-                        {{ formatRupiah.format(project.budget) }}
+                        {{ useRupiah(project.budget) }}
                     </td>
                     <td>
                         {{ project.area }}

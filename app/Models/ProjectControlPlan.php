@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 class ProjectControlPlan extends Model
 {
     protected $table = 'project_control_plan';
@@ -21,6 +22,7 @@ class ProjectControlPlan extends Model
 
     public function project(): BelongsTo
     {
-        return $this->project(Projects::class, 'project_id');
+        return $this->belongsTo(Projects::class, 'project_id');
+
     }
 }
