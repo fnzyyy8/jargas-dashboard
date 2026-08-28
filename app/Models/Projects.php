@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -51,5 +52,11 @@ class Projects extends Model
         'end_date',
         'budget',
         'status',
+        'isMultipleArea'
     ];
+
+    public function boqs(): HasMany
+    {
+        return $this->hasMany(Boq::class, 'project_id', 'id');
+    }
 }

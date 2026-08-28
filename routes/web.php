@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectControlPlanController;
+use App\Http\Controllers\ProjectControlBoqController;
 
 Route::get('/', [DashboardController::class, 'show'])->name('home');
 
@@ -19,5 +20,13 @@ Route::prefix('/project-control')->group(function () {
     Route::controller(ProjectControlPlanController::class)->group(function () {
         Route::get("/plan", 'index')->name('plan');
         Route::post("/plan", 'store')->name('plan.store');
+    });
+
+    Route::controller(ProjectControlBoqController::class)->group(function () {
+        Route::prefix('/boq')->group(function () {
+            Route::get("/", 'index')->name('boq');
+            Route::post('/', 'store')->name('boq.store');
+            Route::delete("/{id}", 'destroy')->name('boq.destroy');
+        });
     });
 });

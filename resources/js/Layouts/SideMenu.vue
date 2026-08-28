@@ -38,13 +38,9 @@ const items: ItemType[] = [
         icon: 'mdi-hard-hat',
         children: [
             {
-                title: 'Plan',
-                href: '/project-control/plan',
+                title: 'Boq',
+                href: '/project-control/boq',
             },
-            // {
-            //     title: 'Actual',
-            //     href: '/project-control/actual',
-            // },
         ],
     },
 ];

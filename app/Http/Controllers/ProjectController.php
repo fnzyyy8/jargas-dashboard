@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProjectRequest;
+use App\Models\Boq;
 use App\Models\Projects;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
@@ -30,20 +31,21 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function store(StoreProjectRequest $request): JsonResponse
+    public function store(StoreProjectRequest $request)
     {
 
-        Projects::create($request->validated());
+        $project = Projects::create($request->validated());
 
-        return \response()->json([
-            'status' => 'success',
-            'message' => 'Project created successfully',
+        Boq::query()->create([
+            'project_id' => $project->id,
+            'detailed_area' => '-'
+        ]);
 
-        ], 201);
+        return redirect()->back();
 
     }
 
-    public function update(Request $request, $id): JsonResponse
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'project_name' => 'required',
@@ -56,10 +58,7 @@ class ProjectController extends Controller
         $project = Projects::findOrFail($id);
         $project->update($validated);
 
-        return \response()->json([
-            'status' => 'success',
-            'message' => 'Project updated successfully'],
-        );
+        return redirect()->back();
     }
 
     public function destroy($id): RedirectResponse

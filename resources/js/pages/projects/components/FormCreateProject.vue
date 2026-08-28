@@ -18,17 +18,18 @@ const form = useForm({
     start_date: '',
     end_date: '',
     status: '',
+    isMultipleArea: false,
 });
 
-    interface FormSetup {
-        density?: VTextField['$props']['density'];
-        variant?: VTextField['$props']['variant'];
-    }
+interface FormSetup {
+    density?: VTextField['$props']['density'];
+    variant?: VTextField['$props']['variant'];
+}
 
-    const formSetup = withDefaults(defineProps<FormSetup>(), {
-        density: 'comfortable',
-        variant: 'outlined',
-    });
+const formSetup = withDefaults(defineProps<FormSetup>(), {
+    density: 'comfortable',
+    variant: 'outlined',
+});
 
 const dateMulai = ref<Date | null>(null);
 const dateSelesai = ref<Date | null>(null);
@@ -111,11 +112,12 @@ const submitData = () => {
                                 v-model="form.category"
                                 :variant="formSetup.variant"
                                 :density="formSetup.density"
-                                :items="['Material','Konstruksi']"
+                                :items="['Material', 'Konstruksi']"
                                 label="Kategori Proyek"
                                 :error-messages="form.errors.category"
                             />
                         </div>
+
                         <div class="col-span-2">
                             <v-textarea
                                 v-model="form.project_name"
@@ -179,6 +181,12 @@ const submitData = () => {
                                 class="text-sm text-red-500"
                                 >{{ form.errors.end_date }}</span
                             >
+                        </div>
+                        <div>
+                            <v-checkbox
+                                v-model="form.isMultipleArea"
+                                label="Multiple Area"
+                            />
                         </div>
                     </div>
                 </v-form>
