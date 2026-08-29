@@ -20,6 +20,7 @@ const {
     confirmDeleteModal,
     deleteLoading,
 } = useBoqActions();
+
 </script>
 
 <template>

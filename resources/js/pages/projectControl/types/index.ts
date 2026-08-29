@@ -17,3 +17,14 @@ export interface BoqPageProps {
     categories: string[];
     projects: Project[];
 }
+
+export interface ProjectOption {
+    id: number;
+    project_name: string;
+    category?: string;
+}
+
+export interface FormBoqProps {
+    categories: string[];
+    projects: ProjectOption[];
+}

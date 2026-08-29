@@ -1,66 +1,27 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
+import { toRef, watch } from 'vue';
 import type { VTextField } from 'vuetify/components';
+import { useBoqFormActions } from '@/pages/projectControl/composables/boq/useBoqFormActions';
+import type { FormBoqProps } from '@/pages/projectControl/types';
 
-interface ProjectOption {
-    id: number;
-    project_name: string;
-    category?: string;
-}
-interface Props {
-    density?: VTextField['$props']['density'];
-    variant?: VTextField['$props']['variant'];
-    categories: string[];
-    projects: ProjectOption[];
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    density: 'comfortable',
-    variant: 'outlined',
+const props = withDefaults(defineProps<FormBoqProps>(), {
     categories: () => [],
     projects: () => [],
 });
 
 const dialog = defineModel<boolean>('modelValue', { default: false });
-const selectedCategory = ref<string | null>(null);
+const projectRef = toRef(props, 'projects');
 
-const form = useForm({
-    project_id: null as number | null,
-    detailed_area: '',
-});
-
-const filteredProjects = computed(() => {
-    if (!selectedCategory.value) {
-        return props.projects;
-    } else {
-        return props.projects.filter(
-            (p) => p.category === selectedCategory.value,
-        );
-    }
-});
-
-watch(selectedCategory, () => {
-    form.project_id = null;
-});
+const { form, selectedCategory, filteredProjects, submitForm, resetForm } =
+    useBoqFormActions(projectRef, () => {
+        dialog.value = false;
+    });
 
 watch(dialog, (isOpen) => {
     if (isOpen === false) {
-        form.reset();
-        selectedCategory.value = null;
+        resetForm();
     }
 });
-
-const submit = () => {
-    form.post('/project-control/boq', {
-        preserveScroll: true,
-        onSuccess: () => {
-            dialog.value = false;
-            form.reset();
-            selectedCategory.value = null;
-        },
-    });
-};
 </script>
 
 <template>
@@ -70,7 +31,7 @@ const submit = () => {
         transition="dialog-center-transition"
     >
         <v-card>
-            <v-form @submit.prevent="submit">
+            <v-form @submit.prevent="submitForm">
                 <v-card-title>
                     <span> Tambahkan Boq </span>
                 </v-card-title>
@@ -79,8 +40,8 @@ const submit = () => {
                         <v-autocomplete
                             v-model="selectedCategory"
                             :items="props.categories"
-                            :density="props.density"
-                            :variant="props.variant"
+                            density="comfortable"
+                            variant="outlined"
                             label="Category"
                             clearable
                         />
@@ -89,8 +50,8 @@ const submit = () => {
                             :items="filteredProjects"
                             item-title="project_name"
                             item-value="id"
-                            :density="props.density"
-                            :variant="props.variant"
+                            density="comfortable"
+                            variant="outlined"
                             :disabled="!selectedCategory"
                             label="Project"
                             :error-messages="form.errors.project_id"
@@ -98,8 +59,8 @@ const submit = () => {
                         />
                         <v-text-field
                             v-model="form.detailed_area"
-                            :density="props.density"
-                            :variant="props.variant"
+                            density="comfortable"
+                            variant="outlined"
                             label="Detailed Area"
                             :error-messages="form.errors.detailed_area"
                         />
