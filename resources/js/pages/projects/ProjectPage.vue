@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import { formatNumber } from '@/composable/ConvertRupiah';
 import FormCreateProject from '@/pages/projects/components/FormCreateProject.vue';
 import FormEditProject from '@/pages/projects/components/FormEditProject.vue';
+import { useProjectActions } from '@/pages/projects/composables/useProjectActions';
+import type { Project } from '@/pages/projects/types';
 
-const formDelete = useForm({});
 const { useRupiah } = formatNumber();
 
 const tableHead = [
@@ -20,45 +20,14 @@ const tableHead = [
     'Aksi',
 ];
 
-interface Project {
-    id: number;
-    status: string;
-    project_name: string;
-    project_code: string;
-    project_number: string;
-    budget: number;
-    area: string;
-    client: string;
-    start_date: string;
-    end_date: string;
-}
-
 defineProps<{
     projects: Project[];
 }>();
 
 const openEditModalRef = ref<InstanceType<typeof FormEditProject> | null>(null);
 
-const deleteDialog = ref(false);
-const selectedProject = ref<Project | null>(null);
-
-const confirmDelete = (project: Project) => {
-    selectedProject.value = project;
-    deleteDialog.value = true;
-};
-
-const handleDelete = () => {
-    if (!selectedProject.value) {
-        return;
-    }
-
-    formDelete.delete(`/projects/${selectedProject.value.id}`, {
-        onSuccess: () => {
-            deleteDialog.value = false;
-            selectedProject.value = null;
-        },
-    });
-};
+const { confirmDeleteModal, openDeleteModal, isDeleteOpen, deleteLoading } =
+    useProjectActions();
 </script>
 
 <template>
@@ -131,14 +100,17 @@ const handleDelete = () => {
                                     title="Edit"
                                     base-color="warning"
                                     @click="
-                                        openEditModalRef?.openEditModal(project)
+                                        openEditModalRef?.openEditModal(
+                                            project.id,
+                                            project,
+                                        )
                                     "
                                 />
                                 <v-list-item
                                     prepend-icon="mdi-delete"
                                     title="Delete"
                                     base-color="error"
-                                    @click="confirmDelete(project)"
+                                    @click="openDeleteModal(project.id)"
                                 />
                             </v-list>
                         </v-menu>
@@ -155,9 +127,9 @@ const handleDelete = () => {
             </tbody>
         </v-table>
         <ConfirmationDialog
-            v-model="deleteDialog"
-            :loading="formDelete.processing"
-            @confirm="handleDelete"
+            v-model="isDeleteOpen"
+            :loading="deleteLoading"
+            @confirm="confirmDeleteModal"
         />
     </v-card>
 </template>

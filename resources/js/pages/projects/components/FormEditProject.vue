@@ -1,97 +1,34 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
-
 import AppDatePicker from '@/components/AppDatePicker.vue';
+import { useProjectEditActions } from '@/pages/projects/composables/useProjectEditActions';
 
-const dialog = ref(false);
-
-const form = useForm({
-    id: 0,
-    project_name: '',
-    project_code: '',
-    project_number: '',
-    budget: 0,
-    area: '',
-    client: '',
-    start_date: '',
-    end_date: '',
-});
-
-interface Project {
-    id: number;
-    project_name: string;
-    project_code: string;
-    project_number: string;
-    budget: number;
-    area: string;
-    client: string;
-    start_date: string;
-    end_date: string;
-}
-
-const dateMulai = ref<Date | null>(null);
-const dateSelesai = ref<Date | null>(null);
-
-const minDateSelesai = computed(() => dateMulai.value || undefined);
-
-watch(dateMulai, (newMulai) => {
-    if (newMulai) {
-        if (!dateSelesai.value) {
-            dateSelesai.value = new Date(newMulai);
-        } else if (dateSelesai.value < newMulai) {
-            dateSelesai.value = new Date(newMulai);
-        }
-    }
-});
-
-const openEditModal = (project: Project) => {
-    form.id = project.id;
-    form.project_name = project.project_name;
-    form.project_code = project.project_code;
-    form.project_number = project.project_number;
-    form.budget = project.budget;
-    form.area = project.area;
-    form.client = project.client;
-
-    dateMulai.value = new Date(project.start_date);
-    dateSelesai.value = new Date(project.end_date);
-    dialog.value = true;
-};
+const {
+    form,
+    isEditOpen,
+    dateEnd,
+    dateStart,
+    minDateEnd,
+    openEditModal,
+    submit,
+} = useProjectEditActions();
 
 defineExpose({ openEditModal });
-
-const submitData = () => {
-    form.start_date = dateMulai.value
-        ? dateMulai.value.toLocaleDateString('en-CA')
-        : '';
-    form.end_date = dateSelesai.value
-        ? dateSelesai.value.toLocaleDateString('en-CA')
-        : '';
-
-    form.put(`/projects/${form.id}`, {
-        onSuccess: () => {
-            dialog.value = false;
-            form.reset();
-        },
-    });
-};
 </script>
 
 <template>
     <v-dialog
         max-width="700"
         transition="dialog-center-transition"
-        v-model="dialog"
+        v-model="isEditOpen"
     >
         <v-card>
-            <v-card-title>
-                <span>Edit Project</span>
-            </v-card-title>
-            <v-spacer />
+            <v-form @submit.prevent="submit" id="project-form">
+                <v-card-title>
+                    <span>Edit Project</span>
+                </v-card-title>
+                <v-spacer />
 
-            <v-card-item>
-                <v-form @submit.prevent="submitData" id="project-form">
+                <v-card-item>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <v-text-field
@@ -144,7 +81,7 @@ const submitData = () => {
                         </div>
                         <div>
                             <AppDatePicker
-                                v-model="dateMulai"
+                                v-model="dateStart"
                                 label="Tanggal Mulai"
                             />
                             <span
@@ -155,9 +92,9 @@ const submitData = () => {
                         </div>
                         <div>
                             <AppDatePicker
-                                v-model="dateSelesai"
+                                v-model="dateEnd"
                                 label="Tanggal Selesai"
-                                :min="minDateSelesai"
+                                :min="minDateEnd"
                             />
                             <span
                                 v-if="form.errors.end_date"
@@ -166,23 +103,25 @@ const submitData = () => {
                             >
                         </div>
                     </div>
-                </v-form>
-            </v-card-item>
-            <v-card-actions>
-                <v-btn
-                    text="Simpan"
-                    color="success"
-                    variant="flat"
-                    :loading="form.processing"
-                    @click="submitData"
-                />
-                <v-btn
-                    text="Batal"
-                    color="error"
-                    variant="flat"
-                    @click="dialog = false"
-                />
-            </v-card-actions>
+                </v-card-item>
+                <v-card-actions class="flex justify-end mx-2">
+                    <div class="flex gap-2">
+                        <v-btn
+                            text="Simpan"
+                            color="success"
+                            variant="flat"
+                            :loading="form.processing"
+                            type="submit"
+                        />
+                        <v-btn
+                            text="Batal"
+                            color="error"
+                            variant="flat"
+                            @click="isEditOpen = false"
+                        />
+                    </div>
+                </v-card-actions>
+            </v-form>
         </v-card>
     </v-dialog>
 </template>
