@@ -2,7 +2,7 @@ import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
 
 import type { Ref } from 'vue';
-import type { ProjectOption } from '@/pages/projectControl/types';
+import type { ProjectOption } from '@/pages/projectControl/types/boq.type';
 import { route } from 'ziggy-js';
 
 export function useBoqFormActions(

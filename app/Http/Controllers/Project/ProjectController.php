@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Project;
 
-use App\Http\Requests\StoreProjectRequest;
-use App\Models\Boq;
-use App\Models\Projects;
-use App\Services\ProjectService;
-use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\StoreProjectRequest;
+use App\Models\Project\Projects;
+use App\Models\ProjectControl\Boq;
+use App\Services\Project\ProjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

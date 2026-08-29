@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Project;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectControlBoqRequest extends FormRequest
+class UpdateProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,8 +23,7 @@ class StoreProjectControlBoqRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['required', 'integer', 'exists:projects,id'],
-            'detailed_area' => ['required', 'string'],
+            //
         ];
     }
 }

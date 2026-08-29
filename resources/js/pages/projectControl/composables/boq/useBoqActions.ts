@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 
 import { ref } from 'vue';
 import { route } from 'ziggy-js';
@@ -32,6 +32,10 @@ export function useBoqActions() {
         });
     };
 
+    const directToPlan = (id: number) => {
+        router.visit(route('plan.show', id));
+    };
+
     return {
         isCreateOpen,
         isDeleteOpen,
@@ -39,5 +43,6 @@ export function useBoqActions() {
         deleteLoading: deleteForm.processing,
         openDeleteModal,
         confirmDeleteModal,
+        directToPlan,
     };
 }

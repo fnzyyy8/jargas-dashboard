@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectControlPlanController;
-use App\Http\Controllers\ProjectControlBoqController;
+use App\Http\Controllers\Project\ProjectController;
+use App\Http\Controllers\ProjectControl\ProjectControlBoqController;
+use App\Http\Controllers\ProjectControl\ProjectControlPlanController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'show'])->name('home');
 
@@ -18,8 +18,9 @@ Route::controller(ProjectController::class)->prefix('/projects')->group(function
 
 Route::prefix('/project-control')->group(function () {
     Route::controller(ProjectControlPlanController::class)->group(function () {
-        Route::get("/plan", 'index')->name('plan');
-        Route::post("/plan", 'store')->name('plan.store');
+        Route::prefix('/plans')->group(function () {
+            Route::get("/{id}", 'index')->name('plan.show');
+        });
     });
 
     Route::controller(ProjectControlBoqController::class)->group(function () {
@@ -29,4 +30,5 @@ Route::prefix('/project-control')->group(function () {
             Route::delete("/{id}", 'destroy')->name('boq.destroy');
         });
     });
+
 });

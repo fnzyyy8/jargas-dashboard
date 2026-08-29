@@ -3,7 +3,7 @@ import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import FormCreateBoq from '@/pages/projectControl/components/boq/FormCreateBoq.vue';
 import { useBoqActions } from '@/pages/projectControl/composables/boq/useBoqActions';
 
-import type { Boq, Project } from '@/pages/projectControl/types';
+import type { Boq, Project } from '@/pages/projectControl/types/boq.type';
 
 const tHead = ['No. SPK', 'Area', 'Nama Pekerjaan', 'Detail Area', 'Aksi'];
 
@@ -19,8 +19,8 @@ const {
     openDeleteModal,
     confirmDeleteModal,
     deleteLoading,
+    directToPlan,
 } = useBoqActions();
-
 </script>
 
 <template>
@@ -69,6 +69,7 @@ const {
                                             prepend-icon="mdi-eye"
                                             title="Detail"
                                             base-color="grey"
+                                            @click="directToPlan(boq.id)"
                                         />
                                         <v-list-item
                                             prepend-icon="mdi-delete"

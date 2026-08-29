@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ProjectControl;
 
-use App\Http\Requests\StoreProjectControlBoqRequest;
-use App\Services\ProjectControlBoqService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectControl\StoreProjectControlBoqRequest;
+use App\Services\ProjectControl\ProjectControlBoqService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,6 +20,7 @@ class ProjectControlBoqController extends Controller
         $getCategory = $request->input('category');
 
         return Inertia::render('projectControl/BoqPage', [
+            'page_title' => 'BOQ',
             'categories' => $this->service->getProjectsCategories(),
             'projects' => $this->service->getProjects($getCategory),
             'boqs' => $this->service->getBoqs(),

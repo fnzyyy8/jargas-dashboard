@@ -2,7 +2,7 @@
 import { toRef, watch } from 'vue';
 import type { VTextField } from 'vuetify/components';
 import { useBoqFormActions } from '@/pages/projectControl/composables/boq/useBoqFormActions';
-import type { FormBoqProps } from '@/pages/projectControl/types';
+import type { FormBoqProps } from '@/pages/projectControl/types/boq.type';
 
 const props = withDefaults(defineProps<FormBoqProps>(), {
     categories: () => [],

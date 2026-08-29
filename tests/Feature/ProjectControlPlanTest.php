@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Projects;
+use App\Models\Project\Projects;
 use App\Models\User;
-use function \Pest\Laravel\post;
+use function Pest\Laravel\post;
 
 test('User can create Project Control Plan', function () {
 

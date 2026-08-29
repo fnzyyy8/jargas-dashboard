@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Projects;
+use App\Models\Project\Projects;
 use Illuminate\Support\Collection;
 
 class DashboardService

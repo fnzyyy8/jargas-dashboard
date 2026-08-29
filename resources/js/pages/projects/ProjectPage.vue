@@ -28,6 +28,7 @@ const openEditModalRef = ref<InstanceType<typeof FormEditProject> | null>(null);
 
 const { confirmDeleteModal, openDeleteModal, isDeleteOpen, deleteLoading } =
     useProjectActions();
+
 </script>
 
 <template>

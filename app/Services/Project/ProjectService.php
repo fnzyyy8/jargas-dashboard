@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Project;
 
-use App\Models\Projects;
+use App\Models\Project\Projects;
 use Illuminate\Support\Collection;
 
 class ProjectService

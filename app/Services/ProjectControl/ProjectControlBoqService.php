@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ProjectControl;
 
-use App\Models\Boq;
-use App\Models\Projects;
+use App\Models\Project\Projects;
+use App\Models\ProjectControl\Boq;
 
 class ProjectControlBoqService
 {

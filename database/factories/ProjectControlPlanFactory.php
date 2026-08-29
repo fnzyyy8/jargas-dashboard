@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\ProjectControlPlan;
+use App\Models\ProjectControl\ProjectControlPlan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
