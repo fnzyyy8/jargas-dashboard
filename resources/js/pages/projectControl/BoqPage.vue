@@ -1,52 +1,25 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import FormCreateBoq from '@/pages/projectControl/components/boq/FormCreateBoq.vue';
+import { useBoqActions } from '@/pages/projectControl/composables/boq/useBoqActions';
+
+import type { Boq, Project } from '@/pages/projectControl/types';
 
 const tHead = ['No. SPK', 'Area', 'Nama Pekerjaan', 'Detail Area', 'Aksi'];
 
-const form = useForm({});
-interface Boqs {
-    id: number;
-    project_number: string;
-    project_area: string;
-    project_name: string;
-    detailed_area: string;
-}
-
-interface Projects {
-    id: number;
-    project_name: string;
-    category: string;
-}
-
 defineProps<{
-    boqs: Boqs[];
+    boqs: Boq[];
     categories: string[];
-    projects: Projects[];
+    projects: Project[];
 }>();
 
-const openCreateDialog = ref(false);
-const selectedIdToDelete = ref<number | null>(null);
-const deleteDialog = ref(false);
-
-const openDeleteDialog = (id: number) => {
-    selectedIdToDelete.value = id;
-    deleteDialog.value = true;
-};
-const handleDelete = () => {
-    if (!selectedIdToDelete.value) {
-        return;
-    } else {
-        form.delete(`/project-control/boq/${selectedIdToDelete.value}`, {
-            onSuccess: () => {
-                deleteDialog.value = false;
-                selectedIdToDelete.value = null;
-            },
-        });
-    }
-};
+const {
+    isCreateOpen,
+    isDeleteOpen,
+    openDeleteModal,
+    confirmDeleteModal,
+    deleteLoading,
+} = useBoqActions();
 </script>
 
 <template>
@@ -56,11 +29,11 @@ const handleDelete = () => {
                 <v-btn
                     prepend-icon="mdi-plus"
                     color="success"
-                    @click="openCreateDialog = true"
+                    @click="isCreateOpen = true"
                     >Create Boq</v-btn
                 >
                 <FormCreateBoq
-                    v-model="openCreateDialog"
+                    v-model="isCreateOpen"
                     :categories="categories"
                     :projects="projects"
                 />
@@ -95,13 +68,12 @@ const handleDelete = () => {
                                             prepend-icon="mdi-eye"
                                             title="Detail"
                                             base-color="grey"
-                                            @click=""
                                         />
                                         <v-list-item
                                             prepend-icon="mdi-delete"
                                             title="Delete"
                                             base-color="error"
-                                            @click="openDeleteDialog(boq.id)"
+                                            @click="openDeleteModal(boq.id)"
                                         />
                                     </v-list>
                                 </v-menu>
@@ -113,9 +85,9 @@ const handleDelete = () => {
         </div>
     </v-card>
     <ConfirmationDialog
-        v-model="deleteDialog"
-        :loading="form.processing"
-        @confirm="handleDelete"
+        v-model="isDeleteOpen"
+        :loading="deleteLoading"
+        @confirm="confirmDeleteModal"
     />
 </template>
 

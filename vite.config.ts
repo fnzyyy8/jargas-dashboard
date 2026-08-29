@@ -6,6 +6,7 @@ import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
 import vuetify from 'vite-plugin-vuetify';
+import * as path from 'node:path';
 
 export default defineConfig({
     plugins: [
@@ -33,5 +34,10 @@ export default defineConfig({
         }),
         vuetify({ autoImport: true }),
     ],
-    ssr : {noExternal : ['vuetify']}
+    ssr: { noExternal: ['vuetify'] },
+    resolve: {
+        alias: {
+            'ziggy-js': path.resolve('vendor/tightenco/ziggy'),
+        },
+    },
 });

@@ -1,5 +1,7 @@
 import { createInertiaApp } from '@inertiajs/vue3';
 import { createApp, h } from 'vue';
+import { ZiggyVue } from 'ziggy-js';
+
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import MainLayouts from '@/Layouts/MainLayouts.vue';
@@ -13,7 +15,8 @@ void createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(vuetify);
+            .use(vuetify)
+            .use(ZiggyVue);
 
         app.component('AppDatePicker', AppDatePicker);
         app.component('ConfirmationDialog', ConfirmationDialog);
