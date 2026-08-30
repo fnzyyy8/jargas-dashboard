@@ -4,7 +4,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Project\ProjectController;
 use App\Http\Controllers\ProjectControl\ProjectControlBoqController;
 use App\Http\Controllers\ProjectControl\ProjectControlPlanController;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+});
 
 Route::get('/', [DashboardController::class, 'show'])->name('home');
 
@@ -19,7 +24,9 @@ Route::controller(ProjectController::class)->prefix('/projects')->group(function
 Route::prefix('/project-control')->group(function () {
     Route::controller(ProjectControlPlanController::class)->group(function () {
         Route::prefix('/plans')->group(function () {
-            Route::get("/{id}", 'index')->name('plan.show');
+            Route::get("/{boqId}", 'index')->name('plan.show');
+            Route::post("/", 'store')->name('plan.store');
+            Route::delete("/{id}", 'destroy')->name('plan.destroy');
         });
     });
 

@@ -1,16 +1,32 @@
 import { createInertiaApp } from '@inertiajs/vue3';
 import { createApp, h } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
+import type { Component } from 'vue';
 
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import MainLayouts from '@/Layouts/MainLayouts.vue';
 import vuetify from '@/vuetify';
+import { ZiggyVue } from 'ziggy-js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Jargas';
 
+type ComponentWithLayout = Component & {
+    layout? : Component
+}
+
 void createInertiaApp({
-    layout: () => MainLayouts,
+    layout: (name, page: ComponentWithLayout) => {
+        if (page.layout) {
+            return page.layout;
+        }
+
+        if (name.startsWith('Auth/')) {
+            return GuestLayout;
+        }
+
+        return MainLayouts;
+    },
     title: (title) => (title ? `${title} - ${appName}` : appName),
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })

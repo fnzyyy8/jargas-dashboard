@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
+
 const user = {
-    name: 'John Doe',
-    role: 'Document Control',
+    name: 'Farhan Septiansyah',
 };
+
+const toLoginMenu = () => {
+    router.visit(route('login'))
+}
 </script>
 
 <template>
-    <v-menu width="150px">
+    <v-menu width="150px" :offset="5" location="bottom end">
         <template v-slot:activator="{ props, isActive }">
             <v-btn
                 v-bind="props"
@@ -16,16 +22,16 @@ const user = {
                     <span class="mb-1 text-sm leading-none font-bold">{{
                         user.name
                     }}</span>
-                    <span
-                        class="text-xs leading-none font-normal text-blue-500"
-                        >{{ user.role }}</span
-                    >
                 </div>
             </v-btn>
         </template>
-        <v-list>
+        <v-list width="150">
             <v-list-item title="Profile" append-icon="mdi-account" />
-            <v-list-item title="Logout" append-icon="mdi-logout" />
+            <v-list-item
+                title="Logout"
+                append-icon="mdi-logout"
+                @click="toLoginMenu"
+            />
         </v-list>
     </v-menu>
 </template>

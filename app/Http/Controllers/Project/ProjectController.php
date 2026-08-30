@@ -64,6 +64,11 @@ class ProjectController extends Controller
     public function destroy($id): RedirectResponse
     {
         $project = Projects::findOrFail($id);
+
+        if ($project->boqs()->exists()) {
+            return redirect()->back()->with('error', 'Terdapat BOQ pada Project');
+        }
+
         $project->delete();
 
         return redirect()->back();

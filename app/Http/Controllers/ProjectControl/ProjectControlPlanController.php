@@ -21,8 +21,24 @@ class ProjectControlPlanController extends Controller
         return Inertia::render('projectControl/GetPlanDetail', [
             'page_title' => 'Plan',
             'project_detail' => $this->service->getProjectDetail($id),
-            'plan' => $this->service->getPlans($id)
+            'plans' => $this->service->getPlans($id)
         ]);
+    }
+
+    public function store(StoreProjectControlPlanRequest $request)
+    {
+        $data = $request->validated();
+        $this->service->create($data);
+
+        return redirect()->back();
+
+    }
+
+    public function destroy(int $id)
+    {
+        $this->service->delete($id);
+
+        return redirect()->back();
     }
 
 }

@@ -23,4 +23,17 @@ class ProjectControlPlanService
 
     }
 
+    public function create(array $data)
+    {
+        return Plans::query()->create($data);
+
+
+    }
+
+    public function delete(int $id)
+    {
+        return Plans::query()->find($id)->delete();
+
+    }
+
 }

@@ -23,7 +23,7 @@ class StoreProjectControlPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['required', 'integer', 'exists:projects,id'],
+            'boq_id' => ['required', 'integer', 'exists:boqs,id'],
             'section' => 'required|string|between:1,255',
             'category' => 'nullable|string|between:1,255',
             'sub_category' => 'nullable|string|between:1,255',
