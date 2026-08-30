@@ -1,5 +1,5 @@
 select *
-from users;
+from projects;
 
 select *
-from projects;
+from project_control_plan;

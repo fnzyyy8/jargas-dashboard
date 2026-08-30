@@ -131,26 +131,29 @@ const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
                         <div>
                             <v-checkbox
                                 v-model="form.isMultipleArea"
-                                label="Multiple Area"
+                                label="Cakupan area lebih dari satu"
+                                :error-messages="form.errors.isMultipleArea"
                             />
                         </div>
                     </div>
                 </v-card-item>
-                <v-card-actions>
-                    <v-btn
-                        text="Simpan"
-                        color="success"
-                        variant="flat"
-                        :loading="loading"
-                        type="submit"
-                        @click="dialog = false"
-                    />
-                    <v-btn
-                        text="Batal"
-                        color="error"
-                        variant="flat"
-                        @click="dialog = false"
-                    />
+                <v-card-actions class="flex justify-end px-3">
+                    <div class="flex gap-3">
+                        <v-btn
+                            text="Simpan"
+                            color="success"
+                            variant="flat"
+                            :loading="loading"
+                            type="submit"
+                            @click="dialog = false"
+                        />
+                        <v-btn
+                            text="Batal"
+                            color="error"
+                            variant="flat"
+                            @click="dialog = false"
+                        />
+                    </div>
                 </v-card-actions>
             </v-form>
         </v-card>
