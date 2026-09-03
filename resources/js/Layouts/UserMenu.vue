@@ -7,14 +7,15 @@ const user = {
 };
 
 const toLoginMenu = () => {
-    router.visit(route('login'))
-}
+    router.visit(route('login'));
+};
 </script>
 
 <template>
     <v-menu width="150px" :offset="5" location="bottom end">
         <template v-slot:activator="{ props, isActive }">
             <v-btn
+                color="primary"
                 v-bind="props"
                 :append-icon="isActive ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             >

@@ -14,6 +14,7 @@ export function useProjectEditActions() {
         client: '',
         start_date: '',
         end_date: '',
+        isMultipleArea: false,
     });
     const isEditOpen = ref(false);
     const dateStart = ref<Date | null>(null);
@@ -34,9 +35,10 @@ export function useProjectEditActions() {
         form.project_name = project.project_name;
         form.project_code = project.project_code;
         form.project_number = project.project_number;
-        form.budget = project.budget;
+        form.budget = project.budget ? Number(project.budget) : 0;
         form.area = project.area;
         form.client = project.client;
+        form.isMultipleArea = Boolean(project.isMultipleArea);
 
         dateStart.value = new Date(project.start_date);
         dateEnd.value = new Date(project.end_date);

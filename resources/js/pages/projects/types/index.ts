@@ -9,6 +9,5 @@ export interface Project {
     client: string;
     start_date: string;
     end_date: string;
+    isMultipleArea: boolean;
 }
-
-

@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
+
 import FormCreateBoq from '@/pages/projectControl/components/boq/FormCreateBoq.vue';
 import { useBoqActions } from '@/pages/projectControl/composables/boq/useBoqActions';
 
 import type { Boq, Project } from '@/pages/projectControl/types/boq.type';
+import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
+import { onMounted } from 'vue';
 
-const tHead = ['No. SPK', 'Area', 'Nama Pekerjaan', 'Detail Area', 'Aksi'];
+const tHead = [
+    'Cust',
+    'No. SPK',
+    'Area',
+    'Nama Pekerjaan',
+    'Detail Area',
+    'Aksi',
+];
 
 defineProps<{
     boqs: Boq[];
@@ -21,6 +31,17 @@ const {
     deleteLoading,
     directToPlan,
 } = useBoqActions();
+
+const breadcrumb = useBreadcrumbStore();
+
+onMounted(() => {
+    breadcrumb.setBreadcrumbs([
+        {
+            title: 'BOQ',
+            disabled: true,
+        },
+    ]);
+});
 </script>
 
 <template>
@@ -50,6 +71,14 @@ const {
                     </thead>
                     <tbody>
                         <tr v-for="boq in boqs" :key="boq.id">
+                            <td>
+                                <VIcon
+                                    v-if="boq.isMultipleCustomer"
+                                    icon="mdi-account-group"
+                                />
+
+                                <VIcon v-else icon="mdi-account" />
+                            </td>
                             <td>{{ boq.project_number }}</td>
                             <td>{{ boq.project_area }}</td>
                             <td>{{ boq.project_name }}</td>

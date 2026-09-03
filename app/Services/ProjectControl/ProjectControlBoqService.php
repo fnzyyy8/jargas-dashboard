@@ -4,25 +4,38 @@ namespace App\Services\ProjectControl;
 
 use App\Models\Project\Projects;
 use App\Models\ProjectControl\Boq;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProjectControlBoqService
 {
-    public function getProjectsCategories()
+    public function getFormData(?string $category = null)
     {
-        return Projects::whereNotNull('category')
-            ->where('isMultipleArea', true)
-            ->distinct()
-            ->pluck('category', 'category')
-            ->values();
-    }
 
-    public function getProjects(?string $category)
-    {
-        return Projects::select('id', 'project_name', 'category')
-            ->where('isMultipleArea', true)
-            ->when($category, function ($query, $category) {
-                return $query->where('category', $category);
-            })->get();
+        $projectQuery = Projects::query()
+            ->select('id', 'project_name', 'category', 'isMultipleArea')
+            ->where(function ($query) {
+                $query->where('isMultipleArea', true)
+                    ->orWhere(function ($query) {
+                        $query->where('isMultipleArea', false)
+                            ->whereDoesntHave('boqs');
+                    });
+            });
+
+        $categories = (clone $projectQuery)
+            ->whereNotNull('category')
+            ->pluck('category')
+            ->unique()
+            ->values();
+
+        $projects = $projectQuery->when($category, function ($query, $cat) {
+            return $query->where('category', $cat);
+        })->get()->values();
+
+        return [
+            'categories' => $categories,
+            'projects' => $projects,
+        ];
+
     }
 
     public function getBoqs()
@@ -34,6 +47,7 @@ class ProjectControlBoqService
                 'projects.project_name as project_name',
                 'boqs.id',
                 'boqs.detailed_area',
+                'boqs.isMultipleCustomer'
             )->get();
 
     }

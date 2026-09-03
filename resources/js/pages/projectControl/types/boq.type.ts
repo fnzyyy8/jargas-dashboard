@@ -4,12 +4,14 @@ export interface Boq {
     project_area: string;
     project_name: string;
     detailed_area: string;
+    isMultipleCustomer: boolean;
 }
 
 export interface Project {
     id: number;
     project_name: string;
     category: string;
+    isMultipleArea: boolean;
 }
 
 export interface BoqPageProps {
@@ -22,6 +24,7 @@ export interface ProjectOption {
     id: number;
     project_name: string;
     category?: string;
+    isMultipleArea: boolean;
 }
 
 export interface FormBoqProps {

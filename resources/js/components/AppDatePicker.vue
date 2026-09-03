@@ -14,6 +14,10 @@ const props = defineProps({
         type: [Date, String] as PropType<Date | string>,
         default: undefined,
     },
+    max: {
+        type: [Date, String] as PropType<Date | string>,
+        default: undefined,
+    },
     density: {
         type: String as PropType<VTextField['$props']['density']>,
         default: 'comfortable',
@@ -47,6 +51,7 @@ const formattedDate = computed(() => {
         <v-date-picker
             v-model="model"
             :min="props.min"
+            :max="props.max"
             @update:model-value="menu = false"
             color="primary"
         />

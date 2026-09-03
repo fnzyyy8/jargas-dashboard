@@ -6,9 +6,6 @@ export function usePlanActions() {
     const isCreateOpen = ref(false);
     const isDeleteOpen = ref(false);
     const selectedPlanId = ref<number | null>(0);
-    const redirectToBoq = () => {
-        router.visit(route('boq'));
-    };
 
     const deleteForm = useForm({});
 
@@ -34,12 +31,16 @@ export function usePlanActions() {
         });
     };
 
+    const directToPlanDetail = (planId: number, id: number) => {
+        router.visit(route('plan.detail', { planId, id }));
+    };
+
     return {
         isCreateOpen,
         isDeleteOpen,
         deleteLoading: deleteForm.processing,
         openDeleteModal,
         confirmDeleteModal,
-        redirectToBoq,
+        directToPlanDetail,
     };
 }

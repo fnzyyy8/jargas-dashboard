@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import { formatNumber } from '@/composable/ConvertRupiah';
 import FormCreatePlan from '@/pages/projectControl/components/plan/FormCreatePlan.vue';
 import { usePlanActions } from '@/pages/projectControl/composables/plan/usePlanActions';
 import type { Boq, Plan } from '@/pages/projectControl/types/plan.type';
+import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
+import { route } from 'ziggy-js';
 
 const tHead = ['Detail Pekerjaan', 'Satuan', 'Volume', 'Harga Satuan', 'Aksi'];
 
-const { useRupiah } = formatNumber();
+const { useRupiah, useNumber } = formatNumber();
 
 defineProps<{
     project_detail: Boq;
@@ -20,12 +23,31 @@ const {
     deleteLoading,
     confirmDeleteModal,
     openDeleteModal,
-    redirectToBoq,
+    directToPlanDetail,
 } = usePlanActions();
+
+const breadcrumb = useBreadcrumbStore();
+
+onMounted(() => {
+    breadcrumb.setBreadcrumbs([
+        {
+            title: 'BOQ',
+            href: route('boq'),
+        },
+        {
+            title: 'PLAN',
+            disabled: true,
+        },
+    ]);
+});
 </script>
 
 <template>
-    <FormCreatePlan v-model="isCreateOpen" :boq-id="project_detail.id" />
+    <FormCreatePlan
+        v-model="isCreateOpen"
+        :boq-id="project_detail.id"
+        :is-multiple-customer="Boolean(project_detail.isMultipleCustomer)"
+    />
     <div class="flex flex-col gap-3">
         <v-card>
             <v-card-item>
@@ -71,14 +93,6 @@ const {
                                 >Tambahkan Item</v-btn
                             >
                         </div>
-                        <div class="flex">
-                            <v-btn
-                                prepend-icon="mdi-arrow-left"
-                                color="warning"
-                                @click="redirectToBoq"
-                                >Kembali</v-btn
-                            >
-                        </div>
                     </div>
                 </div>
             </v-card-item>
@@ -95,11 +109,11 @@ const {
                     </thead>
                     <tbody>
                         <template v-if="plans && plans.length > 0">
-                            <tr v-for="boq in plans" :key="boq.id">
-                                <td>{{ boq.item_detail }}</td>
-                                <td>{{ boq.unit }}</td>
-                                <td>{{ boq.volume }}</td>
-                                <td>{{ useRupiah(boq.unit_price) }}</td>
+                            <tr v-for="plan in plans" :key="plan.id">
+                                <td>{{ plan.item_detail }}</td>
+                                <td>{{ plan.unit }}</td>
+                                <td>{{ useNumber(plan.volume) }}</td>
+                                <td>{{ useRupiah(plan.unit_price) }}</td>
                                 <td>
                                     <v-menu>
                                         <template v-slot:activator="{ props }">
@@ -113,10 +127,23 @@ const {
                                         </template>
                                         <v-list>
                                             <v-list-item
+                                                prepend-icon="mdi-eye"
+                                                title="View"
+                                                base-color="grey"
+                                                @click="
+                                                    directToPlanDetail(
+                                                        project_detail.id,
+                                                        plan.id,
+                                                    )
+                                                "
+                                            />
+                                            <v-list-item
                                                 prepend-icon="mdi-delete"
                                                 title="Delete"
                                                 base-color="error"
-                                                @click="openDeleteModal(boq.id)"
+                                                @click="
+                                                    openDeleteModal(plan.id)
+                                                "
                                             />
                                         </v-list>
                                     </v-menu>

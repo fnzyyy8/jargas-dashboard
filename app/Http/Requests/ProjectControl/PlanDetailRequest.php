@@ -5,7 +5,7 @@ namespace App\Http\Requests\ProjectControl;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectControlBoqRequest extends FormRequest
+class PlanDetailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class StoreProjectControlBoqRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['required', 'integer', 'exists:projects,id'],
-            'detailed_area' => ['required', 'string'],
-            'isMultipleCustomer' => ['required', 'boolean'],
+            'plan_date' => 'required|date',
+            'plan_volume' => 'required|numeric|min:1',
         ];
     }
 }

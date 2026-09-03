@@ -4,6 +4,7 @@ import { route } from 'ziggy-js';
 export function usePlanFormActions() {
     const form = useForm({
         boq_id: 0,
+        customer_category: '',
         section: '',
         category: '',
         sub_category: '',
@@ -13,8 +14,17 @@ export function usePlanFormActions() {
         unit_price: 0,
     });
 
-    const submitForm = (boqId: number, onSuccessCallback?: () => void) => {
+    const submitForm = (
+        boqId: number,
+        isMultipleCustomer: boolean,
+        onSuccessCallback?: () => void,
+    ) => {
         form.boq_id = boqId;
+
+        if (isMultipleCustomer) {
+            form.customer_category = 'rumah tangga';
+        }
+
         form.post(route('plan.store'), {
             preserveScroll: true,
             onSuccess: () => {

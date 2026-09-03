@@ -5,7 +5,6 @@ namespace App\Http\Controllers\ProjectControl;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectControl\StoreProjectControlPlanRequest;
 use App\Services\ProjectControl\ProjectControlPlanService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,11 +16,12 @@ class ProjectControlPlanController extends Controller
 
     public function index(int $id): Response
     {
+        $getProject = $this->service->getProjects($id);
 
-        return Inertia::render('projectControl/GetPlanDetail', [
+        return Inertia::render('projectControl/PlanPage', [
             'page_title' => 'Plan',
-            'project_detail' => $this->service->getProjectDetail($id),
-            'plans' => $this->service->getPlans($id)
+            'project_detail' => $getProject['boq'],
+            'plans' => $getProject['plans'],
         ]);
     }
 
@@ -30,7 +30,7 @@ class ProjectControlPlanController extends Controller
         $data = $request->validated();
         $this->service->create($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Plan Created Successfully');
 
     }
 
@@ -38,7 +38,7 @@ class ProjectControlPlanController extends Controller
     {
         $this->service->delete($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('info', 'Plan Deleted Successfully');
     }
 
 }

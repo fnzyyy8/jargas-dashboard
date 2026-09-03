@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Project;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project\Projects;
 use App\Models\ProjectControl\Boq;
 use App\Services\Project\ProjectService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,14 +15,14 @@ use Inertia\Response;
 class ProjectController extends Controller
 {
     public function __construct(
-        protected ProjectService $projectService
+        protected ProjectService $service
     )
     {
     }
 
     public function index(): Response
     {
-        $projects = $this->projectService->get();
+        $projects = $this->service->read();
 
         return Inertia::render('projects/ProjectPage', [
             'page_title' => 'Project',
@@ -34,34 +34,21 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
 
-        $project = Projects::create($request->validated());
+        $this->service->create($request->validated());
 
-        Boq::query()->create([
-            'project_id' => $project->id,
-            'detailed_area' => '-'
-        ]);
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Project created successfully');
 
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProjectRequest $request, int $id)
     {
-        $validated = $request->validate([
-            'project_name' => 'required',
-            'budget' => 'required',
-            'area' => 'required',
-            'client' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);
-        $project = Projects::findOrFail($id);
-        $project->update($validated);
 
-        return redirect()->back();
+        $this->service->update($id, $request->validated());
+
+        return redirect()->back()->with('success', 'Project updated successfully');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
         $project = Projects::findOrFail($id);
 
@@ -71,6 +58,6 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('info', 'Success Delete Project');
     }
 }

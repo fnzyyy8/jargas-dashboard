@@ -18,14 +18,18 @@ class ProjectControlBoqController extends Controller
     {
 
         $getCategory = $request->input('category');
+        $projectId = $request->input('projectId');
+
+        $formData = $this->service->getFormData($getCategory);
 
         return Inertia::render('projectControl/BoqPage', [
             'page_title' => 'BOQ',
-            'categories' => $this->service->getProjectsCategories(),
-            'projects' => $this->service->getProjects($getCategory),
+            'categories' => $formData['categories'],
+            'projects' => $formData['projects'],
             'boqs' => $this->service->getBoqs(),
             'filters' => [
-                'category' => $getCategory
+                'category' => $getCategory,
+                'projectId' => $projectId
             ]
         ]);
     }
@@ -33,15 +37,13 @@ class ProjectControlBoqController extends Controller
     public function store(StoreProjectControlBoqRequest $request)
     {
         $this->service->create($request->validated());
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Success Create Boq');
 
     }
 
     public function destroy(int $id)
     {
         $this->service->delete($id);
-
-        return redirect()->back();
+        return redirect()->back()->with('info', 'Success Delete Boq');
     }
 }

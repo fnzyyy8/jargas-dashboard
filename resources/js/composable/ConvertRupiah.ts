@@ -13,5 +13,16 @@ export function formatNumber() {
         return formatted.replace(/\./g, ',');
     };
 
-    return { useRupiah };
+    const useNumber = (value: number) => {
+        if (value === null || value === undefined) {
+            return '0,00';
+        }
+
+        return new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(value);
+    };
+
+    return { useRupiah, useNumber };
 }

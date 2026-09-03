@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
 import UserMenu from '@/Layouts/UserMenu.vue';
-
-const page = usePage();
-
-const pageName = computed(() => page.props.page_title);
 </script>
 
 <template>
-    <div class="flex h-16 items-center justify-between bg-blue-400 px-6">
-        <h1>{{ pageName }}</h1>
+    <div class="flex h-16 items-center justify-between bg-blue-950 px-6">
+        <v-img
+            max-height="30"
+            max-width="120"
+            src="/images/pgn_logo.png"
+            alt="Logo Pgas"
+            aspect-ratio="16/9"
+            cover
+        />
         <UserMenu />
     </div>
 </template>

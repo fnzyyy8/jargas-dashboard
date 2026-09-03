@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { toRef, watch } from 'vue';
-import type { VTextField } from 'vuetify/components';
 import { useBoqFormActions } from '@/pages/projectControl/composables/boq/useBoqFormActions';
 import type { FormBoqProps } from '@/pages/projectControl/types/boq.type';
 
@@ -11,9 +10,10 @@ const props = withDefaults(defineProps<FormBoqProps>(), {
 
 const dialog = defineModel<boolean>('modelValue', { default: false });
 const projectRef = toRef(props, 'projects');
+const categoriesRef = toRef(props, 'categories');
 
 const { form, selectedCategory, filteredProjects, submitForm, resetForm } =
-    useBoqFormActions(projectRef, () => {
+    useBoqFormActions(projectRef, categoriesRef, () => {
         dialog.value = false;
     });
 
@@ -63,6 +63,13 @@ watch(dialog, (isOpen) => {
                             variant="outlined"
                             label="Detailed Area"
                             :error-messages="form.errors.detailed_area"
+                        />
+                        <v-checkbox
+                            v-model="form.isMultipleCustomer"
+                            :error-messages="form.errors.isMultipleCustomer"
+                            :false-value="false"
+                            :true-value="true"
+                            label="Cakupan pelanggan lebih dari satu"
                         />
                     </div>
                 </v-card-item>

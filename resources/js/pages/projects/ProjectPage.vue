@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
+
 import { formatNumber } from '@/composable/ConvertRupiah';
 import FormCreateProject from '@/pages/projects/components/FormCreateProject.vue';
 import FormEditProject from '@/pages/projects/components/FormEditProject.vue';
 import { useProjectActions } from '@/pages/projects/composables/useProjectActions';
 import type { Project } from '@/pages/projects/types';
+import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
+
+const breadcrumb = useBreadcrumbStore();
 
 const { useRupiah } = formatNumber();
 
@@ -29,6 +34,14 @@ const openEditModalRef = ref<InstanceType<typeof FormEditProject> | null>(null);
 const { confirmDeleteModal, openDeleteModal, isDeleteOpen, deleteLoading } =
     useProjectActions();
 
+onMounted(() => {
+    breadcrumb.setBreadcrumbs([
+        {
+            title: 'PROJECT',
+            disabled: true,
+        },
+    ]);
+});
 </script>
 
 <template>

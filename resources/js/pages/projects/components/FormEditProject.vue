@@ -29,25 +29,29 @@ defineExpose({ openEditModal });
                 <v-spacer />
 
                 <v-card-item>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="mt-3 grid grid-cols-2 gap-4">
                         <div>
                             <v-text-field
                                 label="Kode Proyek"
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.project_code"
                                 :error-messages="form.errors.project_code"
-                                disabled
                             />
                         </div>
                         <div>
                             <v-text-field
                                 label="Nomor SPK"
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.project_number"
                                 :error-messages="form.errors.project_number"
-                                disabled
                             />
                         </div>
                         <div class="col-span-2">
                             <v-textarea
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.project_name"
                                 label="Nama Proyek"
                                 :error-messages="form.errors.project_name"
@@ -55,6 +59,8 @@ defineExpose({ openEditModal });
                         </div>
                         <div class="col-span-2">
                             <v-number-input
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.budget"
                                 label="Anggaran"
                                 :error-messages="form.errors.budget"
@@ -67,6 +73,8 @@ defineExpose({ openEditModal });
                         </div>
                         <div class="col-span-2">
                             <v-text-field
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.area"
                                 label="Area"
                                 :error-messages="form.errors.area"
@@ -75,6 +83,8 @@ defineExpose({ openEditModal });
                         <div class="col-span-2">
                             <v-text-field
                                 label="Client"
+                                variant="outlined"
+                                density="comfortable"
                                 v-model="form.client"
                                 :error-messages="form.errors.client"
                             />
@@ -102,9 +112,16 @@ defineExpose({ openEditModal });
                                 >{{ form.errors.end_date }}</span
                             >
                         </div>
+                        <div>
+                            <v-checkbox
+                                v-model="form.isMultipleArea"
+                                label="Cakupan area lebih dari satu"
+                                :error-messages="form.errors.isMultipleArea"
+                            />
+                        </div>
                     </div>
                 </v-card-item>
-                <v-card-actions class="flex justify-end mx-2">
+                <v-card-actions class="mx-2 flex justify-end">
                     <div class="flex gap-2">
                         <v-btn
                             text="Simpan"

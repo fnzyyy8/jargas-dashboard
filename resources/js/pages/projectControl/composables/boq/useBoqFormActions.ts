@@ -7,6 +7,7 @@ import { route } from 'ziggy-js';
 
 export function useBoqFormActions(
     projects: Ref<ProjectOption[]>,
+    categories: Ref<string[]>,
     onSuccessCallback?: () => void,
 ) {
     const selectedCategory = ref<string | null>(null);
@@ -14,6 +15,7 @@ export function useBoqFormActions(
     const form = useForm({
         project_id: null as number | null,
         detailed_area: '',
+        isMultipleCustomer: false,
     });
 
     const filteredProjects = computed(() => {
@@ -28,8 +30,18 @@ export function useBoqFormActions(
         );
     });
 
-    watch(selectedCategory, () => {
-        form.project_id = null;
+    watch(filteredProjects, (newList) => {
+        if (newList.length === 1) {
+            form.project_id = newList[0].id;
+        } else {
+            form.project_id = null;
+        }
+    });
+
+    watch(selectedCategory, (newCat) => {
+        if (!newCat) {
+            form.project_id = null;
+        }
     });
 
     const resetForm = () => {

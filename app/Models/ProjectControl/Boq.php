@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Boq extends Model
 {
     protected $table = 'boqs';
-    protected $fillable = ['project_id', 'detailed_area'];
+    protected $fillable = ['project_id', 'detailed_area', 'isMultipleCustomer'];
 
     public function project(): BelongsTo
     {

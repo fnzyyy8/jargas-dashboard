@@ -4,12 +4,13 @@ import { usePlanFormActions } from '@/pages/projectControl/composables/plan/useP
 const dialog = defineModel<boolean>('modelValue', { default: false });
 const props = defineProps<{
     boqId: number;
+    isMultipleCustomer: boolean;
 }>();
 
 const { form, submitForm } = usePlanFormActions();
 
 const handleSubmit = () => {
-    submitForm(props.boqId, () => {
+    submitForm(props.boqId, props.isMultipleCustomer, () => {
         dialog.value = false;
     });
 };
@@ -28,6 +29,30 @@ const handleSubmit = () => {
                 </v-card-title>
                 <v-card-item>
                     <div class="mt-2">
+                        <v-autocomplete
+                            v-model="form.customer_category"
+                            :error-messages="form.errors.customer_category"
+                            v-if="isMultipleCustomer"
+                            :items="[
+                                {
+                                    title: 'Rumah Tangga',
+                                    value: 'rumah tangga',
+                                },
+                                {
+                                    title: 'Pelanggan Kecil',
+                                    value: 'pelanggan kecil',
+                                },
+                                {
+                                    title: 'Komersial Industri',
+                                    value: 'komersial industri',
+                                },
+                            ]"
+                            item-title="title"
+                            item-value="value"
+                            density="comfortable"
+                            variant="outlined"
+                            label="Pelanggan"
+                        />
                         <v-combobox
                             v-model="form.section"
                             :error-messages="form.errors.section"

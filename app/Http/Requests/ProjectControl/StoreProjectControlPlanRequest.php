@@ -24,6 +24,7 @@ class StoreProjectControlPlanRequest extends FormRequest
     {
         return [
             'boq_id' => ['required', 'integer', 'exists:boqs,id'],
+            'customer_category' => ['string', 'between:1,100'],
             'section' => 'required|string|between:1,255',
             'category' => 'nullable|string|between:1,255',
             'sub_category' => 'nullable|string|between:1,255',

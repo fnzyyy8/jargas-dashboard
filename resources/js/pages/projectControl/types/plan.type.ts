@@ -9,6 +9,7 @@ export interface Project {
 export interface Boq {
     id: number;
     detailed_area: string;
+    isMultipleCustomer: boolean;
     project: Project;
 }
 
