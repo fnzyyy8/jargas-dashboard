@@ -13,21 +13,21 @@ class PlanDetailController extends Controller
     {
     }
 
-    public function index(int $planId, int $id)
+    public function index(int $boqId, int $planId)
     {
-        $plans = $this->service->getPlan($id);
+        $plans = $this->service->getPlan($planId);
         $planDetail = $this->service->getPlanDetail($planId);
 
 
-        return Inertia::render('projectControl/PlanDetailPage', [
+        return Inertia::render('projectControl/PlanDetail/PlanDetailPage', [
             'page_title' => 'Plan Detail',
             'plans' => $plans,
-            'planDetail' => $planDetail
+            'planDetails' => $planDetail
         ]);
 
     }
 
-    public function store(PlanDetailRequest $request)
+    public function create(PlanDetailRequest $request)
     {
         $this->service->create($request->validated());
 

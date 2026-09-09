@@ -3,14 +3,11 @@ import UserMenu from '@/Layouts/UserMenu.vue';
 </script>
 
 <template>
-    <div class="flex h-16 items-center justify-between bg-blue-950 px-6">
-        <v-img
-            max-height="30"
-            max-width="120"
+    <div class="flex h-16 w-full items-center justify-between bg-blue-950 px-6">
+        <img
             src="/images/pgn_logo.png"
             alt="Logo Pgas"
-            aspect-ratio="16/9"
-            cover
+            class="h-7.5 w-30 object-contain"
         />
         <UserMenu />
     </div>

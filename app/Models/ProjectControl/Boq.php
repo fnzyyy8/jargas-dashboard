@@ -3,12 +3,16 @@
 namespace App\Models\ProjectControl;
 
 use App\Models\Project\Projects;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Boq extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'boqs';
     protected $fillable = ['project_id', 'detailed_area', 'isMultipleCustomer'];
 

@@ -39,7 +39,7 @@ export function useProjectCreateActions() {
             ? dateEnd.value.toLocaleDateString('en-CA')
             : '';
 
-        form.post(route('projects.store'), {
+        form.post(route('projects.create'), {
             preserveScroll: true,
             onSuccess: () => {
                 form.reset();

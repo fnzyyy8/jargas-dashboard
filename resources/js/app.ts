@@ -1,4 +1,4 @@
-import { createInertiaApp, router } from '@inertiajs/vue3';
+import { createInertiaApp } from '@inertiajs/vue3';
 import { createPinia } from 'pinia';
 import { createApp, h } from 'vue';
 import type { Component } from 'vue';
@@ -7,7 +7,6 @@ import AppDatePicker from '@/components/AppDatePicker.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import MainLayouts from '@/Layouts/MainLayouts.vue';
-import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
 import vuetify from '@/vuetify';
 import { ZiggyVue } from 'ziggy-js';
 
@@ -35,16 +34,11 @@ void createInertiaApp({
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(vuetify)
-            .use(ZiggyVue);
+            .use(ZiggyVue)
+            .use(pinia);
 
         app.component('AppDatePicker', AppDatePicker);
         app.component('ConfirmationDialog', ConfirmationDialog);
-        app.use(pinia);
-
-        router.on('start', () => {
-            const breadcrumb = useBreadcrumbStore();
-            breadcrumb.clearBreadcrumbs();
-        });
 
         if (typeof window !== 'undefined' && el) {
             app.mount(el);

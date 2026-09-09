@@ -23,6 +23,7 @@ class PlanDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'plan_id' => 'required|exists:plans,id',
             'plan_date' => 'required|date',
             'plan_volume' => 'required|numeric|min:1',
         ];

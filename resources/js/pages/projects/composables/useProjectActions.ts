@@ -18,7 +18,7 @@ export function useProjectActions() {
             return;
         }
 
-        formDelete.delete(route('projects.destroy', selectedProjectId.value), {
+        formDelete.delete(route('projects.delete', selectedProjectId.value), {
             onSuccess: () => {
                 isDeleteOpen.value = false;
                 selectedProjectId.value = null;

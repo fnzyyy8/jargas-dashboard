@@ -19,7 +19,7 @@ class PlanDetailService
 
     public function getPlanDetail(int $id)
     {
-        return PlanDetail::query()->select(['plan_date', 'plan_volume'])->where('plan_id', $id)->get();
+        return PlanDetail::query()->select(['id', 'plan_date', 'plan_volume'])->where('plan_id', $id)->latest()->get();
 
     }
 

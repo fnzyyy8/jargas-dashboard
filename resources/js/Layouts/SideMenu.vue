@@ -27,10 +27,6 @@ const items: ItemType[] = [
                 title: 'SPK Awal',
                 href: '/projects',
             },
-            // {
-            //     title: 'Amandement',
-            //     href: '/projects-amendement',
-            // },
         ],
     },
     {
@@ -46,10 +42,11 @@ const items: ItemType[] = [
 ];
 
 const navigate = (url?: string) => {
-    if (url) {
-        open.value = [];
-        router.get(url);
+    if (!url) {
+        return;
     }
+
+    router.visit(url);
 };
 
 const isActive = (href?: string) => {
@@ -61,7 +58,7 @@ const isActive = (href?: string) => {
 };
 </script>
 <template>
-    <div class="h-full w-72">
+    <div class="w-full">
         <v-list v-model:opened="open">
             <template v-for="(item, index) in items" :key="index">
                 <v-list-group v-if="item.children" :value="item.title">

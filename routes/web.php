@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Project\ProjectController;
-use App\Http\Controllers\ProjectControl\ProjectControlBoqController;
-use App\Http\Controllers\ProjectControl\ProjectControlPlanController;
+use App\Http\Controllers\ProjectControl\BoqController;
+use App\Http\Controllers\ProjectControl\PlanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProjectControl\PlanDetailController;
 use Illuminate\Support\Facades\Route;
@@ -18,34 +18,29 @@ Route::get('/', [DashboardController::class, 'show'])->name('home');
 
 Route::controller(ProjectController::class)->prefix('/projects')->group(function () {
     Route::get("/", 'index')->name('projects');
-    Route::post("/", 'store')->name('projects.store');
+    Route::post("/", 'create')->name('projects.create');
     Route::put("/{id}", 'update')->name('projects.update');
-    Route::delete("/{id}", 'destroy')->name('projects.destroy');
+    Route::delete("/{id}", 'delete')->name('projects.delete');
 });
 
 Route::prefix('/project-control')->group(function () {
-    Route::controller(ProjectControlPlanController::class)->group(function () {
-        Route::prefix('/plans')->group(function () {
-            Route::get("/{id}", 'index')->name('plan.show');
-            Route::post("/", 'store')->name('plan.store');
-            Route::delete("/{id}", 'destroy')->name('plan.destroy');
+    Route::controller(BoqController::class)->prefix('/boq')->group(function () {
+        Route::get("/", 'index')->name('boq');
+        Route::post("/", 'create')->name('boq.create');
+        Route::put("/{id}", 'update')->name('boq.update');
+        Route::delete("/{id}", 'delete')->name('boq.delete');
 
-            Route::controller(PlanDetailController::class)->group(function () {
-                Route::prefix('/{planId}/detail')->group(function () {
-                    Route::get("/{id}", 'index')->name('plan.detail');
-                    Route::post("/{id}", 'store')->name('plan.detail.store');
-                });
+        Route::controller(PlanController::class)->prefix('/{boqId}/plan')->name('plan.')->group(function () {
+            Route::get("/", 'index')->name('index');
+            Route::post("/", 'create')->name('create');
+            Route::delete("/{id}", 'delete')->name('delete');
+
+            Route::controller(PlanDetailController::class)->prefix('/{planId}/detail')->name('detail.')->group(function () {
+                Route::get("/", 'index')->name('index');
+                Route::post("/", 'create')->name('create');
             });
         });
     });
-
-    Route::controller(ProjectControlBoqController::class)->group(function () {
-        Route::prefix('/boq')->group(function () {
-            Route::get("/", 'index')->name('boq');
-            Route::post('/', 'store')->name('boq.store');
-            Route::delete("/{id}", 'destroy')->name('boq.destroy');
-
-        });
-    });
-
 });
+
+

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Project;
 
+use App\Exceptions\Project\ProjectHasBoqException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\CreateProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
-use App\Models\Project\Projects;
-use App\Models\ProjectControl\Boq;
 use App\Services\Project\ProjectService;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class ProjectController extends Controller
 {
@@ -22,42 +22,59 @@ class ProjectController extends Controller
 
     public function index(): Response
     {
-        $projects = $this->service->read();
 
         return Inertia::render('projects/ProjectPage', [
-            'page_title' => 'Project',
-            'projects' => $projects,
-
+            'projects' => $this->service->getAll(),
         ]);
     }
 
-    public function store(StoreProjectRequest $request)
+    public function create(CreateProjectRequest $request)
     {
 
         $this->service->create($request->validated());
 
-        return redirect()->back()->with('success', 'Project created successfully');
+        return redirect()
+            ->back()
+            ->with('success', 'Project created successfully');
 
     }
 
-    public function update(UpdateProjectRequest $request, int $id)
+    public function update(UpdateProjectRequest $request, int $id): RedirectResponse
     {
 
-        $this->service->update($id, $request->validated());
+        $this->service->update(
+            $id,
+            $request->validated()
+        );
 
-        return redirect()->back()->with('success', 'Project updated successfully');
+        return redirect()
+            ->back()
+            ->with('success', 'Project updated successfully');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $project = Projects::findOrFail($id);
+        try {
+            $this->service->delete($id);
 
-        if ($project->boqs()->exists()) {
-            return redirect()->back()->with('error', 'Terdapat BOQ pada Project');
+            return redirect()
+                ->back()
+                ->with(
+                    'success',
+                    'Project deleted successfully'
+                );
+        } catch (ProjectHasBoqException $e) {
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+        } catch (Throwable $e) {
+
+            return redirect()
+                ->back()
+                ->with(
+                    'error',
+                    $e->getMessage()
+                );
         }
-
-        $project->delete();
-
-        return redirect()->back()->with('info', 'Success Delete Project');
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App\Models\ProjectControl;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Plans extends Model
 {
+    use HasFactory;
+
     protected $table = 'plans';
     protected $fillable = [
         'boq_id',
