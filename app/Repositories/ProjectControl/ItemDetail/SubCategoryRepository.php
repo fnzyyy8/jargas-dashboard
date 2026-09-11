@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Repositories\ProjectControl\ItemDetail;
+
+use App\Models\ProjectControl\ItemDetail\SubCategory;
+use Illuminate\Support\Collection;
+
+class SubCategoryRepository
+{
+    public function __construct(
+        protected SubCategory $model
+    )
+    {
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->model->newQuery()->get();
+    }
+
+    public function findById(int $id): SubCategory
+    {
+        return $this->model->newQuery()->findOrFail($id);
+    }
+
+    public function create(array $data): SubCategory
+    {
+        return $this->model->newQuery()->firstOrCreate($data);
+    }
+
+    public function update(SubCategory $subCategory, array $data): SubCategory
+    {
+        $subCategory->update($data);
+        return $subCategory->fresh();
+    }
+
+    public function delete(SubCategory $subCategory): bool
+    {
+        return (bool)$subCategory->delete();
+    }
+}

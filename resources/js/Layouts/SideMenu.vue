@@ -39,6 +39,16 @@ const items: ItemType[] = [
             },
         ],
     },
+    {
+        title: 'Engineering',
+        icon: 'mdi-hammer-wrench',
+        children: [
+            {
+                title: 'Boq Item',
+                href: '/project-control/item-details',
+            },
+        ],
+    },
 ];
 
 const navigate = (url?: string) => {

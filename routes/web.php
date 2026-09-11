@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectControl\BoqController;
 use App\Http\Controllers\ProjectControl\PlanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProjectControl\PlanDetailController;
+use App\Http\Controllers\ProjectControl\ItemDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
@@ -24,6 +25,14 @@ Route::controller(ProjectController::class)->prefix('/projects')->group(function
 });
 
 Route::prefix('/project-control')->group(function () {
+
+    Route::controller(ItemDetailController::class)->prefix('/item-details')->group(function () {
+        Route::get("/", 'index')->name('item-details.index');
+        Route::post("/", 'create')->name('item-details.create');
+        Route::put("/{id}", 'update')->name('item-details.update');
+        Route::delete("/{id}", 'delete')->name('item-details.delete');
+    });
+
     Route::controller(BoqController::class)->prefix('/boq')->group(function () {
         Route::get("/", 'index')->name('boq');
         Route::post("/", 'create')->name('boq.create');

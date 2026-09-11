@@ -1,2 +1,2 @@
 select *
-from plan_details;
+from item_details;
