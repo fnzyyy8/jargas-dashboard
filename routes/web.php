@@ -57,6 +57,8 @@ Route::prefix('/engineering')->group(function () {
     Route::controller(PriceListController::class)->group(function () {
         Route::get("/", 'index')->name('price-list.index');
         Route::post("/", 'create')->name('price-list.create');
+        Route::put("/{id}", 'update')->name('price-list.update');
+        Route::delete("/{id}", 'delete')->name('price-list.delete');
     });
 });
 

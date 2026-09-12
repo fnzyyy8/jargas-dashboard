@@ -4,6 +4,11 @@ import type { PriceList } from '@/pages/Engineering/type/price-list.type';
 defineProps<{
     priceLists: PriceList[];
 }>();
+
+const emit = defineEmits<{
+    (e: 'update-price-list', priceList: PriceList): void;
+    (e: 'delete-price-list', id: number): void;
+}>();
 </script>
 
 <template>
@@ -17,8 +22,8 @@ defineProps<{
         </thead>
         <tbody>
             <tr v-for="priceList in priceLists" :key="priceList.id">
-                <td>{{ priceList.name}}</td>
-                <td> {{ priceList.number}}</td>
+                <td>{{ priceList.name }}</td>
+                <td>{{ priceList.number }}</td>
                 <td>
                     <v-menu>
                         <template v-slot:activator="{ props }">
@@ -39,11 +44,13 @@ defineProps<{
                                 title="Update"
                                 base-color="warning"
                                 prepend-icon="mdi-pencil"
+                                @click="emit('update-price-list', priceList)"
                             />
                             <v-list-item
                                 title="Delete"
                                 base-color="error"
                                 prepend-icon="mdi-delete"
+                                @click="emit('delete-price-list', priceList.id)"
                             />
                         </v-list>
                     </v-menu>

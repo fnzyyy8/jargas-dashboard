@@ -3,11 +3,19 @@ import { usePage } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { useBreadcrumb } from '@/composable/useBreadcrumb';
 import FormCreatePriceList from '@/pages/Engineering/components/form/FormCreatePriceList.vue';
+import FormUpdatePriceList from '@/pages/Engineering/components/form/FormUpdatePriceList.vue';
 import PriceListTable from '@/pages/Engineering/components/table/PriceListTable.vue';
 import { useEngineeringActions } from '@/pages/Engineering/composables/useEngineeringActions';
 import type { PriceList } from '@/pages/Engineering/type/price-list.type';
 
-const { isCreateOpen, openCreateModal } = useEngineeringActions();
+const {
+    isCreateOpen,
+    isUpdateOpen,
+    openCreateModal,
+    selectedPriceList,
+    openUpdateModal,
+    submitDelete,
+} = useEngineeringActions();
 
 const page = usePage<{
     priceLists: PriceList[];
@@ -27,6 +35,10 @@ onMounted(() =>
 
 <template>
     <FormCreatePriceList v-model="isCreateOpen" />
+    <FormUpdatePriceList
+        :price-list="selectedPriceList"
+        v-model="isUpdateOpen"
+    />
     <div>
         <v-card>
             <div class="p-3">
@@ -39,7 +51,11 @@ onMounted(() =>
                     />
                 </div>
                 <div>
-                    <PriceListTable :priceLists="page.props.priceLists" />
+                    <PriceListTable
+                        :priceLists="page.props.priceLists"
+                        @update-price-list="openUpdateModal"
+                        @delete-price-list="submitDelete"
+                    />
                 </div>
             </div>
         </v-card>

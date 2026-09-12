@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Engineering;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Engineering\PriceList\CreatePriceListRequest;
+use App\Http\Requests\Engineering\PriceList\UpdatePriceListRequest;
 use App\Services\Engineering\PriceListService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,4 +34,20 @@ class PriceListController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil Membuat Kelompok Harga Satuan');
     }
+
+    public function update(int $id, UpdatePriceListRequest $request): RedirectResponse
+    {
+        $this->service->update($id, $request->validated());
+
+        return redirect()->route('price-list.index')->with('success', 'Berhasil Mengubah Kelompok Harga Satuan');
+    }
+
+    public function delete(int $id): RedirectResponse
+    {
+        $this->service->delete($id);
+
+        return redirect()->route('price-list.index')->with('info', 'Berhasil Menghapus Kelompok Harga Satuan');
+    }
+
+
 }

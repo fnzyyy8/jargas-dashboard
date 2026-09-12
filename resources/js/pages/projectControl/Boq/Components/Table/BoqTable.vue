@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3';
 import type { Boq } from '@/pages/projectControl/Boq/Types/boq.type';
-import { route } from 'ziggy-js';
 
 defineProps<{
     boqs: Boq[];
