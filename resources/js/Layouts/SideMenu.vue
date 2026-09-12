@@ -47,6 +47,10 @@ const items: ItemType[] = [
                 title: 'Boq Item',
                 href: '/project-control/item-details',
             },
+            {
+                title: 'Harga Satuan',
+                href: '/engineering',
+            },
         ],
     },
 ];

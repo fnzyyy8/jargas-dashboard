@@ -120,8 +120,7 @@ class BoqService
      * @throws BoqHasPlanException
      * @throws RuntimeException
      */
-    public
-    function delete(int $id)
+    public function delete(int $id)
     {
         try {
             return DB::transaction(function () use ($id) {

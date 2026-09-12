@@ -37,6 +37,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Projects whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Projects whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Projects whereUpdatedAt($value)
+ * @property int $isMultipleArea
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Boq> $boqs
+ * @property-read int|null $boqs_count
+ * @method static \Database\Factories\Project\ProjectsFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Projects whereIsMultipleArea($value)
  * @mixin \Eloquent
  */
 class Projects extends Model

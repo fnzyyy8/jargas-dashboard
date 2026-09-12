@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ProjectControl;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectControl\ItemDetail\CreateItemDetailRequest;
 use App\Http\Requests\ProjectControl\ItemDetail\UpdateItemDetailRequest;
+use App\Http\Resources\ProjectControl\ItemDetail\ItemDetailTableResource;
 use App\Services\ProjectControl\ItemDetailService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class ItemDetailController extends Controller
     public function index()
     {
         return Inertia::render('projectControl/ItemDetail/ItemDetailPage', [
-
+            'itemDetailOptions' => $this->service->getItemDetailOptions(),
+            'itemDetails' => $this->service->getAll()
         ]);
     }
 

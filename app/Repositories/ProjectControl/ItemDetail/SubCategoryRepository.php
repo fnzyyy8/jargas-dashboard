@@ -38,4 +38,18 @@ class SubCategoryRepository
     {
         return (bool)$subCategory->delete();
     }
+
+    public function getOptions(): Collection
+    {
+        return $this->model
+            ->newQuery()
+            ->select([
+                'id',
+                'category_id',
+                'name',
+                'sort_order',
+            ])->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+    }
 }

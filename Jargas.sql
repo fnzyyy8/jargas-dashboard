@@ -1,2 +1,1 @@
-select *
-from item_details;
+desc unit_prices;

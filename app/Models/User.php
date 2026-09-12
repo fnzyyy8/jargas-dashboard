@@ -34,6 +34,10 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @property string $division
+ * @property string $position
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDivision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePosition($value)
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'email', 'password'])]

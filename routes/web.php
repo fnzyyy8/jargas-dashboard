@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectControl\PlanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProjectControl\PlanDetailController;
 use App\Http\Controllers\ProjectControl\ItemDetailController;
+use App\Http\Controllers\Engineering\PriceListController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
@@ -49,6 +50,13 @@ Route::prefix('/project-control')->group(function () {
                 Route::post("/", 'create')->name('create');
             });
         });
+    });
+});
+
+Route::prefix('/engineering')->group(function () {
+    Route::controller(PriceListController::class)->group(function () {
+        Route::get("/", 'index')->name('price-list.index');
+        Route::post("/", 'create')->name('price-list.create');
     });
 });
 

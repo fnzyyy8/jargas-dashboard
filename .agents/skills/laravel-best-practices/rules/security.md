@@ -127,7 +127,7 @@ Validate extension, MIME type, and size. The `mimes` rule checks extensions; use
 public function rules(): array
 {
     return [
-        'avatar' => ['required', 'images', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
     ];
 }
 ```

@@ -1,41 +1,10 @@
 <script setup lang="ts">
-const itemDetails = [
-    {
-        section: {
-            name: 'PEKERJAAN PERSIAPAN',
-        },
-        itemDetail: [
-            {
-                sort_order: 1,
-                name: 'Penyediaan Papan Nama Provek',
-                unit: 'Unit',
-            },
-            {
-                sort_order: 2,
-                name: 'Sewa Direksi Kit (Include Biaya Consumable)',
-                unit: ' Bulan',
-            },
-        ],
-    },
-    {
-        section: {
-            name: 'JARINGAN PIPA DISTRIBUSI',
-        },
-        category: {
-            name: 'MATERIAL PIPA PE 63 mm & AKSESORIS',
-        },
-        subCategory: {
-            name: 'Pipa',
-        },
-        itemDetail: [
-            {
-                sort_order: 1,
-                name: 'Pipa PE Ø63 mm , MDPE 80/HDPE 100, YELLOW, ISO 4437 SDR 11/SDR 13.6',
-                unit: 'm',
-            },
-        ],
-    },
-];
+import ItemDetailTableAction from '@/pages/projectControl/ItemDetail/components/table/ItemDetailTableAction.vue';
+import type { Section } from '@/pages/projectControl/ItemDetail/types/item-detail.type';
+
+defineProps<{
+    items: Section[];
+}>();
 
 const emit = defineEmits<{
     (e: 'add-item-detail'): void;
@@ -51,7 +20,10 @@ const emit = defineEmits<{
             @click="emit('add-item-detail')"
         />
     </div>
-    <v-table class="mt-3">
+    <v-table
+        fixed-header
+        height="825px"
+        class="mt-3">
         <thead>
             <tr>
                 <th>No</th>
@@ -61,63 +33,61 @@ const emit = defineEmits<{
             </tr>
         </thead>
         <tbody>
-            <template v-for="(data, index) in itemDetails" :key="index">
-                <tr>
-                    <td :colspan="4" class="bg-gray-300">
-                        <strong>{{ data.section.name }}</strong>
-                    </td>
-                </tr>
-                <tr v-if="data.category">
-                    <td :colspan="4" class="bg-gray-200 pl-8">
-                        <strong>
-                            {{ data.category.name }}
-                        </strong>
-                    </td>
-                </tr>
-                <tr v-if="data.subCategory">
-                    <td :colspan="4" class="bg-gray-100 pl-10">
-                        <strong>
-                            {{ data.subCategory.name }}
-                        </strong>
+            <template v-for="section in items" :key="`sec-${section.id}`">
+                <tr class="bg-gray-300">
+                    <td :colspan="4">
+                        <strong>{{ section.name }}</strong>
                     </td>
                 </tr>
                 <tr
-                    v-for="(item, itemIndex) in data.itemDetail"
-                    :key="itemIndex"
+                    v-for="item in section.item_details"
+                    :key="`sec-item-${item.id}`"
                 >
-                    <td>
-                        {{ item.sort_order }}
-                    </td>
-                    <td>
-                        {{ item.name }}
-                    </td>
-                    <td class="">
-                        {{ item.unit }}
-                    </td>
-                    <td>
-                        <v-menu>
-                            <template v-slot:activator="{ props }">
-                                <v-btn
-                                    variant="text"
-                                    icon="mdi-dots-vertical"
-                                    v-bind="props"
-                                />
-                            </template>
-                            <v-list>
-                                <v-list-item
-                                    prepend-icon="mdi-pencil"
-                                    title="Edit"
-                                    base-color="warning"
-                                />
-                                <v-list-item
-                                    prepend-icon="mdi-delete"
-                                    title="Delete"
-                                    base-color="error"
-                                />
-                            </v-list>
-                        </v-menu>
-                    </td>
+                    <td>{{ item.sort_order }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.unit }}</td>
+                    <td><ItemDetailTableAction /></td>
                 </tr>
+                <template
+                    v-for="category in section.categories"
+                    :key="`cat-${category.id}`"
+                >
+                    <tr class="bg-gray-200">
+                        <td :colspan="4" class="pl-8">
+                            <strong>
+                                {{ category.name }}
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr
+                        v-for="item in category.item_details"
+                        :key="`cat-item-${item.id}`"
+                    >
+                        <td>{{ item.sort_order }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td><ItemDetailTableAction /></td>
+                    </tr>
+                    <template
+                        v-for="subCategory in category.sub_categories"
+                        :key="`subCat-${subCategory.id}`"
+                    >
+                        <tr class="bg-gray-100">
+                            <td :colspan="5" class="pl-12">
+                                <strong>{{ subCategory.name }} :</strong>
+                            </td>
+                        </tr>
+                        <tr
+                            v-for="item in subCategory.item_details"
+                            :key="`subCat-item-${item.id}`"
+                        >
+                            <td>{{ item.sort_order }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.unit }}</td>
+                            <td><ItemDetailTableAction /></td>
+                        </tr>
+                    </template>
+                </template>
             </template>
         </tbody>
     </v-table>

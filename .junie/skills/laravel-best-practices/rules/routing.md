@@ -49,8 +49,8 @@ Incorrect:
 public function store(Request $request)
 {
     $validated = $request->validate([...]);
-    if ($request->hasFile('images')) {
-        $request->file('images')->move(public_path('images'));
+    if ($request->hasFile('image')) {
+        $request->file('image')->move(public_path('images'));
     }
     $post = Post::create($validated);
     $post->tags()->sync($validated['tags']);

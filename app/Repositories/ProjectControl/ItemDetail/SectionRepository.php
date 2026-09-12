@@ -41,4 +41,43 @@ class SectionRepository
     {
         return (bool)$section->delete();
     }
+
+    public function getOptions(): Collection
+    {
+        return $this->model
+            ->newQuery()
+            ->select([
+                'id',
+                'name',
+                'sort_order',
+            ])->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+    }
+
+    public function getTree(): Collection
+    {
+        return $this->model->newQuery()
+            ->with([
+                'itemDetails' => function ($query) {
+                    $query->whereNull('category_id');
+                },
+                'categories' => function ($query) {
+                    $query->orderBy('sort_order')->orderBy('name');
+                },
+                'categories.itemDetails' => function ($query) {
+                    $query->whereNull('sub_category_id');
+                },
+                'categories.subCategories' => function ($query) {
+                    $query->orderBy('sort_order')->orderBy('name');
+                },
+                'categories.subCategories.itemDetails' => function ($query) {
+                    $query->orderBy('sort_order')->orderBy('id');
+                }
+            ])
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
+    }
 }

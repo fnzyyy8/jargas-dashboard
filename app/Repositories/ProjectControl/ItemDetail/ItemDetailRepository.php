@@ -18,10 +18,14 @@ class ItemDetailRepository
         return $this->model
             ->newQuery()
             ->with([
+                'section:id,name,sort_order',
+                'category:id,section_id,name,sort_order',
                 'subCategory:id,category_id,name,sort_order',
-                'subCategory.category:id,section_id,name,sort_order',
-                'subCategory.category.section:id,name,sort_order',
             ])
+            ->orderBy('section_id')
+            ->orderBy('category_id')
+            ->orderBy('sub_category_id')
+            ->orderBy('sort_order')
             ->get();
     }
 

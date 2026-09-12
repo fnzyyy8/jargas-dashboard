@@ -40,4 +40,17 @@ class CategoryRepository
         return (bool)$category->delete();
     }
 
+    public function getOptions(): Collection
+    {
+        return $this->model
+            ->newQuery()
+            ->select([
+                'id',
+                'section_id',
+                'name',
+                'sort_order',
+            ])->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+    }
 }

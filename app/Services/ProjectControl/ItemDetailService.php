@@ -27,7 +27,7 @@ class ItemDetailService
 
     public function getAll(): Collection
     {
-        return $this->itemDetailRepository->getAll();
+        return $this->sectionRepository->getTree();
     }
 
     public function create(array $data): ItemDetail
@@ -85,5 +85,14 @@ class ItemDetailService
 
             throw  $e;
         }
+    }
+
+    public function getItemDetailOptions()
+    {
+        return [
+            'sections' => $this->sectionRepository->getOptions(),
+            'categories' => $this->categoryRepository->getOptions(),
+            'subCategories' => $this->subCategoryRepository->getOptions(),
+        ];
     }
 }

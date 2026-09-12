@@ -1,0 +1,56 @@
+<script setup lang="ts">
+import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+
+defineProps<{
+    priceLists: PriceList[];
+}>();
+</script>
+
+<template>
+    <v-table>
+        <thead>
+            <tr>
+                <th>Nama Harsat</th>
+                <th>Nomor Harsat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="priceList in priceLists" :key="priceList.id">
+                <td>{{ priceList.name}}</td>
+                <td> {{ priceList.number}}</td>
+                <td>
+                    <v-menu>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                variant="text"
+                                icon="mdi-dots-vertical"
+                                v-bind="props"
+                            />
+                        </template>
+                        <v-list>
+                            <v-list-item
+                                title="View"
+                                base-color="grey"
+                                prepend-icon="mdi-eye"
+                            />
+
+                            <v-list-item
+                                title="Update"
+                                base-color="warning"
+                                prepend-icon="mdi-pencil"
+                            />
+                            <v-list-item
+                                title="Delete"
+                                base-color="error"
+                                prepend-icon="mdi-delete"
+                            />
+                        </v-list>
+                    </v-menu>
+                </td>
+            </tr>
+        </tbody>
+    </v-table>
+</template>
+
+<style scoped></style>

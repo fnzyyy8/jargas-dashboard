@@ -1,0 +1,86 @@
+[
+    {
+        "id": 4,
+        "name": "PEKERJAAN PERSIAPAN",
+        "sort_order": 1,
+        "created_at": "2026-09-11T05:38:47.000000Z",
+        "updated_at": "2026-09-11T05:38:47.000000Z",
+        "item_details": [
+            {
+                "id": 1,
+                "section_id": 4,
+                "category_id": null,
+                "sub_category_id": null,
+                "name": "Penyediaan Papan Nama Proyek",
+                "unit": "Unit",
+                "sort_order": 1,
+                "created_at": "2026-09-11T05:38:47.000000Z",
+                "updated_at": "2026-09-11T05:38:47.000000Z"
+            }
+        ],
+        "categories": []
+    },
+    {
+        "id": 52,
+        "name": "JARINGAN PIPA DISTRIBUSI",
+        "sort_order": 2,
+        "created_at": "2026-09-12T09:39:46.000000Z",
+        "updated_at": "2026-09-12T09:39:46.000000Z",
+        "item_details": [],
+        "categories": [
+            {
+                "id": 1,
+                "section_id": 52,
+                "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+                "sort_order": 1,
+                "created_at": "2026-09-12T09:39:46.000000Z",
+                "updated_at": "2026-09-12T09:39:46.000000Z",
+                "item_details": [],
+                "sub_categories": [
+                    {
+                        "id": 1,
+                        "category_id": 1,
+                        "name": "Pipa",
+                        "sort_order": 1,
+                        "created_at": "2026-09-12T09:39:46.000000Z",
+                        "updated_at": "2026-09-12T09:39:46.000000Z",
+                        "item_details": [
+                            {
+                                "id": 52,
+                                "section_id": 52,
+                                "category_id": 1,
+                                "sub_category_id": 1,
+                                "name": "Pipa PE Ø63 mm , MDPE 80/HDPE 100, YELLOW, ISO 4437 SDR 11/SDR 13.6",
+                                "unit": "Meter",
+                                "sort_order": 1,
+                                "created_at": "2026-09-12T09:39:46.000000Z",
+                                "updated_at": "2026-09-12T09:39:46.000000Z"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "category_id": 1,
+                        "name": "Fitting",
+                        "sort_order": 2,
+                        "created_at": "2026-09-12T09:40:24.000000Z",
+                        "updated_at": "2026-09-12T09:40:24.000000Z",
+                        "item_details": [
+                            {
+                                "id": 53,
+                                "section_id": 52,
+                                "category_id": 1,
+                                "sub_category_id": 2,
+                                "name": "Elbow 90, Ø 63 mm PE 80/PE 100 SDR 11 Electrofusion fitting ISO 4437-3 or EN 1555-3 or EN 12201-3",
+                                "unit": "Buah",
+                                "sort_order": 2,
+                                "created_at": "2026-09-12T09:40:24.000000Z",
+                                "updated_at": "2026-09-12T09:40:24.000000Z"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
