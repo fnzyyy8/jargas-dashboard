@@ -17,18 +17,27 @@ class UnitPrice extends Model
         'isFreeIssueMaterial'
     ];
 
-    public function recorded_price(): HasMany
+    protected $casts = [
+        'isFreeIssueMaterial' => 'boolean'
+    ];
+
+    public function recordPrices(): HasMany
     {
-        return $this->hasMany(RecordPrice::class);
+        return $this->hasMany(RecordPrice::class, 'unit_price_id');
     }
 
-    public function price_list(): BelongsTo
+    public function latestRecordPrice(): HasOne
     {
-        return $this->belongsTo(PriceList::class);
+        return $this->hasOne(RecordPrice::class, 'unit_price_id')->latestOfMany();
     }
 
-    public function item_detail(): BelongsTo
+    public function priceList(): BelongsTo
     {
-        $this->belongsTo(ItemDetail::class);
+        return $this->belongsTo(PriceList::class, 'price_list_id');
+    }
+
+    public function itemDetail(): BelongsTo
+    {
+        return $this->belongsTo(ItemDetail::class, 'item_id');
     }
 }

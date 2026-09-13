@@ -2,9 +2,12 @@
 
 namespace App\Models\ProjectControl\ItemDetail;
 
+use App\Models\Engineering\PriceList\UnitPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -63,4 +66,8 @@ class ItemDetail extends Model
         return $this->belongsTo(SubCategory::class);
     }
 
+    public function unitPrices(): HasMany
+    {
+        return $this->hasMany(UnitPrice::class, 'item_detail_id');
+    }
 }

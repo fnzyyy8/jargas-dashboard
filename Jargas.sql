@@ -1,1 +1,1 @@
-desc unit_prices;
+show tables

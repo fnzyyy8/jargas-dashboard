@@ -34,6 +34,15 @@ class ItemDetailRepository
         return $this->model->newQuery()->findOrFail($id);
     }
 
+    public function getByIds(array $ids): Collection
+    {
+        return $this->model
+            ->newQuery()
+            ->whereIn('id', $ids)
+            ->with(['section,category,subCategory'])
+            ->get();
+    }
+
     public function create(array $data): ItemDetail
     {
         return $this->model->newQuery()->create($data);

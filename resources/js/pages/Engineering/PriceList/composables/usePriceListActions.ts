@@ -1,11 +1,11 @@
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
 import { route } from 'ziggy-js';
 const isCreateOpen = ref(false);
 const isUpdateOpen = ref(false);
 
-export function useEngineeringActions() {
+export function usePriceListActions() {
     const selectedPriceList = ref<PriceList | null>(null);
 
     const openCreateModal = () => {
@@ -23,6 +23,10 @@ export function useEngineeringActions() {
         formDelete.delete(route('price-list.delete', id));
     };
 
+    const redirectToPriceListShow = (id: number) => {
+        formDelete.get(route('price-list.show', id));
+    };
+
     return {
         isCreateOpen,
         isUpdateOpen,
@@ -30,5 +34,6 @@ export function useEngineeringActions() {
         openCreateModal,
         openUpdateModal,
         submitDelete,
+        redirectToPriceListShow,
     };
 }

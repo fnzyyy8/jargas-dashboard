@@ -17,6 +17,7 @@ class PriceListRepository
     {
         return $this->model
             ->newQuery()
+            ->withCount('unitPrices')
             ->get();
     }
 
@@ -24,6 +25,15 @@ class PriceListRepository
     {
         return $this->model
             ->newQuery()
+            ->with(['unitPrices.itemDetail,unitPrices.lastRecordPrice'])
+            ->findOrFail($id);
+    }
+
+    public function findByIdWithPrices(int $id): PriceList
+    {
+        return $this->model
+            ->newQuery()
+            ->with(['unitPrices.itemDetail,unitPrices.lastRecordPrice'])
             ->findOrFail($id);
     }
 

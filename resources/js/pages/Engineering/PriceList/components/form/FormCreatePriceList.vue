@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useEngineeringCreateActions } from '@/pages/Engineering/composables/useEngineeringCreateActions';
+import { usePriceListCreateActions } from '@/pages/Engineering/PriceList/composables/usePriceListCreateActions';
 
 const dialog = defineModel<boolean>({ default: false });
 
-const { formCreate, submitCreate } = useEngineeringCreateActions(() => {
+const { formCreate, submitCreate } = usePriceListCreateActions(() => {
     dialog.value = false;
 });
 </script>

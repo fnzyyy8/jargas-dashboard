@@ -24,6 +24,25 @@ class PriceListService
         return $this->repository->getAll();
     }
 
+    public function getDetailWithPrices(int $id): PriceList
+    {
+        try {
+            return $this->repository->findByIdWithPrices($id);
+        } catch (Throwable $e) {
+            Log::error(
+                'Failed to get price list with id ', [
+                    'price_list_id' => $id,
+                    'message' => $e->getMessage()
+                ]
+            );
+
+            throw new RuntimeException(
+                'Failed to get price list with id ',
+                previous: $e
+            );
+        }
+    }
+
     public function create(array $data): PriceList
     {
         try {

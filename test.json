@@ -1,86 +1,555 @@
 [
     {
-        "id": 4,
-        "name": "PEKERJAAN PERSIAPAN",
+        "id": 1,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Penyediaan Papan Nama Proyek",
+        "unit": "Unit",
         "sort_order": 1,
         "created_at": "2026-09-11T05:38:47.000000Z",
         "updated_at": "2026-09-11T05:38:47.000000Z",
-        "item_details": [
-            {
-                "id": 1,
-                "section_id": 4,
-                "category_id": null,
-                "sub_category_id": null,
-                "name": "Penyediaan Papan Nama Proyek",
-                "unit": "Unit",
-                "sort_order": 1,
-                "created_at": "2026-09-11T05:38:47.000000Z",
-                "updated_at": "2026-09-11T05:38:47.000000Z"
-            }
-        ],
-        "categories": []
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 56,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Sewa Direksi Kit (Include Biaya Consumable)",
+        "unit": "Bulan",
+        "sort_order": 2,
+        "created_at": "2026-09-12T17:49:43.000000Z",
+        "updated_at": "2026-09-12T17:49:43.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 57,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Penyediaan Banner",
+        "unit": "Unit",
+        "sort_order": 3,
+        "created_at": "2026-09-12T17:50:07.000000Z",
+        "updated_at": "2026-09-12T17:50:07.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 58,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Penyediaan Tanda Pengaman & Rambu-rambu",
+        "unit": "Unit",
+        "sort_order": 4,
+        "created_at": "2026-09-12T17:50:28.000000Z",
+        "updated_at": "2026-09-12T17:50:28.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 59,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Sewa Gudang Material",
+        "unit": "Unit",
+        "sort_order": 5,
+        "created_at": "2026-09-12T17:51:18.000000Z",
+        "updated_at": "2026-09-12T17:51:18.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 60,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Mobilisasi dan Demobilisasi",
+        "unit": "Bulan",
+        "sort_order": 6,
+        "created_at": "2026-09-12T17:51:46.000000Z",
+        "updated_at": "2026-09-12T17:51:46.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 61,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Perizinan",
+        "unit": "Ls",
+        "sort_order": 7,
+        "created_at": "2026-09-12T17:55:11.000000Z",
+        "updated_at": "2026-09-12T17:55:11.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 62,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Pengambilan dan Pengembalian Free Issue Material (FIM)",
+        "unit": "Ls",
+        "sort_order": 8,
+        "created_at": "2026-09-12T17:55:31.000000Z",
+        "updated_at": "2026-09-12T17:55:31.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 63,
+        "section_id": 4,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Selther Temporary / Fasiliti",
+        "unit": "Set",
+        "sort_order": 9,
+        "created_at": "2026-09-12T17:56:06.000000Z",
+        "updated_at": "2026-09-12T17:56:06.000000Z",
+        "section": { "id": 4, "name": "PEKERJAAN PERSIAPAN", "sort_order": 1 },
+        "category": null,
+        "sub_category": null
     },
     {
         "id": 52,
-        "name": "JARINGAN PIPA DISTRIBUSI",
-        "sort_order": 2,
+        "section_id": 52,
+        "category_id": 1,
+        "sub_category_id": 1,
+        "name": "Pipa PE Ø63 mm , MDPE 80/HDPE 100, YELLOW, ISO 4437 SDR 11/SDR 13.6",
+        "unit": "Meter",
+        "sort_order": 1,
         "created_at": "2026-09-12T09:39:46.000000Z",
         "updated_at": "2026-09-12T09:39:46.000000Z",
-        "item_details": [],
-        "categories": [
-            {
-                "id": 1,
-                "section_id": 52,
-                "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
-                "sort_order": 1,
-                "created_at": "2026-09-12T09:39:46.000000Z",
-                "updated_at": "2026-09-12T09:39:46.000000Z",
-                "item_details": [],
-                "sub_categories": [
-                    {
-                        "id": 1,
-                        "category_id": 1,
-                        "name": "Pipa",
-                        "sort_order": 1,
-                        "created_at": "2026-09-12T09:39:46.000000Z",
-                        "updated_at": "2026-09-12T09:39:46.000000Z",
-                        "item_details": [
-                            {
-                                "id": 52,
-                                "section_id": 52,
-                                "category_id": 1,
-                                "sub_category_id": 1,
-                                "name": "Pipa PE Ø63 mm , MDPE 80/HDPE 100, YELLOW, ISO 4437 SDR 11/SDR 13.6",
-                                "unit": "Meter",
-                                "sort_order": 1,
-                                "created_at": "2026-09-12T09:39:46.000000Z",
-                                "updated_at": "2026-09-12T09:39:46.000000Z"
-                            }
-                        ]
-                    },
-                    {
-                        "id": 2,
-                        "category_id": 1,
-                        "name": "Fitting",
-                        "sort_order": 2,
-                        "created_at": "2026-09-12T09:40:24.000000Z",
-                        "updated_at": "2026-09-12T09:40:24.000000Z",
-                        "item_details": [
-                            {
-                                "id": 53,
-                                "section_id": 52,
-                                "category_id": 1,
-                                "sub_category_id": 2,
-                                "name": "Elbow 90, Ø 63 mm PE 80/PE 100 SDR 11 Electrofusion fitting ISO 4437-3 or EN 1555-3 or EN 12201-3",
-                                "unit": "Buah",
-                                "sort_order": 2,
-                                "created_at": "2026-09-12T09:40:24.000000Z",
-                                "updated_at": "2026-09-12T09:40:24.000000Z"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 1,
+            "section_id": 52,
+            "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+            "sort_order": 1
+        },
+        "sub_category": {
+            "id": 1,
+            "category_id": 1,
+            "name": "Pipa",
+            "sort_order": 1
+        }
+    },
+    {
+        "id": 53,
+        "section_id": 52,
+        "category_id": 1,
+        "sub_category_id": 2,
+        "name": "Elbow 90, Ø 63 mm PE 80/PE 100 SDR 11 Electrofusion fitting ISO 4437-3 or EN 1555-3 or EN 12201-3",
+        "unit": "Buah",
+        "sort_order": 1,
+        "created_at": "2026-09-12T09:40:24.000000Z",
+        "updated_at": "2026-09-12T09:40:24.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 1,
+            "section_id": 52,
+            "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+            "sort_order": 1
+        },
+        "sub_category": {
+            "id": 2,
+            "category_id": 1,
+            "name": "Fitting",
+            "sort_order": 2
+        }
+    },
+    {
+        "id": 54,
+        "section_id": 52,
+        "category_id": 1,
+        "sub_category_id": 2,
+        "name": "Coupler Electrofusion Ø63 mm, PE 80/PE 100 SDR 11 ISO 4437",
+        "unit": "Buah",
+        "sort_order": 2,
+        "created_at": "2026-09-12T17:41:35.000000Z",
+        "updated_at": "2026-09-12T17:41:35.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 1,
+            "section_id": 52,
+            "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+            "sort_order": 1
+        },
+        "sub_category": {
+            "id": 2,
+            "category_id": 1,
+            "name": "Fitting",
+            "sort_order": 2
+        }
+    },
+    {
+        "id": 55,
+        "section_id": 52,
+        "category_id": 1,
+        "sub_category_id": 2,
+        "name": "Tee Equal Electrofusion, PE 80/PE 100 SDR 11 ISO 4437, Ø63 mm x Ø63 mm x Ø63 mm",
+        "unit": "Buah",
+        "sort_order": 3,
+        "created_at": "2026-09-12T17:45:56.000000Z",
+        "updated_at": "2026-09-12T17:45:56.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 1,
+            "section_id": 52,
+            "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+            "sort_order": 1
+        },
+        "sub_category": {
+            "id": 2,
+            "category_id": 1,
+            "name": "Fitting",
+            "sort_order": 2
+        }
+    },
+    {
+        "id": 64,
+        "section_id": 52,
+        "category_id": 1,
+        "sub_category_id": 2,
+        "name": "End Cap Electrofusion Pipa Ø63 mm, PE 80/PE 100 SDR 11 ISO 4437",
+        "unit": "Buah",
+        "sort_order": 4,
+        "created_at": "2026-09-12T17:57:20.000000Z",
+        "updated_at": "2026-09-12T17:57:20.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 1,
+            "section_id": 52,
+            "name": "MATERIAL PIPA PE 63 mm & Aksesoris",
+            "sort_order": 1
+        },
+        "sub_category": {
+            "id": 2,
+            "category_id": 1,
+            "name": "Fitting",
+            "sort_order": 2
+        }
+    },
+    {
+        "id": 65,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Pekerjaan Penggelaran Pipa PE dia. 63 mm",
+        "unit": "Meter",
+        "sort_order": 1,
+        "created_at": "2026-09-12T17:57:59.000000Z",
+        "updated_at": "2026-09-12T17:57:59.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 66,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Pekerjaan Penyambungan Fitting & Valve PE dia. 63 mm (Electro Fusion)",
+        "unit": "Titik",
+        "sort_order": 2,
+        "created_at": "2026-09-12T18:00:54.000000Z",
+        "updated_at": "2026-09-12T18:00:54.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 67,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Pekerjaan Penyambungan Pipa PE dia. 63 mm Butt Fusion",
+        "unit": "Joint",
+        "sort_order": 3,
+        "created_at": "2026-09-12T18:01:49.000000Z",
+        "updated_at": "2026-09-12T18:01:49.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 68,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Pekerjaan Manual Boring Pipa PE dia. 63 mm (termasuk enty & exit pit, dan reinstatement)",
+        "unit": "Meter",
+        "sort_order": 4,
+        "created_at": "2026-09-12T18:02:29.000000Z",
+        "updated_at": "2026-09-12T18:02:29.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 69,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Pekerjaan Perlintasan Jalan PE dia. 63mm (Manual Boring, termasuk pemasangan casing, aksesoris dan reinstatement)",
+        "unit": "Meter",
+        "sort_order": 5,
+        "created_at": "2026-09-12T18:02:47.000000Z",
+        "updated_at": "2026-09-12T18:02:47.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 70,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Papan Nama Jalur Gas (@500m) Pipa Distribusi Tekanan Rendah (DTR)",
+        "unit": "Buah",
+        "sort_order": 6,
+        "created_at": "2026-09-12T18:03:42.000000Z",
+        "updated_at": "2026-09-12T18:03:42.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 71,
+        "section_id": 52,
+        "category_id": 2,
+        "sub_category_id": null,
+        "name": "Patok Gas Type B (@100m) Pipa Distribusi Tekanan Rendah (DTR)",
+        "unit": "Buah",
+        "sort_order": 7,
+        "created_at": "2026-09-12T18:04:13.000000Z",
+        "updated_at": "2026-09-12T18:04:13.000000Z",
+        "section": {
+            "id": 52,
+            "name": "JARINGAN PIPA DISTRIBUSI",
+            "sort_order": 2
+        },
+        "category": {
+            "id": 2,
+            "section_id": 52,
+            "name": "KONSTRUKSI",
+            "sort_order": 2
+        },
+        "sub_category": null
+    },
+    {
+        "id": 72,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Regulator RT (inlet max: 0,4 bar; min: 0,04 bar, outlet: 0,03 bar)",
+        "unit": "Buah",
+        "sort_order": 1,
+        "created_at": "2026-09-12T18:06:03.000000Z",
+        "updated_at": "2026-09-12T18:06:03.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 74,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Meter Rumah Tangga (Meter RT) Post Paid (Konvensional), G 1.6 Inlet/Outlet size 3/4\"\" (Include Coupling Meter)",
+        "unit": "Unit",
+        "sort_order": 2,
+        "created_at": "2026-09-12T18:08:01.000000Z",
+        "updated_at": "2026-09-12T18:08:01.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 75,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Casing Pipa Galvanis SNI 0039 Medium 1 Inchi untuk Crossing Parit/Selokan Sambungan Rumah",
+        "unit": "Meter",
+        "sort_order": 3,
+        "created_at": "2026-09-12T18:08:58.000000Z",
+        "updated_at": "2026-09-12T18:08:58.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 76,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Material Sambungan Rumah (SR)",
+        "unit": "Set",
+        "sort_order": 4,
+        "created_at": "2026-09-12T18:09:41.000000Z",
+        "updated_at": "2026-09-12T18:09:41.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 77,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Material Sambungan Kompor (SK)",
+        "unit": "Set",
+        "sort_order": 5,
+        "created_at": "2026-09-12T18:10:00.000000Z",
+        "updated_at": "2026-09-12T18:10:00.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 78,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Material Double Nipple 1/2\"",
+        "unit": "Pcs",
+        "sort_order": 6,
+        "created_at": "2026-09-12T18:10:17.000000Z",
+        "updated_at": "2026-09-12T18:10:17.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
+    },
+    {
+        "id": 79,
+        "section_id": 53,
+        "category_id": null,
+        "sub_category_id": null,
+        "name": "Material Tee Galvanize 1/2\"",
+        "unit": "Pcs",
+        "sort_order": 7,
+        "created_at": "2026-09-12T18:10:35.000000Z",
+        "updated_at": "2026-09-12T18:10:35.000000Z",
+        "section": {
+            "id": 53,
+            "name": "MATERIAL SAMBUNGAN RUMAH & SAMBUNGAN KOMPOR",
+            "sort_order": 3
+        },
+        "category": null,
+        "sub_category": null
     }
 ]

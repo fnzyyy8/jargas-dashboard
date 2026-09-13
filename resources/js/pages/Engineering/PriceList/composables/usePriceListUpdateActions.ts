@@ -2,10 +2,10 @@ import { useForm } from '@inertiajs/vue3';
 import type { Ref } from 'vue';
 import { watch } from 'vue';
 
-import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
 import { route } from 'ziggy-js';
 
-export function useEngineeringUpdateActions(
+export function usePriceListUpdateActions(
     priceListRef: Ref<PriceList | null>,
     onSuccessCallback?: () => void,
 ) {

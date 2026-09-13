@@ -2,11 +2,11 @@
 import { usePage } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { useBreadcrumb } from '@/composable/useBreadcrumb';
-import FormCreatePriceList from '@/pages/Engineering/components/form/FormCreatePriceList.vue';
-import FormUpdatePriceList from '@/pages/Engineering/components/form/FormUpdatePriceList.vue';
-import PriceListTable from '@/pages/Engineering/components/table/PriceListTable.vue';
-import { useEngineeringActions } from '@/pages/Engineering/composables/useEngineeringActions';
-import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+import FormCreatePriceList from '@/pages/Engineering/PriceList/components/form/FormCreatePriceList.vue';
+import FormUpdatePriceList from '@/pages/Engineering/PriceList/components/form/FormUpdatePriceList.vue';
+import PriceListTable from '@/pages/Engineering/PriceList/components/table/PriceListTable.vue';
+import { usePriceListActions } from '@/pages/Engineering/PriceList/composables/usePriceListActions';
+import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
 
 const {
     isCreateOpen,
@@ -15,7 +15,8 @@ const {
     selectedPriceList,
     openUpdateModal,
     submitDelete,
-} = useEngineeringActions();
+    redirectToPriceListShow,
+} = usePriceListActions();
 
 const page = usePage<{
     priceLists: PriceList[];
@@ -53,6 +54,7 @@ onMounted(() =>
                 <div>
                     <PriceListTable
                         :priceLists="page.props.priceLists"
+                        @show-price-list="redirectToPriceListShow"
                         @update-price-list="openUpdateModal"
                         @delete-price-list="submitDelete"
                     />

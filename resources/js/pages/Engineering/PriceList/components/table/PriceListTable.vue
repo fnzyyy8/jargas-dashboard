@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
 
 defineProps<{
     priceLists: PriceList[];
 }>();
 
 const emit = defineEmits<{
+    (e: 'show-price-list', id: number): void;
     (e: 'update-price-list', priceList: PriceList): void;
     (e: 'delete-price-list', id: number): void;
 }>();
@@ -38,6 +39,7 @@ const emit = defineEmits<{
                                 title="View"
                                 base-color="grey"
                                 prepend-icon="mdi-eye"
+                                @click="emit('show-price-list', priceList.id)"
                             />
 
                             <v-list-item

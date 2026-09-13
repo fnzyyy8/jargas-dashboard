@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProjectControl\PlanDetailController;
 use App\Http\Controllers\ProjectControl\ItemDetailController;
 use App\Http\Controllers\Engineering\PriceListController;
+use App\Http\Controllers\Engineering\UnitPrice\UnitPriceController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
@@ -55,10 +56,19 @@ Route::prefix('/project-control')->group(function () {
 
 Route::prefix('/engineering')->group(function () {
     Route::controller(PriceListController::class)->group(function () {
+
         Route::get("/", 'index')->name('price-list.index');
         Route::post("/", 'create')->name('price-list.create');
         Route::put("/{id}", 'update')->name('price-list.update');
         Route::delete("/{id}", 'delete')->name('price-list.delete');
+
+        Route::prefix('/price-list')->group(function () {
+            Route::get("/{id}", 'show')->name('price-list.show');
+        });
+
+        Route::controller(UnitPriceController::class)->prefix('/unit-price')->group(function () {
+            Route::get("/create-price-list/{priceListId}", 'index')->name('unit-price.index');
+        });
     });
 });
 

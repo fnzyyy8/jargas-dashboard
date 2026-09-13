@@ -13,8 +13,8 @@ class PriceList extends Model
         'number',
     ];
 
-    public function unit_price(): HasMany
+    public function unitPrices(): HasMany
     {
-        return $this->hasMany(UnitPrice::class);
+        return $this->hasMany(UnitPrice::class, 'price_list_id');
     }
 }

@@ -30,6 +30,11 @@ class ItemDetailService
         return $this->sectionRepository->getTree();
     }
 
+    public function getByIds(array $ids): Collection
+    {
+        return $this->itemDetailRepository->getByIds($ids);
+    }
+
     public function create(array $data): ItemDetail
     {
         try {
@@ -83,7 +88,7 @@ class ItemDetailService
                 'data' => $data,
             ]);
 
-            throw  $e;
+            throw new RuntimeException('Failed to create item detail', previous: $e,);
         }
     }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRef } from 'vue';
-import { useEngineeringUpdateActions } from '@/pages/Engineering/composables/useEngineeringUpdateActions';
-import type { PriceList } from '@/pages/Engineering/type/price-list.type';
+import { usePriceListUpdateActions } from '@/pages/Engineering/PriceList/composables/usePriceListUpdateActions';
+import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
 
 const dialog = defineModel<boolean>({ default: false });
 
@@ -11,7 +11,7 @@ const props = defineProps<{
 
 const priceListRef = toRef(props, 'priceList');
 
-const { formUpdate, submitUpdate } = useEngineeringUpdateActions(
+const { formUpdate, submitUpdate } = usePriceListUpdateActions(
     priceListRef,
     () => {
         dialog.value = false;

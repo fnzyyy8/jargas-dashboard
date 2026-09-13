@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 
-export function useEngineeringCreateActions(onSuccessCallback?: () => void) {
+export function usePriceListCreateActions(onSuccessCallback?: () => void) {
     const formCreate = useForm({
         name: '',
         number: '',

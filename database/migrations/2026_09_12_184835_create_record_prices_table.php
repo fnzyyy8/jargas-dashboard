@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('unit_price_id')->constrained('unit_prices');
             $table->decimal('price')->default(0);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -21,11 +21,20 @@ class PriceListController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('Engineering/EngineeringPage',
+        return Inertia::render('Engineering/PriceList/PriceListPage',
             [
                 'priceLists' => $this->service->getAll()
             ]
         );
+    }
+
+    public function show(int $id): Response
+    {
+        $priceList = $this->service->getDetailWithPrices($id);
+        return Inertia::render('Engineering/PriceListDetail/PriceListDetailPage', [
+            'priceList' => $priceList
+        ]);
+
     }
 
     public function create(CreatePriceListRequest $request): RedirectResponse
