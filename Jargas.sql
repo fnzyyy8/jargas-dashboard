@@ -1,1 +1,2 @@
-show tables
+select *
+from unit_prices;

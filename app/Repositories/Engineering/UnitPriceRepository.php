@@ -22,14 +22,6 @@ class UnitPriceRepository
             ->get();
     }
 
-    public function findByPriceListAndItem(int $priceListId, int $itemDetailId): ?UnitPrice
-    {
-        return $this->model
-            ->newQuery()
-            ->where('price_list_id', $priceListId)
-            ->where('item_detail_id', $itemDetailId)
-            ->first();
-    }
 
     public function findById(int $id): UnitPrice
     {
@@ -52,31 +44,17 @@ class UnitPriceRepository
             );
     }
 
-    public function create(array $data): UnitPrice
+    public function deleteUnselectedItemDetails(int $priceListId, array $itemDetailsIds): int
     {
-        return $this->model
+        $query = $this->model
             ->newQuery()
-            ->create($data);
-    }
+            ->where('price_list_id', $priceListId);
 
-    public function getByIds(array $ids): Collection
-    {
-        return $this->model
-            ->newQuery()
-            ->whereIn('id', $ids)
-            ->with(['itemDetail', 'latestRecordPrice'])
-            ->get();
+        if (empty($itemDetailsIds)) {
+            return $query->delete();
+        }
+        return $query
+            ->whereNotIn('item_detail_id', $itemDetailsIds)
+            ->delete();
     }
-
-    public function update(UnitPrice $unitPrice, array $data): UnitPrice
-    {
-        $unitPrice->update($data);
-        return $unitPrice->fresh();
-    }
-
-    public function delete(UnitPrice $unitPrice): bool
-    {
-        return (bool)$unitPrice->delete();
-    }
-
 }

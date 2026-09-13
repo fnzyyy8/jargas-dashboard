@@ -25,7 +25,10 @@ class PriceListRepository
     {
         return $this->model
             ->newQuery()
-            ->with(['unitPrices.itemDetail,unitPrices.lastRecordPrice'])
+            ->with([
+                'unitPrices.itemDetail',
+                'unitPrices.lastRecordPrice'
+            ])
             ->findOrFail($id);
     }
 
@@ -33,7 +36,12 @@ class PriceListRepository
     {
         return $this->model
             ->newQuery()
-            ->with(['unitPrices.itemDetail,unitPrices.lastRecordPrice'])
+            ->with(
+                [
+                    'unitPrices.itemDetail',
+                    'unitPrices.latestRecordPrice'
+                ]
+            )
             ->findOrFail($id);
     }
 

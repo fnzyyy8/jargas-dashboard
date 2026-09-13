@@ -1,31 +1,54 @@
-import { computed, ref, toValue } from 'vue';
+import { computed, ref, toValue, watch } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
-import type { Section } from '@/pages/Engineering/UnitPrice/type/unit-price.type';
+import type {
+    Section,
+    UnitPrice,
+} from '@/pages/Engineering/UnitPrice/type/unit-price.type';
 
-export function useUnitPriceTableActions(items: MaybeRefOrGetter<Section[]>) {
+export function useUnitPriceTableActions(
+    items: MaybeRefOrGetter<Section[]>,
+    unitPrices: MaybeRefOrGetter<UnitPrice[]>,
+) {
     const selectedItemIds = ref<number[]>([]);
+    const originalItemIds = ref<number[]>([]);
+
+    watch(
+        () => toValue(unitPrices),
+        (newUnitPrices) => {
+            const ids = newUnitPrices.map(
+                (unitPrice) => unitPrice.item_detail_id,
+            );
+            selectedItemIds.value = [...ids];
+            originalItemIds.value = [...ids];
+        },
+        {
+            immediate: true,
+        },
+    );
 
     const allAvailableItemIds = computed<number[]>(() => {
-        const ids: number[] = [];
+        const ids = new Set<number>();
         const rawItems = toValue(items);
 
         if (!Array.isArray(rawItems)) {
-            return ids;
+            return [];
         }
 
-        rawItems.forEach((sec) => {
-            sec.item_details?.forEach((item) => ids.push(item.id));
+        rawItems.forEach((section) => {
+            section.item_details?.forEach((item) => ids.add(item.id));
 
-            sec.categories?.forEach((cat) => {
-                cat.item_details?.forEach((item) => ids.push(item.id));
+            section.categories?.forEach((category) => {
+                category.item_details?.forEach((item) => ids.add(item.id));
 
-                cat.sub_categories?.forEach((sub) => {
-                    sub.item_details?.forEach((item) => ids.push(item.id));
+                category.sub_categories?.forEach((subCategory) => {
+                    subCategory.item_details?.forEach((item) =>
+                        ids.add(item.id),
+                    );
                 });
             });
         });
 
-        return ids;
+        return [...ids];
     });
 
     const isAllSelected = computed({
@@ -33,12 +56,8 @@ export function useUnitPriceTableActions(items: MaybeRefOrGetter<Section[]>) {
             allAvailableItemIds.value.length > 0 &&
             selectedItemIds.value.length === allAvailableItemIds.value.length,
 
-        set: (val: boolean) => {
-            if (val) {
-                selectedItemIds.value = [...allAvailableItemIds.value];
-            } else {
-                selectedItemIds.value = [];
-            }
+        set: (value: boolean) => {
+            selectedItemIds.value = value ? [...allAvailableItemIds.value] : [];
         },
     });
 
@@ -49,15 +68,22 @@ export function useUnitPriceTableActions(items: MaybeRefOrGetter<Section[]>) {
         );
     });
 
-    const clearSelection = () => {
-        selectedItemIds.value = [];
-    };
+    const hasChange = computed(() => {
+        const current = [...selectedItemIds.value].sort((a, b) => a - b);
+
+        const original = [...originalItemIds.value].sort((a, b) => a - b);
+
+        return (
+            current.length !== original.length ||
+            current.some((id, index) => id !== original[index])
+        );
+    });
 
     return {
         selectedItemIds,
         allAvailableItemIds,
         isAllSelected,
         isIndeterminate,
-        clearSelection,
+        hasChange,
     };
 }

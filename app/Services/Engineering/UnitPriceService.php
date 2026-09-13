@@ -34,36 +34,27 @@ class UnitPriceService
         return $this->unitPriceRepository->getByPriceListId($priceListId);
     }
 
-    public function createBatch(array $payload): bool
+    public function sync(int $priceListId, array $itemDetailIds): bool
     {
         try {
-            return DB::transaction(function () use ($payload) {
-                $priceListId = $payload['priceListId'];
+            return DB::transaction(function () use ($priceListId, $itemDetailIds) {
 
-                foreach ($payload['items'] as $item) {
-                    $unitPrice = $this->unitPriceRepository->firstOrCreate(
-                        $priceListId,
-                        $item['item_detail_id'],
-                        $item['isFreeIssueMaterial'] ?? false,
-                    );
-                    $this->unitPriceRepository->create([
-                        'unit_price_id' => $unitPrice->id,
-                        'price' => $item['price'],
-                        'notes' => $item['notes'],
-                    ]);
+                $this->unitPriceRepository->deleteUnselectedItemDetails($priceListId, $itemDetailIds);
+
+                foreach ($itemDetailIds as $itemDetailId) {
+                    $this->unitPriceRepository->firstOrCreate($priceListId, $itemDetailId);
                 }
                 return true;
             });
-
         } catch (Throwable $e) {
-            Log::error('Failed to create unit price batch: ',
-                [
-                    'message' => $e->getMessage(),
-                    'payload' => $payload,
-                ]);
+            Log::error('Failed to sync batch: ', [
+                'price_list_id' => $priceListId,
+                'item_detail_ids' => $itemDetailIds,
+                'message' => $e->getMessage(),
+            ]);
 
-            throw new RuntimeException('Failed to create unit price batch',
-                previous: $e);
+            throw new RuntimeException('Failed to sync batch', previous: $e);
         }
+
     }
 }

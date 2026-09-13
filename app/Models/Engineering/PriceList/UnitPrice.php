@@ -13,7 +13,7 @@ class UnitPrice extends Model
     protected $table = 'unit_prices';
     protected $fillable = [
         'price_list_id',
-        'item_id',
+        'item_detail_id',
         'isFreeIssueMaterial'
     ];
 
@@ -21,7 +21,7 @@ class UnitPrice extends Model
         'isFreeIssueMaterial' => 'boolean'
     ];
 
-    public function recordPrices(): HasMany
+    public function recordedPrices(): HasMany
     {
         return $this->hasMany(RecordPrice::class, 'unit_price_id');
     }
@@ -38,6 +38,6 @@ class UnitPrice extends Model
 
     public function itemDetail(): BelongsTo
     {
-        return $this->belongsTo(ItemDetail::class, 'item_id');
+        return $this->belongsTo(ItemDetail::class, 'item_detail_id');
     }
 }

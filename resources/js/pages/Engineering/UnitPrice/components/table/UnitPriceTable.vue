@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import { useUnitPriceTableActions } from '@/pages/Engineering/UnitPrice/composables/useUnitPriceTableActions';
-import type { Section } from '@/pages/Engineering/UnitPrice/type/unit-price.type';
+import type {
+    PriceList,
+    Section,
+    UnitPrice,
+} from '@/pages/Engineering/UnitPrice/type/unit-price.type';
 
 const props = defineProps<{
     items: Section[];
+    priceList: PriceList;
+    unitPrices: UnitPrice[];
 }>();
 
 const emit = defineEmits<{
     (e: 'update:selected-ids', ids: number[]): void;
+    (e: 'update:has-change', value: boolean): void;
 }>();
 
 const {
@@ -16,15 +23,28 @@ const {
     allAvailableItemIds,
     isAllSelected,
     isIndeterminate,
-    clearSelection,
-} = useUnitPriceTableActions(() => props.items);
+    hasChange,
+} = useUnitPriceTableActions(
+    () => props.items,
+    () => props.unitPrices,
+);
 
 watch(
     selectedItemIds,
     (newIds) => {
-        emit('update:selected-ids', newIds);
+        emit('update:selected-ids', [...newIds]);
     },
-    { deep: true },
+    { deep: true, immediate: true },
+);
+
+watch(
+    hasChange,
+    (value) => {
+        emit('update:has-change', value);
+    },
+    {
+        immediate: true,
+    },
 );
 </script>
 

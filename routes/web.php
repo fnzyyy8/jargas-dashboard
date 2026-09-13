@@ -64,11 +64,13 @@ Route::prefix('/engineering')->group(function () {
 
         Route::prefix('/price-list')->group(function () {
             Route::get("/{id}", 'show')->name('price-list.show');
+
+            Route::controller(UnitPriceController::class)->prefix('/{priceList}/unit-price')->name('unit-price')->group(function () {
+                Route::get("/", 'index')->name('.index');
+                Route::post("/sync", 'sync')->name('.sync');
+            });
         });
 
-        Route::controller(UnitPriceController::class)->prefix('/unit-price')->group(function () {
-            Route::get("/create-price-list/{priceListId}", 'index')->name('unit-price.index');
-        });
     });
 });
 

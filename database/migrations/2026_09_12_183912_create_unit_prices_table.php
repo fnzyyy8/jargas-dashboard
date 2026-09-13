@@ -13,9 +13,10 @@ return new class extends Migration {
         Schema::create('unit_prices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('price_list_id')->constrained('price_lists');
-            $table->foreignId('item_id')->constrained('item_details');
+            $table->foreignId('item_detail_id')->constrained('item_details');
             $table->boolean('isFreeIssueMaterial')->default(false);
             $table->timestamps();
+            $table->unique(['price_list_id', 'item_detail_id']);
         });
     }
 
