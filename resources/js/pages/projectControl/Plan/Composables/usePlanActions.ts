@@ -1,53 +1,72 @@
 import { router, useForm } from '@inertiajs/vue3';
 import { ref, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
+import type { Boq, Plan } from '@/pages/projectControl/Plan/Types/plan.type';
 import { route } from 'ziggy-js';
 
-export function usePlanActions(boqId: MaybeRefOrGetter<number>) {
-    const isCreateOpen = ref(false);
-    const isDeleteOpen = ref(false);
-    const isFilterOpen = ref(false);
-    const openCreateModal = () => {
-        isCreateOpen.value = true;
+export function usePlanActions(boq: MaybeRefOrGetter<Boq>) {
+    const isVolumeCreateOpen = ref(false);
+    const selectedPlan = ref<Plan | null>(null);
+
+    const volumeForm = useForm({
+        volume: null as number | null,
+    });
+
+    const routeToUpdatePlan = (id: number) => {
+        router.visit(
+            route('plan.updatePlan', {
+                boq: id,
+            }),
+        );
     };
 
-    const formDelete = useForm({});
-
-    const openFilterModal = () => {
-        isFilterOpen.value = true;
+    const routeToPlanDetail = (plan: Plan) => {
+        router.visit(
+            route('plan.detail.index', {
+                boq: toValue(boq).id,
+                plan: plan.id,
+            }),
+        );
     };
 
-    const submitDeleteForm = (planId: number) => {
-        const selectedBoqId = toValue(boqId);
+    const handleOpenVolume = (plan: Plan) => {
+        selectedPlan.value = plan;
+        volumeForm.volume = plan.volume === null ? null : Number(plan.volume);
+        isVolumeCreateOpen.value = true;
+    };
 
-        if (!planId || !selectedBoqId) {
+    const submitVolume = () => {
+        if (!selectedPlan.value) {
             return;
         }
 
-        formDelete.delete(
-            route('plan.delete', { boqId: selectedBoqId, id: planId }),
+        volumeForm.put(
+            route('plan.update', {
+                boq: toValue(boq).id,
+                plan: selectedPlan.value.id,
+            }),
             {
                 preserveScroll: true,
-                onSuccess: () => {},
+                onSuccess: () => {
+                    volumeForm.reset();
+
+                    selectedPlan.value = null;
+                    isVolumeCreateOpen.value = false;
+                },
+                onError: (e) => {
+                    console.log(e);
+                },
             },
         );
     };
 
-    const viewPlanDetail = (planId: number) => {
-        const selectedBoqId = toValue(boqId);
-        router.visit(
-            route('plan.detail.index', { boqId: selectedBoqId, planId }),
-        );
-    };
-
     return {
-        isCreateOpen,
-        isFilterOpen,
-        isDeleteOpen,
-        openFilterModal,
-        openCreateModal,
-        submitDeleteForm,
-        deleteLoading: formDelete.processing,
-        viewPlanDetail,
+        volumeForm,
+        isVolumeCreateOpen,
+        selectedPlan,
+        routeToUpdatePlan,
+        routeToPlanDetail,
+        handleOpenVolume,
+        submitVolume,
     };
 }

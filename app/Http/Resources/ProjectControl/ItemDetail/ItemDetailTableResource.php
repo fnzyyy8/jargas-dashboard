@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\ProjectControl\ItemDetail;
 
-use App\Models\ProjectControl\ItemDetail\ItemDetail;
+use App\Models\Engineering\ItemDetail\ItemDetail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

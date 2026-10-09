@@ -5,16 +5,21 @@ namespace App\Http\Controllers\Engineering;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Engineering\PriceList\CreatePriceListRequest;
 use App\Http\Requests\Engineering\PriceList\UpdatePriceListRequest;
+use App\Http\Resources\Engineering\PriceList\PriceListDetailResource;
+use App\Http\Resources\Engineering\PriceList\PriceListResource;
+use App\Services\Engineering\ItemDetailService;
 use App\Services\Engineering\PriceListService;
+use App\Services\Engineering\UnitPriceService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PriceListController extends Controller
 {
     public function __construct(
-        protected PriceListService $service
+        protected PriceListService  $priceListService,
+        protected ItemDetailService $itemDetailService,
+        protected UnitPriceService  $unitPriceService
     )
     {
     }
@@ -23,37 +28,40 @@ class PriceListController extends Controller
     {
         return Inertia::render('Engineering/PriceList/PriceListPage',
             [
-                'priceLists' => $this->service->getAll()
+                'priceLists' => $this->priceListService->getAll()
             ]
         );
     }
 
     public function show(int $id): Response
     {
-        $priceList = $this->service->getDetailWithPrices($id);
+        $unitPrice = $this->unitPriceService->getGroupByPriceListId($id);
+        $priceList = $this->priceListService->getDetailWithPrices($id);
+
         return Inertia::render('Engineering/PriceListDetail/PriceListDetailPage', [
-            'priceList' => $priceList
+            'priceList' => (new PriceListDetailResource($priceList))->resolve(),
+            'sections' => PriceListResource::collection($unitPrice)->resolve(),
         ]);
 
     }
 
     public function create(CreatePriceListRequest $request): RedirectResponse
     {
-        $this->service->create($request->validated());
+        $this->priceListService->create($request->validated());
 
         return redirect()->back()->with('success', 'Berhasil Membuat Kelompok Harga Satuan');
     }
 
     public function update(int $id, UpdatePriceListRequest $request): RedirectResponse
     {
-        $this->service->update($id, $request->validated());
+        $this->priceListService->update($id, $request->validated());
 
         return redirect()->route('price-list.index')->with('success', 'Berhasil Mengubah Kelompok Harga Satuan');
     }
 
     public function delete(int $id): RedirectResponse
     {
-        $this->service->delete($id);
+        $this->priceListService->delete($id);
 
         return redirect()->route('price-list.index')->with('info', 'Berhasil Menghapus Kelompok Harga Satuan');
     }

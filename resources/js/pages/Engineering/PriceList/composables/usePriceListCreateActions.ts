@@ -5,6 +5,7 @@ export function usePriceListCreateActions(onSuccessCallback?: () => void) {
     const formCreate = useForm({
         name: '',
         number: '',
+        client: '',
     });
 
     const submitCreate = () => {

@@ -2,7 +2,7 @@
 
 namespace App\Models\Engineering\PriceList;
 
-use App\Models\ProjectControl\ItemDetail\ItemDetail;
+use App\Models\Engineering\ItemDetail\ItemDetail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,7 +28,7 @@ class UnitPrice extends Model
 
     public function latestRecordPrice(): HasOne
     {
-        return $this->hasOne(RecordPrice::class, 'unit_price_id')->latestOfMany();
+        return $this->hasOne(RecordPrice::class, 'unit_price_id')->latest('date');
     }
 
     public function priceList(): BelongsTo

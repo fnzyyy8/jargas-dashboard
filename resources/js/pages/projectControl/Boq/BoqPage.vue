@@ -7,6 +7,7 @@ import BoqTable from '@/pages/projectControl/Boq/Components/Table/BoqTable.vue';
 
 import { useBoqActions } from '@/pages/projectControl/Boq/Composables/useBoqActions';
 import type { Boq } from '@/pages/projectControl/Boq/Types/boq.type';
+import AppCard from '@/components/card/AppCard.vue';
 
 defineProps<{
     boqs: Boq[];
@@ -38,6 +39,7 @@ onMounted(() => {
 <template>
     <FormCreateBoq :formBoqOptions="formBoqOptions" v-model="isCreateOpen" />
     <FormUpdateBoq :boq="selectedBoq" v-model="isUpdateOpen" />
+    <AppCard btn-label="Create Boq" @create="openCreateDialog" />
     <BoqTable
         :boqs="boqs"
         @view-boq="viewPlan"

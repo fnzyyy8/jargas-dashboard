@@ -3,29 +3,57 @@
 namespace App\Services\ProjectControl;
 
 use App\Models\ProjectControl\PlanDetail;
-use App\Models\ProjectControl\Plans;
+use App\Repositories\ProjectControl\PlanDetailRepository;
+use App\Repositories\ProjectControl\PlanRepository;
+use Illuminate\Support\Collection;
+
+use Illuminate\Support\Facades\DB;
+use Throwable;
+use RuntimeException;
+use InvalidArgumentException;
 
 class PlanDetailService
 {
-    public function getPlan(int $id)
+    public function __construct(
+        protected PlanDetailRepository $repository,
+        protected PlanRepository       $planRepository,
+
+    )
     {
-        return Plans::query()->select(['id', 'boq_id', 'customer_category', 'section', 'category', 'sub_category', 'item_detail', 'unit', 'unit_price', 'volume'])
-            ->with(
-                ['boq:id,project_id,detailed_area',
-                    'boq.project:id,project_name,project_number,start_date,end_date,area,client'
-                ])
-            ->findOrFail($id);
     }
 
-    public function getPlanDetail(int $id)
+    public function getAllByPlan(int $planId): Collection
     {
-        return PlanDetail::query()->select(['id', 'plan_date', 'plan_volume'])->where('plan_id', $id)->latest()->get();
+        return $this->repository->findAll($planId);
+    }
+
+    public function getByPlanId(int $planId): Collection
+    {
+        return $this->planRepository->getAllByPlanId($planId);
 
     }
 
-    public function create(array $data)
-    {
-        return PlanDetail::query()->create($data);
-    }
 
+    public function create(array $data): PlanDetail
+    {
+
+        try {
+            return DB::transaction(function () use ($data) {
+                $plan = $this->planRepository->findById($data['plan_id']);
+
+                $totalVolume = $plan->planDetails()->sum('volume');
+                $newTotalVolume = $totalVolume + $data['volume'];
+
+                if ($newTotalVolume > $plan->volume) {
+                    throw new InvalidArgumentException('Total volume Plan Detail melebihi batas volume');
+                }
+
+                return $this->repository->create($data);
+            });
+        } catch (Throwable $e) {
+
+            throw new RuntimeException('Failed to create plan detail', previous: $e);
+        }
+
+    }
 }

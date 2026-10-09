@@ -3,8 +3,10 @@ export interface Boq {
     project_number: string;
     project_area: string;
     project_name: string;
+    project_budget: number;
     detailed_area: string;
     isMultipleCustomer: boolean;
+    planBudget: number;
 }
 
 interface ProjectType {

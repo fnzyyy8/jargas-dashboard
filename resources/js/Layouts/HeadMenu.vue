@@ -3,7 +3,7 @@ import UserMenu from '@/Layouts/UserMenu.vue';
 </script>
 
 <template>
-    <div class="flex h-16 w-full items-center justify-between bg-blue-950 px-6">
+    <div class="flex h-16 w-full items-center justify-between bg-gray-200 px-6">
         <img
             src="/images/pgn_logo.png"
             alt="Logo Pgas"

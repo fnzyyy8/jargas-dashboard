@@ -1,2 +1,5 @@
 select *
-from unit_prices;
+from plan_details;
+
+select *
+from plans;

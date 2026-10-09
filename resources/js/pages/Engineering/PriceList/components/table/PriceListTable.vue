@@ -18,6 +18,7 @@ const emit = defineEmits<{
             <tr>
                 <th>Nama Harsat</th>
                 <th>Nomor Harsat</th>
+                <th>Client</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@ const emit = defineEmits<{
             <tr v-for="priceList in priceLists" :key="priceList.id">
                 <td>{{ priceList.name }}</td>
                 <td>{{ priceList.number }}</td>
+                <td>{{ priceList.client }}</td>
                 <td>
                     <v-menu>
                         <template v-slot:activator="{ props }">

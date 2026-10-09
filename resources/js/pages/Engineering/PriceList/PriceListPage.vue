@@ -7,6 +7,7 @@ import FormUpdatePriceList from '@/pages/Engineering/PriceList/components/form/F
 import PriceListTable from '@/pages/Engineering/PriceList/components/table/PriceListTable.vue';
 import { usePriceListActions } from '@/pages/Engineering/PriceList/composables/usePriceListActions';
 import type { PriceList } from '@/pages/Engineering/PriceList/type/price-list.type';
+import AppCard from '@/components/card/AppCard.vue';
 
 const {
     isCreateOpen,
@@ -27,7 +28,7 @@ const { setBreadcrumbs } = useBreadcrumb();
 onMounted(() =>
     setBreadcrumbs([
         {
-            title: 'Harsat',
+            title: 'HARSAT',
             disabled: true,
         },
     ]),
@@ -41,16 +42,13 @@ onMounted(() =>
         v-model="isUpdateOpen"
     />
     <div>
+        <AppCard
+            btn-label="Create Harsat"
+            btn-icon="mdi-plus"
+            @create="openCreateModal"
+        />
         <v-card>
             <div class="p-3">
-                <div class="flex justify-end">
-                    <v-btn
-                        prepend-icon="mdi-plus"
-                        color="success"
-                        text="Buat Harsat"
-                        @click="openCreateModal"
-                    />
-                </div>
                 <div>
                     <PriceListTable
                         :priceLists="page.props.priceLists"

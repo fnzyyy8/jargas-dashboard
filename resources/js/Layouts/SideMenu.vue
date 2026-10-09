@@ -44,8 +44,8 @@ const items: ItemType[] = [
         icon: 'mdi-hammer-wrench',
         children: [
             {
-                title: 'Boq Item',
-                href: '/project-control/item-details',
+                title: 'Item Pekerjaan',
+                href: '/engineering/item-details',
             },
             {
                 title: 'Harga Satuan',

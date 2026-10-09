@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import AppCard from '@/components/card/AppCard.vue';
 import { useBreadcrumb } from '@/composable/useBreadcrumb';
-import PriceListInformation from '@/pages/Engineering/PriceListDetail/components/PriceListInformation.vue';
+import PriceListDetailTable from '@/pages/Engineering/PriceListDetail/components/table/PriceListDetailTable.vue';
 import { usePriceListDetailActions } from '@/pages/Engineering/PriceListDetail/composables/usePriceListDetailActions';
-import type { PriceListDetail } from '@/pages/Engineering/PriceListDetail/type/price-list-detail.type';
+import type {
+    PriceList,
+    Section,
+} from '@/pages/Engineering/PriceListDetail/type/price-list-detail.type';
 import { route } from 'ziggy-js';
 
 const { setBreadcrumbs } = useBreadcrumb();
 
-defineProps<{
-    priceList: PriceListDetail;
+const props = defineProps<{
+    priceList: PriceList;
+    sections: Section[];
 }>();
 
 onMounted(() => {
@@ -29,10 +34,39 @@ const { redirectToUnitPrice } = usePriceListDetailActions();
 </script>
 
 <template>
-    <PriceListInformation
-        :price-list="priceList"
-        @create-unit-price="(id) => redirectToUnitPrice(id)"
-    />
+    <AppCard
+        :multipleActions="true"
+        :active-actions="['update']"
+        @update="redirectToUnitPrice(priceList.id)"
+    >
+        <div class="flex flex-col gap-3">
+            <div>
+                <span>Harsat :</span>
+                <h3>{{ priceList.name }}</h3>
+            </div>
+            <div class="flex gap-5">
+                <div>
+                    <span>Client :</span>
+                    <h3>{{ priceList.client }}</h3>
+                </div>
+                <v-divider vertical />
+                <div>
+                    <span>Nomor :</span>
+                    <h3>{{ priceList.number }}</h3>
+                </div>
+            </div>
+        </div>
+    </AppCard>
+    <div class="flex flex-col gap-3">
+        <PriceListDetailTable
+            :items="props.sections"
+            :priceListId="props.priceList.id"
+        />
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+span{
+    color: #90a4ae;
+}
+</style>

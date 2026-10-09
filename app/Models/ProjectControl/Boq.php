@@ -46,6 +46,6 @@ class Boq extends Model
 
     public function plans(): HasMany
     {
-        return $this->hasMany(Plans::class, 'boq_id', 'id');
+        return $this->hasMany(Plan::class, 'boq_id', 'id');
     }
 }

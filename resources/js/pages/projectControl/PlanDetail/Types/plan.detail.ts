@@ -1,35 +1,30 @@
-export interface Plans {
+export interface Boq {
     id: number;
-    boq_id: number;
-    customer_category: string;
-    section: string;
-    category: string | null;
-    sub_category: string | null;
-    item_detail: string;
-    unit: string;
-    unit_price: number;
-    volume: number;
-    boq?: Boq;
-}
-interface Boq {
-    id: number;
-    project_id: number;
-    detailed_area: string;
-    project?: Project;
+    planId: number;
+
+    projectName: string;
+    projectNumber: string;
+    client: string;
+    area: string;
+    detailedArea: string;
+
+    startDate: string;
+    endDate: string;
 }
 
-interface Project {
-    id: number;
-    project_name: string;
-    project_number: string;
-    area: string;
-    client: string;
-    start_date: string;
-    end_date: string;
+export interface ItemDetail {
+    section: string;
+    category: string;
+    subCategory: string;
+    name: string;
+
+    volume: number;
+    totalVolume: number;
 }
 
 export interface PlanDetail {
     id: number;
-    plan_date: string;
-    plan_volume: number;
+    date: string;
+    volume: number;
+    unit: string;
 }

@@ -6,6 +6,8 @@ use App\Exceptions\Project\ProjectHasBoqException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\CreateProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
+use App\Http\Resources\Project\ProjectResource;
+use App\Services\Engineering\PriceListService;
 use App\Services\Project\ProjectService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -15,7 +17,8 @@ use Throwable;
 class ProjectController extends Controller
 {
     public function __construct(
-        protected ProjectService $service
+        protected ProjectService   $service,
+        protected PriceListService $priceListService
     )
     {
     }
@@ -23,8 +26,12 @@ class ProjectController extends Controller
     public function index(): Response
     {
 
+        $projects = $this->service->getAll();
+
+
         return Inertia::render('projects/ProjectPage', [
-            'projects' => $this->service->getAll(),
+            'projects' => ProjectResource::collection($projects)->resolve(),
+            'priceListOptions' => $this->priceListService->getAll(),
         ]);
     }
 

@@ -4,11 +4,17 @@ import { VTextField } from 'vuetify/components';
 
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import { useProjectCreateActions } from '@/pages/projects/composables/useProjectCreateActions';
+import type { PriceListOption } from '@/pages/projects/types';
 
 const dialog = ref(false);
+defineProps<{
+    priceListOptions: PriceListOption[];
+}>();
 
 const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
-    useProjectCreateActions();
+    useProjectCreateActions(() => {
+        dialog.value = false;
+    });
 </script>
 
 <template>
@@ -17,15 +23,6 @@ const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
         transition="dialog-center-transition"
         v-model="dialog"
     >
-        <template v-slot:activator="{ props: activatorProps }">
-            <v-btn
-                v-bind="activatorProps"
-                text="Create Project"
-                color="success"
-                prepend-icon="mdi-plus"
-            />
-        </template>
-
         <v-card>
             <v-form @submit.prevent="submitForm" id="project-form">
                 <v-card-title>
@@ -34,7 +31,18 @@ const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
                 <v-spacer />
 
                 <v-card-item>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="col-span-2 mt-2">
+                            <v-autocomplete
+                                v-model="form.price_list_id"
+                                :items="priceListOptions"
+                                item-title="name"
+                                item-value="id"
+                                variant="outlined"
+                                density="comfortable"
+                                clearable
+                            />
+                        </div>
                         <div class="mt-2">
                             <v-text-field
                                 v-model="form.project_code"
@@ -96,15 +104,6 @@ const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
                                 :error-messages="form.errors.area"
                             />
                         </div>
-                        <div class="col-span-2">
-                            <v-text-field
-                                v-model="form.client"
-                                density="comfortable"
-                                variant="outlined"
-                                label="Client"
-                                :error-messages="form.errors.client"
-                            />
-                        </div>
                         <div>
                             <AppDatePicker
                                 v-model="dateStart"
@@ -145,7 +144,6 @@ const { form, submitForm, loading, dateStart, dateEnd, minDateEnd } =
                             variant="flat"
                             :loading="loading"
                             type="submit"
-                            @click="dialog = false"
                         />
                         <v-btn
                             text="Batal"

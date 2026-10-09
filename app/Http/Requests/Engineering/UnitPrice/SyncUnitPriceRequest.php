@@ -29,6 +29,7 @@ class SyncUnitPriceRequest extends FormRequest
             ],
 
             'item_detail_ids.*' => [
+                'nullable',
                 'integer',
                 'distinct',
                 'exists:item_details,id',

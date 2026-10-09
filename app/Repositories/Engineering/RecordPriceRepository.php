@@ -14,12 +14,19 @@ class RecordPriceRepository
     {
     }
 
+    public function findById(int $id): RecordPrice
+    {
+        return $this->model
+            ->query()
+            ->findOrFail($id);
+    }
+
     public function getByUnitPriceId(int $unitPriceId): Collection
     {
         return $this->model
             ->newQuery()
             ->where('unit_price_id', $unitPriceId)
-            ->latest()
+            ->latest('date')
             ->get();
     }
 
@@ -29,25 +36,10 @@ class RecordPriceRepository
             ->newQuery()
             ->create([
                 'unit_price_id' => $data['unit_price_id'],
+                'date' => $data['date'],
                 'price' => $data['price'],
                 'notes' => $data['notes'] ?? null,
             ]);
-    }
-
-    public function createBatch(array $records): bool
-    {
-        $timestamp = now();
-        $payload = array_map(function ($record) use ($timestamp) {
-            return [
-                'unit_price_id' => $record['unit_price_id'],
-                'price' => $record['price'],
-                'notes' => $record['notes'],
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
-            ];
-        }, $records);
-
-        return $this->model->newQuery()->insert($payload);
     }
 
     public function delete(RecordPrice $recordPrice): bool

@@ -2,9 +2,11 @@
 
 namespace App\Models\Project;
 
+use App\Models\Engineering\PriceList\PriceList;
 use App\Models\ProjectControl\Boq;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -50,12 +52,12 @@ class Projects extends Model
 
     protected $table = 'projects';
     protected $fillable = [
+        'price_list_id',
         'project_name',
         'project_code',
         'project_number',
         'category',
         'area',
-        'client',
         'start_date',
         'end_date',
         'budget',
@@ -66,5 +68,10 @@ class Projects extends Model
     public function boqs(): HasMany
     {
         return $this->hasMany(Boq::class, 'project_id', 'id');
+    }
+
+    public function priceList(): BelongsTo
+    {
+        return $this->belongsTo(PriceList::class, 'price_list_id', 'id');
     }
 }

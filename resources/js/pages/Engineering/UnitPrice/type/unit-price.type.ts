@@ -12,21 +12,21 @@ interface SubCategory {
     id: number;
     name: string;
     sort_order: number;
-    item_details?: ItemDetail[];
+    itemDetails?: ItemDetail[];
 }
 interface Category {
     id: number;
     name: string;
     sort_order: number;
-    item_details?: ItemDetail[];
-    sub_categories?: SubCategory[];
+    itemDetails?: ItemDetail[];
+    subCategories?: SubCategory[];
 }
 
 export interface Section {
     id: number;
     name: string;
     sort_order: number;
-    item_details?: ItemDetail[];
+    itemDetails?: ItemDetail[];
     categories?: Category[];
 }
 
@@ -35,13 +35,14 @@ export interface UnitPrice {
     name: string;
     item_detail_id: number;
     isFreeIssueMaterial: boolean;
-    item_detail?: ItemDetail;
+    itemDetails?: ItemDetail;
 }
 
 export interface PriceList {
     id: number;
     name: string;
     number: string;
+    client: string;
 }
 
 export interface UnitPricePageProps {

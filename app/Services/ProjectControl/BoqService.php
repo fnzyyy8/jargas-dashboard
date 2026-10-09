@@ -22,7 +22,18 @@ class BoqService
 
     public function getAll(): Collection
     {
-        return $this->repository->getAll();
+        return $this->repository
+            ->getAll()
+            ->map(function (Boq $boq) {
+                $boq->planBudget = $boq->plans->sum(function ($plan) {
+                    $price = $plan->unitPrice->latestRecordPrice?->price ?? 0;
+                    $volume = $plan->volume ?? 0;
+                    return $volume * $price;
+                });
+
+                return $boq;
+
+            });
     }
 
     public function formBoqOptions(?string $category = null): array
@@ -126,9 +137,6 @@ class BoqService
             return DB::transaction(function () use ($id) {
                 $boq = $this->repository->findById($id);
 
-                if ($this->repository->hasPlan($boq)) {
-                    throw new BoqHasPlanException();
-                }
                 return $this->repository->delete($boq);
             });
 

@@ -4,6 +4,7 @@ namespace App\Services\Engineering;
 
 use App\Models\Engineering\PriceList\PriceList;
 use App\Repositories\Engineering\PriceListRepository;
+use App\Repositories\Engineering\UnitPriceRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -19,15 +20,36 @@ class PriceListService
     {
     }
 
+
     public function getAll(): Collection
     {
         return $this->repository->getAll();
+    }
+
+    public function getPriceById(int $id): PriceList
+    {
+        try {
+            return $this->repository->findById($id);
+        } catch (Throwable $e) {
+            Log::error(
+                'Failed to get price list with id ', [
+                    'price_list_id' => $id,
+                    'message' => $e->getMessage()
+                ]
+            );
+
+            throw new RuntimeException(
+                'Failed to get price list with id ',
+                previous: $e
+            );
+        }
     }
 
     public function getDetailWithPrices(int $id): PriceList
     {
         try {
             return $this->repository->findByIdWithPrices($id);
+
         } catch (Throwable $e) {
             Log::error(
                 'Failed to get price list with id ', [
@@ -90,7 +112,6 @@ class PriceListService
     public function delete(int $id): void
     {
         try {
-
             $priceList = $this->repository
                 ->findById($id);
 

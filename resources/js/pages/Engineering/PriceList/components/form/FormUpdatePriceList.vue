@@ -42,6 +42,13 @@ const { formUpdate, submitUpdate } = usePriceListUpdateActions(
                             density="comfortable"
                             label="Nomor Harsat"
                         />
+                        <v-text-field
+                            v-model="formUpdate.client"
+                            :error-messages="formUpdate.errors.client"
+                            variant="outlined"
+                            density="comfortable"
+                            label="Client"
+                        />
                     </div>
                     <div class="flex justify-end gap-2">
                         <v-btn

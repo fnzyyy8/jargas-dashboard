@@ -18,7 +18,13 @@ class UnitPriceRepository
         return $this->model
             ->newQuery()
             ->where('price_list_id', $priceListId)
-            ->with(['itemDetail.section', 'latestRecordPrice'])
+            ->with([
+                'itemDetail',
+                'itemDetail.section',
+                'itemDetail.category',
+                'itemDetail.subCategory',
+                'latestRecordPrice'
+            ])
             ->get();
     }
 
@@ -27,7 +33,16 @@ class UnitPriceRepository
     {
         return $this->model
             ->newQuery()
-            ->with(['itemDetail.section', 'recordedPrices', 'latestRecordPrice'])
+            ->select(['id', 'item_detail_id'])
+            ->with(
+                [
+                    'itemDetail:id,section_id,category_id,sub_category_id,name,unit',
+                    'itemDetail.section:id,name',
+                    'itemDetail.category:id,name',
+                    'itemDetail.subCategory:id,name',
+                    'recordedPrices',
+                    'latestRecordPrice'
+                ])
             ->findOrFail($id);
     }
 

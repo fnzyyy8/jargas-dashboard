@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { PriceListDetail } from '@/pages/Engineering/PriceListDetail/type/price-list-detail.type';
+import type { PriceList } from '@/pages/Engineering/PriceListDetail/type/price-list-detail.type';
 
 const props = defineProps<{
-    priceList: PriceListDetail;
+    priceList: PriceList;
 }>();
 
 const isMenuOpen = ref(false);
@@ -18,9 +18,15 @@ const emit = defineEmits<{
         <div class="grid grid-cols-2 p-3">
             <div>
                 <h1>{{ props.priceList.name }}</h1>
-                <span>
-                    {{ props.priceList.number }}
-                </span>
+                <div>
+                    <span>
+                        {{ props.priceList.client }}
+                    </span>
+                    <span> | </span>
+                    <span>
+                        {{ props.priceList.number }}
+                    </span>
+                </div>
             </div>
             <div class="flex items-center justify-end">
                 <v-menu

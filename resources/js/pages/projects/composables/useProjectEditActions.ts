@@ -6,6 +6,7 @@ import { route } from 'ziggy-js';
 export function useProjectEditActions() {
     const form = useForm({
         id: 0,
+        price_list_id: null as number | null,
         project_name: '',
         project_code: '',
         project_number: '',
@@ -32,6 +33,7 @@ export function useProjectEditActions() {
 
     const openEditModal = (id: number, project: Project) => {
         form.id = id;
+        form.price_list_id = project.price_list_id;
         form.project_name = project.project_name;
         form.project_code = project.project_code;
         form.project_number = project.project_number;

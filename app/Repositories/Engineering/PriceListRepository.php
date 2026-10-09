@@ -25,20 +25,22 @@ class PriceListRepository
     {
         return $this->model
             ->newQuery()
-            ->with([
-                'unitPrices.itemDetail',
-                'unitPrices.lastRecordPrice'
-            ])
             ->findOrFail($id);
     }
 
     public function findByIdWithPrices(int $id): PriceList
     {
         return $this->model
-            ->newQuery()
+            ->newQuery()->select('id', 'name', 'number', 'client')
             ->with(
                 [
-                    'unitPrices.itemDetail',
+                    'unitPrices.itemDetail' => function ($query) {
+                        $query->with([
+                            'section:id,name',
+                            'category:id,name',
+                            'subCategory:id,name'
+                        ]);
+                    },
                     'unitPrices.latestRecordPrice'
                 ]
             )

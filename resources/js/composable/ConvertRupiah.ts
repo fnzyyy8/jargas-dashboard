@@ -1,7 +1,7 @@
 export function formatNumber() {
     const useRupiah = (value: number) => {
-        if (value === null || value === undefined) {
-            return 'Rp 0.00';
+        if (value === null || value === undefined || value == 0) {
+            return 'Rp ,-';
         }
 
         const formatted = new Intl.NumberFormat('id-ID', {
@@ -13,7 +13,7 @@ export function formatNumber() {
         return formatted.replace(/\./g, ',');
     };
 
-    const useNumber = (value: number) => {
+    const useNumber = (value: number | null | undefined) => {
         if (value === null || value === undefined) {
             return '0,00';
         }
@@ -24,5 +24,13 @@ export function formatNumber() {
         }).format(value);
     };
 
-    return { useRupiah, useNumber };
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+    };
+
+    return { useRupiah, useNumber, formatDate };
 }

@@ -19,6 +19,7 @@ class BoqRepository
     {
         return $this->model
             ->newQuery()
+            ->with(['plans.unitPrice.latestRecordPrice'])
             ->join(
                 "projects",
                 "boqs.project_id", "=", "projects.id")
@@ -26,6 +27,8 @@ class BoqRepository
                 "projects.project_number as project_number",
                 "projects.project_code as project_code",
                 "projects.project_name as project_name",
+                "projects.area as project_area",
+                "projects.budget as project_budget",
 
                 'boqs.id',
                 'boqs.project_id',
@@ -64,12 +67,6 @@ class BoqRepository
         return (bool)$boq->delete();
     }
 
-    public function hasPlan(Boq $boq): bool
-    {
-        return $boq
-            ->plans()
-            ->exists();
-    }
 
     public function getProjectForBoq(): Collection
     {

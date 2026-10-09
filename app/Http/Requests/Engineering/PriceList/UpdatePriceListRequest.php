@@ -25,6 +25,7 @@ class UpdatePriceListRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'number' => ['required', 'string'],
+            'client' => ['required', 'string'],
         ];
     }
 }

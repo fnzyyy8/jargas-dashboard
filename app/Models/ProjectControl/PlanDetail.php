@@ -30,11 +30,11 @@ class PlanDetail extends Model
     protected $fillable = [
         'plan_id',
         'plan_date',
-        'plan_volume',
+        'volume',
     ];
 
     public function plan(): BelongsTo
     {
-        return $this->belongsTo(Plans::class, 'plan_id', 'id');
+        return $this->belongsTo(Plan::class, 'plan_id', 'id');
     }
 }

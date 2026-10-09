@@ -49,9 +49,6 @@ watch(dialog, (isOpen) => {
                             v-model="selectedCategory"
                             :items="props.formBoqOptions.categories"
                             label="Category"
-                            variant="outlined"
-                            density="comfortable"
-                            clearable
                         />
                         <v-autocomplete
                             v-model="formCreate.project_id"

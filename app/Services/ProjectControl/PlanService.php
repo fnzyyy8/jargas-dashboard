@@ -2,83 +2,113 @@
 
 namespace App\Services\ProjectControl;
 
-use App\Models\ProjectControl\Boq;
-use App\Models\ProjectControl\Plans;
-use App\Services\Shared\DataTableQuery;
+use App\Models\ProjectControl\Plan;
+use App\Repositories\ProjectControl\PlanRepository;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Enumerable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Throwable;
+use RuntimeException;
+
 
 class PlanService
 {
-    public function getProjects(int $id)
+    public function __construct(
+        protected PlanRepository $repository,
+    )
     {
-        $boq = Boq::query()->select(['id', 'project_id', 'detailed_area', 'isMultipleCustomer'])->with([
-            'project:id,project_number,project_name,area,client',
-        ])->findOrFail($id);
-
-        $plans = Plans::query()->where('boq_id', $id)->latest()->get();
-
-        $planQuery = Plans::query()->select('id', 'customer_category', 'section', 'category', 'sub_category')
-            ->where('boq_id', $id);
-
-        $customerCategory = (clone $planQuery)
-            ->whereNotNull('customer_category')
-            ->pluck('customer_category')
-            ->unique()
-            ->values();
-
-
-        return [
-            'boq' => $boq,
-            'plans' => $plans,
-            'planOption' => [
-                'customerCategory' => $customerCategory,
-
-            ]
-        ];
-
     }
 
-    public function getPlans(
-        int     $boqId,
-        ?string $search = null,
-        int     $perPage = 5,
-        int     $page = 1,
-        string  $sortBy = 'create_at',
-        string  $sortDirection = 'desc')
+    public function getAllByBoqId(int $boqId): Collection
     {
-        $query = Plans::query()->select([
-            'id',
-            'boq_id',
-            'item_detail',
-            'unit',
-            'volume',
-            'unit_price',
-            'create_at',
-        ])->where('boq_id', $boqId);
+        return $this->repository->getAllByBoqId($boqId);
+    }
 
-        return (new DataTableQuery($query))
-            ->search($search, ['item_detail'])
-            ->sort($sortBy, $sortDirection, ['create_at', 'item_detail'])
-            ->paginate($perPage, $page);
+    public function getGroupByBoqId(int $boqId): Enumerable
+    {
+        return $this->getAllByBoqId($boqId)
+            ->groupBy('unitPrice.itemDetail.section_id')
+            ->map(fn(Collection $plans) => [
+                'id' => $plans->first()->unitPrice->itemDetail->section->id,
+                'name' => $plans->first()->unitPrice->itemDetail->section->name,
+                'plans' => $plans->whereNull('unitPrice.itemDetail.category_id')->values(),
+                'categories' => $this->buildByCategoriesTrees($plans->whereNotNull('unitPrice.itemDetail.category_id')),
+            ]);
 
     }
 
 
-    public function create(array $data)
+    private function buildByCategoriesTrees(Collection $unitPrices): Enumerable
     {
-        return Plans::query()->create($data);
+        return $unitPrices->groupBy('unitPrice.itemDetail.category_id')
+            ->map(function (Collection $categoryGroup) {
+                $category = $categoryGroup->first()->unitPrice->itemDetail->category;
+                return [
+                    'id' => $category?->id,
+                    'name' => $category?->name,
+                    'plans' => $categoryGroup->whereNull('unitPrice.itemDetail.sub_category_id')->values(),
 
+                    'subCategories' => $categoryGroup
+                        ->whereNotNull('unitPrice.itemDetail.sub_category_id')
+                        ->groupBy('unitPrice.itemDetail.sub_category_id')
+                        ->map(function (Collection $subCategoryGroup) {
+                            $subCategory = $subCategoryGroup->first()->unitPrice->itemDetail->subCategory;
+                            return [
+                                'id' => $subCategory?->id,
+                                'name' => $subCategory?->name,
+                                'plans' => $subCategoryGroup->whereNotNull('unitPrice.itemDetail.sub_category_id')->values(),
+                            ];
+                        })->values(),
+                ];
+            })->values();
+    }
+
+    public function sync(int $boqId, array $unitPriceIds): bool
+    {
+        try {
+            return DB::transaction(function () use ($boqId, $unitPriceIds) {
+                $this->repository->deleteUnselectedUnitPrices($boqId, $unitPriceIds);
+
+                foreach ($unitPriceIds as $unitPriceId) {
+                    $this->repository->createSelectedUnitPrices($boqId, $unitPriceId);
+                }
+
+                return true;
+            });
+
+        } catch (Throwable $e) {
+            Log::error('Failed to sync Plan', [
+                'boq_id' => $boqId,
+                'item_detail_ids' => $unitPriceIds,
+                'message' => $e->getMessage()
+            ]);
+            throw new RuntimeException('Failed to sync Plan', previous: $e);
+        }
+    }
+
+    public function update(Plan $plan, array $data): Plan
+    {
+        try {
+            return DB::transaction(function () use ($plan, $data) {
+
+                return $this->repository->update($plan, $data);
+            });
+
+        } catch (Throwable $e) {
+            Log::error('Failed to update Plan', [
+                'boq_id' => $plan->id,
+                'item_detail_id' => $data['item_detail_id'],
+                'message' => $e->getMessage()
+            ]);
+
+            throw new RuntimeException(
+                'Failed to update Plan',
+                previous: $e
+            );
+        }
 
     }
 
-    public function delete(int $boqId, int $id)
-    {
-
-        $plan = Plans::query()
-            ->where('boq_id', $boqId)
-            ->findOrFail($id);
-        return $plan->delete();
-
-    }
 
 }

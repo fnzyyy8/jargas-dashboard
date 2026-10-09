@@ -2,7 +2,7 @@
 
 namespace Database\Factories\ProjectControl\ItemDetail;
 
-use App\Models\ProjectControl\ItemDetail\Section;
+use App\Models\Engineering\ItemDetail\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

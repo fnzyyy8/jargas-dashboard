@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DoughnutChart from '@/components/DoughnutChart.vue';
+import DoughnutChart from '@/components/chart/DoughnutChart.vue';
 
 interface StatusChartData {
     name: string;

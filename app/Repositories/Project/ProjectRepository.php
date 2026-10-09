@@ -16,7 +16,13 @@ class ProjectRepository
 
     public function getAll(): Collection
     {
-        return $this->model->newQuery()->latest()->get();
+        return $this->model
+            ->newQuery()
+            ->with([
+                'priceList:id,client'
+            ])
+            ->latest()
+            ->get();
     }
 
     public function findById(int $id): Projects

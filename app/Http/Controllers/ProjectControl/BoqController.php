@@ -29,10 +29,12 @@ class BoqController extends Controller
         $formBoqOptions = $this->service
             ->formBoqOptions($selectedCategory);
 
+        $boqs = $this->service->getAll();
+
         return Inertia::render('projectControl/Boq/BoqPage',
             [
-                'boqs' => $this->service->getAll(),
 
+                'boqs' => $boqs,
                 'formBoqOptions' => $formBoqOptions,
 
                 'filters' => [

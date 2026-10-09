@@ -35,13 +35,13 @@ export function useUnitPriceTableActions(
         }
 
         rawItems.forEach((section) => {
-            section.item_details?.forEach((item) => ids.add(item.id));
+            section.itemDetails?.forEach((item) => ids.add(item.id));
 
             section.categories?.forEach((category) => {
-                category.item_details?.forEach((item) => ids.add(item.id));
+                category.itemDetails?.forEach((item) => ids.add(item.id));
 
-                category.sub_categories?.forEach((subCategory) => {
-                    subCategory.item_details?.forEach((item) =>
+                category.subCategories?.forEach((subCategory) => {
+                    subCategory.itemDetails?.forEach((item) =>
                         ids.add(item.id),
                     );
                 });

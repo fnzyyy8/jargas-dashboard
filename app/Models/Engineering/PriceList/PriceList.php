@@ -11,6 +11,7 @@ class PriceList extends Model
     protected $fillable = [
         'name',
         'number',
+        'client'
     ];
 
     public function unitPrices(): HasMany

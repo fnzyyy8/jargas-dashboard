@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
+import AppCardSave from '@/components/card/AppCardSave.vue';
 import { useBreadcrumb } from '@/composable/useBreadcrumb';
 import UnitPriceTable from '@/pages/Engineering/UnitPrice/components/table/UnitPriceTable.vue';
-import UnitPriceInformation from '@/pages/Engineering/UnitPrice/components/UnitPriceInformation.vue';
 import { useUnitPriceActions } from '@/pages/Engineering/UnitPrice/composables/UseUnitPriceActions';
 import type {
     PriceList,
@@ -14,7 +14,7 @@ import { route } from 'ziggy-js';
 const props = defineProps<{
     priceList: PriceList;
     unitPrice: UnitPrice[];
-    items: Section[];
+    sections: Section[];
 }>();
 
 const { setBreadcrumbs } = useBreadcrumb();
@@ -36,37 +36,52 @@ onMounted(() => {
     ]);
 });
 
-const selectedItemsIds = ref<number[]>([]);
-const hasChange = ref(false);
-
-const handleSelectedItemsUpdate = (ids: number[]) => {
-    selectedItemsIds.value = ids;
-};
-
-const handleChangesUpdate = (value: boolean) => {
-    hasChange.value = value;
-};
-
-const { isSaving, handleSave } = useUnitPriceActions(
+const {
+    selectedItemIds,
+    isAllSelected,
+    isIndeterminate,
+    hasChange,
+    isSaving,
+    handleSave,
+} = useUnitPriceActions(
     () => props.priceList,
-    selectedItemsIds,
+    () => props.unitPrice,
+    () => props.sections,
 );
 </script>
 
 <template>
     <div class="flex flex-col gap-3">
-        <UnitPriceInformation
-            :price-list="priceList"
+        <AppCardSave
             :is-saving="isSaving"
-            :has-changes="hasChange"
+            :has-change="hasChange"
             @save="handleSave"
-        />
+        >
+            <div class="flex flex-col gap-3">
+                <div>
+                    <span>Harsat :</span>
+                    <h3>{{ priceList.name }}</h3>
+                </div>
+                <div class="flex gap-5">
+                    <div>
+                        <span>Client :</span>
+                        <h3>{{ priceList.client }}</h3>
+                    </div>
+                    <v-divider vertical />
+                    <div>
+                        <span>Nomor :</span>
+                        <h3>{{ priceList.number }}</h3>
+                    </div>
+                </div>
+            </div>
+        </AppCardSave>
         <UnitPriceTable
             :price-list="priceList"
             :unit-prices="unitPrice"
-            :items="items"
-            @update:selected-ids="handleSelectedItemsUpdate"
-            @update:has-change="handleChangesUpdate"
+            :is-indeterminate="isIndeterminate"
+            :sections="sections"
+            v-model:selectedIds="selectedItemIds"
+            v-model:isAllSelected="isAllSelected"
         />
     </div>
 </template>

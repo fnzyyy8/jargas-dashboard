@@ -4,10 +4,15 @@ import { ref } from 'vue';
 import { route } from 'ziggy-js';
 
 export function useProjectActions() {
+    const isCreateOpen = ref(false);
     const isDeleteOpen = ref(false);
     const selectedProjectId = ref<number | null>(null);
 
     const formDelete = useForm({});
+
+    const openCreateModal = () => {
+        isCreateOpen.value = true;
+    };
     const openDeleteModal = (id: number) => {
         selectedProjectId.value = id;
         isDeleteOpen.value = true;
@@ -31,8 +36,10 @@ export function useProjectActions() {
     };
 
     return {
+        isCreateOpen,
         isDeleteOpen,
         deleteLoading: formDelete.processing,
+        openCreateModal,
         openDeleteModal,
         confirmDeleteModal,
     };

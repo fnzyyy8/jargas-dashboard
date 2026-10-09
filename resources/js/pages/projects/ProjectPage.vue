@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
+import AppCard from '@/components/card/AppCard.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 
 import { formatNumber } from '@/composable/ConvertRupiah';
 import FormCreateProject from '@/pages/projects/components/FormCreateProject.vue';
-import FormEditProject from '@/pages/projects/components/FormEditProject.vue';
+import FormUpdateProject from '@/pages/projects/components/FormUpdateProject.vue';
 import { useProjectActions } from '@/pages/projects/composables/useProjectActions';
-import type { Project } from '@/pages/projects/types';
+import type { PriceListOption, Project } from '@/pages/projects/types';
 import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
 
 const breadcrumb = useBreadcrumbStore();
@@ -27,12 +28,21 @@ const tableHead = [
 
 defineProps<{
     projects: Project[];
+    priceListOptions: PriceListOption[];
 }>();
 
-const openEditModalRef = ref<InstanceType<typeof FormEditProject> | null>(null);
+const openEditModalRef = ref<InstanceType<typeof FormUpdateProject> | null>(
+    null,
+);
 
-const { confirmDeleteModal, openDeleteModal, isDeleteOpen, deleteLoading } =
-    useProjectActions();
+const {
+    openCreateModal,
+    confirmDeleteModal,
+    openDeleteModal,
+    isCreateOpen,
+    isDeleteOpen,
+    deleteLoading,
+} = useProjectActions();
 
 onMounted(() => {
     breadcrumb.setBreadcrumbs([
@@ -45,10 +55,21 @@ onMounted(() => {
 </script>
 
 <template>
+    <AppCard
+        btn-label="Create project"
+        btn-icon="mdi-plus"
+        @create="openCreateModal"
+    />
     <v-card>
         <div class="flex w-full justify-end p-3">
-            <FormCreateProject />
-            <FormEditProject ref="openEditModalRef" />
+            <FormCreateProject
+                v-model="isCreateOpen"
+                :priceListOptions="priceListOptions"
+            />
+            <FormUpdateProject
+                ref="openEditModalRef"
+                :priceListOptions="priceListOptions"
+            />
         </div>
         <v-table>
             <thead>

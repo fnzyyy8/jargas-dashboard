@@ -1,74 +1,40 @@
 <script setup lang="ts">
-import { watch } from 'vue';
-import { useUnitPriceTableActions } from '@/pages/Engineering/UnitPrice/composables/useUnitPriceTableActions';
 import type {
     PriceList,
     Section,
     UnitPrice,
 } from '@/pages/Engineering/UnitPrice/type/unit-price.type';
 
-const props = defineProps<{
-    items: Section[];
+defineProps<{
+    sections: Section[];
     priceList: PriceList;
     unitPrices: UnitPrice[];
+    isIndeterminate: boolean;
 }>();
 
-const emit = defineEmits<{
-    (e: 'update:selected-ids', ids: number[]): void;
-    (e: 'update:has-change', value: boolean): void;
-}>();
-
-const {
-    selectedItemIds,
-    allAvailableItemIds,
-    isAllSelected,
-    isIndeterminate,
-    hasChange,
-} = useUnitPriceTableActions(
-    () => props.items,
-    () => props.unitPrices,
-);
-
-watch(
-    selectedItemIds,
-    (newIds) => {
-        emit('update:selected-ids', [...newIds]);
-    },
-    { deep: true, immediate: true },
-);
-
-watch(
-    hasChange,
-    (value) => {
-        emit('update:has-change', value);
-    },
-    {
-        immediate: true,
-    },
-);
+const selectedIds = defineModel<number[]>('selectedIds', {
+    required: true,
+});
+const isAllSelected = defineModel<boolean>('isAllSelected', {
+    required: true,
+});
 </script>
 
 <template>
     <v-card>
         <div
             class="flex items-center justify-between border-b bg-gray-50 px-4 py-2 font-mono text-xs"
-        >
-            <span>
-                Terpilih:
-                <strong class="text-primary">{{
-                    selectedItemIds.length
-                }}</strong>
-                / {{ allAvailableItemIds.length }} Item
-            </span>
-        </div>
+        ></div>
         <div class="p-3">
-            <v-table fixed-header height="730px" class="mt-3">
+            <v-table fixed-header height="650" class="mt-3">
                 <thead>
                     <tr>
                         <th>
                             <v-checkbox-btn
                                 v-model="isAllSelected"
-                                :indeterminate="isIndeterminate"
+                                :indeterminate="
+                                    isIndeterminate && !isAllSelected
+                                "
                                 color="primary"
                                 density="compact"
                             />
@@ -80,7 +46,7 @@ watch(
                 </thead>
                 <tbody>
                     <template
-                        v-for="section in items"
+                        v-for="section in sections"
                         :key="`sec-${section.id}`"
                     >
                         <tr class="bg-gray-300">
@@ -89,13 +55,13 @@ watch(
                             </td>
                         </tr>
                         <tr
-                            v-for="item in section.item_details"
+                            v-for="item in section.itemDetails"
                             :key="`sec-item-${item.id}`"
                         >
                             <td>
                                 <v-checkbox-btn
-                                    v-model="selectedItemIds"
-                                    :value="item.id"
+                                    v-model="selectedIds"
+                                    :value="Number(item.id)"
                                     color="primary"
                                     density="compact"
                                 />
@@ -116,13 +82,13 @@ watch(
                                 </td>
                             </tr>
                             <tr
-                                v-for="item in category.item_details"
+                                v-for="item in category.itemDetails"
                                 :key="`cat-item-${item.id}`"
                             >
                                 <td>
                                     <v-checkbox-btn
-                                        v-model="selectedItemIds"
-                                        :value="item.id"
+                                        v-model="selectedIds"
+                                        :value="Number(item.id)"
                                         color="primary"
                                         density="compact"
                                     />
@@ -132,7 +98,7 @@ watch(
                                 <td>{{ item.unit }}</td>
                             </tr>
                             <template
-                                v-for="subCategory in category.sub_categories"
+                                v-for="subCategory in category.subCategories"
                                 :key="`subCat-${subCategory.id}`"
                             >
                                 <tr class="bg-gray-100">
@@ -143,13 +109,13 @@ watch(
                                     </td>
                                 </tr>
                                 <tr
-                                    v-for="item in subCategory.item_details"
+                                    v-for="item in subCategory.itemDetails"
                                     :key="`subCat-item-${item.id}`"
                                 >
                                     <td>
                                         <v-checkbox-btn
-                                            v-model="selectedItemIds"
-                                            :value="item.id"
+                                            v-model="selectedIds"
+                                            :value="Number(item.id)"
                                             color="primary"
                                             density="compact"
                                         />

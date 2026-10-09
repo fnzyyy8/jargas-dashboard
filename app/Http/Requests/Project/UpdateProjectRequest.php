@@ -23,6 +23,7 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'price_list_id' => ['exists:price_lists,id'],
             'project_name' => ['required', 'string'],
             'project_code' => ['required', 'string'],
             'project_number' => ['required', 'string'],

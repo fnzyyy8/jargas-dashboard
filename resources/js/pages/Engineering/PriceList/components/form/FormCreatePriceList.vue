@@ -20,16 +20,17 @@ const { formCreate, submitCreate } = usePriceListCreateActions(() => {
                         <v-text-field
                             v-model="formCreate.name"
                             :error-messages="formCreate.errors.name"
-                            variant="outlined"
-                            density="comfortable"
                             label="Nama Harsat"
                         />
                         <v-text-field
                             v-model="formCreate.number"
                             :error-messages="formCreate.errors.number"
-                            variant="outlined"
-                            density="comfortable"
                             label="Nomor Harsat"
+                        />
+                        <v-text-field
+                            v-model="formCreate.client"
+                            :error-messages="formCreate.errors.client"
+                            label="Client"
                         />
                     </div>
                     <div class="flex justify-end gap-2">

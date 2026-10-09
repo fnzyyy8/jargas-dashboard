@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatNumber } from '@/composable/ConvertRupiah';
 import type { Boq } from '@/pages/projectControl/Boq/Types/boq.type';
 
 defineProps<{
@@ -6,7 +7,6 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'add-boq'): void;
     (e: 'view-boq', id: number): void;
     (e: 'update-boq', boq: Boq): void;
     (e: 'delete-boq', id: number): void;
@@ -18,21 +18,17 @@ const tHead = [
     'Area',
     'Nama Pekerjaan',
     'Detail Area',
+    'Anggaran',
+    'Nilai Rencana',
     'Aksi',
 ];
+
+const { useRupiah } = formatNumber();
 </script>
 
 <template>
     <v-card>
         <div class="m-3">
-            <div class="flex justify-end">
-                <v-btn
-                    prepend-icon="mdi-plus"
-                    color="success"
-                    @click="emit('add-boq')"
-                    >Tambahkan Boq</v-btn
-                >
-            </div>
             <div class="mt-3">
                 <v-table>
                     <thead>
@@ -56,6 +52,8 @@ const tHead = [
                             <td>{{ boq.project_area }}</td>
                             <td>{{ boq.project_name }}</td>
                             <td>{{ boq.detailed_area }}</td>
+                            <td>{{ useRupiah(boq.project_budget) }}</td>
+                            <td>{{useRupiah(boq.planBudget)}}</td>
                             <td>
                                 <v-menu>
                                     <template v-slot:activator="{ props }">

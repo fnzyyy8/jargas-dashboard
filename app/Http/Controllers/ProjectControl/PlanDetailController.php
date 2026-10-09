@@ -3,34 +3,64 @@
 namespace App\Http\Controllers\ProjectControl;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProjectControl\PlanDetailRequest;
+use App\Http\Requests\ProjectControl\PlanDetail\CreatePlanDetailRequest;
+use App\Http\Resources\ProjectControl\PlanDetail\BoqPlanDetailResource;
+use App\Http\Resources\ProjectControl\PlanDetail\ItemDetailPlanDetailResource;
+use App\Http\Resources\ProjectControl\PlanDetail\PlanDetailResources;
+use App\Models\ProjectControl\Boq;
+use App\Models\ProjectControl\Plan;
+use App\Services\ProjectControl\BoqService;
 use App\Services\ProjectControl\PlanDetailService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+
+use InvalidArgumentException;
+use Throwable;
 
 class PlanDetailController extends Controller
 {
-    public function __construct(protected PlanDetailService $service)
+    public function __construct(
+        protected PlanDetailService $service,
+        protected BoqService        $boqService
+    )
     {
     }
 
-    public function index(int $boqId, int $planId)
+    public function index(Boq $boq, Plan $plan)
     {
-        $plans = $this->service->getPlan($planId);
-        $planDetail = $this->service->getPlanDetail($planId);
+        $planDetail = $this->service->getByPlanId($plan->id);
+        $boq = (new BoqPlanDetailResource($planDetail->first()))->resolve();
+        $itemDetail = (new ItemDetailPlanDetailResource($planDetail->first()))->resolve();
+        $planDetails = PlanDetailResources::collection($this->service->getAllByPlan($plan->id))->resolve();
+
 
 
         return Inertia::render('projectControl/PlanDetail/PlanDetailPage', [
-            'page_title' => 'Plan Detail',
-            'plans' => $plans,
-            'planDetails' => $planDetail
+            'boq' => $boq,
+            'itemDetail' => $itemDetail,
+            'planDetails' => $planDetails,
         ]);
-
     }
 
-    public function create(PlanDetailRequest $request)
+    public function create(CreatePlanDetailRequest $request, int $boq, int $plan): RedirectResponse
     {
-        $this->service->create($request->validated());
+        try {
+            $validated = $request->validated();
 
-        redirect()->back()->with('success', 'Plan Detail created.');
+            $this->service->create($validated);
+
+            return redirect()->route('plan.detail.index', [
+                'boq' => $boq,
+                'plan' => $plan,
+            ])->with('success', 'Data Plan berhasil ditambahkan');
+        } catch (InvalidArgumentException $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+
+        } catch (Throwable $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
+
 }

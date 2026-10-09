@@ -2,15 +2,15 @@ import { useForm } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
 import { route } from 'ziggy-js';
 
-export function useProjectCreateActions() {
+export function useProjectCreateActions(onSuccessCallback?: () => void) {
     const form = useForm({
+        price_list_id: null,
         project_name: '',
         project_code: '',
         project_number: '',
         category: '',
         budget: 0,
         area: '',
-        client: '',
         start_date: '',
         end_date: '',
         status: '',
@@ -45,6 +45,10 @@ export function useProjectCreateActions() {
                 form.reset();
                 dateStart.value = null;
                 dateEnd.value = null;
+
+                if (onSuccessCallback) {
+                    onSuccessCallback();
+                }
             },
         });
     };

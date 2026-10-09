@@ -12,6 +12,7 @@ export function usePriceListUpdateActions(
     const formUpdate = useForm({
         name: '',
         number: '',
+        client: '',
     });
 
     watch(
@@ -20,6 +21,7 @@ export function usePriceListUpdateActions(
             if (priceList) {
                 formUpdate.name = priceList.name;
                 formUpdate.number = priceList.number;
+                formUpdate.client = priceList.client
             }
         },
         { immediate: true },
