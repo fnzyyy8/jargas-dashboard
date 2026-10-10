@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MiniProgressChart from '@/components/chart/MiniProgressChart.vue';
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import PlanMenu from '@/pages/projectControl/Plan/Components/Table/PlanMenu.vue';
 import type {
     Plan,
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 
 const tableHead = ['Nama Pekerjaan', 'Harga', 'Volume', 'Plan (%)', 'Total'];
 
-const { useNumber, useRupiah } = formatNumber();
+const { formatQty, formatRupiah } = useFormatNumber();
 </script>
 
 <template>
@@ -51,16 +51,16 @@ const { useNumber, useRupiah } = formatNumber();
                                 {{ plan.name }}
                             </td>
                             <td>
-                                {{ useRupiah(plan.price) }}
+                                {{ formatRupiah(plan.price) }}
                             </td>
                             <td>
-                                {{ useNumber(plan.volume) }}
+                                {{ formatQty(plan.volume) }}
                             </td>
                             <td class="plan-cell">
                                 <MiniProgressChart :value="plan.percentage" />
                             </td>
                             <td>
-                                {{ useRupiah((plan.volume ?? 0) * plan.price) }}
+                                {{ formatRupiah((plan.volume ?? 0) * plan.price) }}
                             </td>
                             <td class="text-center">
                                 <PlanMenu
@@ -92,17 +92,17 @@ const { useNumber, useRupiah } = formatNumber();
                                     {{ plan.name }}
                                 </td>
                                 <td>
-                                    {{ useRupiah(plan.price) }}
+                                    {{ formatRupiah(plan.price) }}
                                 </td>
                                 <td>
-                                    {{ useNumber(plan.volume) }}
+                                    {{ formatQty(plan.volume) }}
                                 </td>
                                 <td class="plan-cell text-center">
                                     <MiniProgressChart :value="plan.percentage" />
                                 </td>
                                 <td>
                                     {{
-                                        useRupiah(
+                                        formatRupiah(
                                             (plan.volume ?? 0) * plan.price,
                                         )
                                     }}
@@ -134,16 +134,16 @@ const { useNumber, useRupiah } = formatNumber();
                                     :key="`subCat-item-${plan.id}`"
                                 >
                                     <td>{{ plan.name }}</td>
-                                    <td>{{ useRupiah(plan.price) }}</td>
+                                    <td>{{ formatRupiah(plan.price) }}</td>
                                     <td>
-                                        {{ useNumber(plan.volume) }}
+                                        {{ formatQty(plan.volume) }}
                                     </td>
                                     <td class="plan-cell">
                                         <MiniProgressChart :value="plan.percentage" />
                                     </td>
                                     <td>
                                         {{
-                                            useRupiah(
+                                            formatRupiah(
                                                 (plan.volume ?? 0) * plan.price,
                                             )
                                         }}

@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import AppCard from '@/components/card/AppCard.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import FormCreateProject from '@/pages/projects/components/FormCreateProject.vue';
 import FormUpdateProject from '@/pages/projects/components/FormUpdateProject.vue';
 import { useProjectActions } from '@/pages/projects/composables/useProjectActions';
@@ -13,7 +13,7 @@ import { useBreadcrumbStore } from '@/stores/useBreadcrumbStore';
 
 const breadcrumb = useBreadcrumbStore();
 
-const { useRupiah } = formatNumber();
+const { formatRupiah } = useFormatNumber();
 
 const tableHead = [
     'Status',
@@ -105,7 +105,7 @@ onMounted(() => {
                         {{ project.project_name }}
                     </td>
                     <td>
-                        {{ useRupiah(project.budget) }}
+                        {{ formatRupiah(project.budget) }}
                     </td>
                     <td>
                         {{ project.area }}

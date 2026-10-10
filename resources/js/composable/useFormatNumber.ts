@@ -1,5 +1,5 @@
-export function formatNumber() {
-    const useRupiah = (value: number) => {
+export function useFormatNumber() {
+    const formatRupiah = (value: number) => {
         if (value === null || value === undefined || value == 0) {
             return 'Rp ,-';
         }
@@ -13,7 +13,7 @@ export function formatNumber() {
         return formatted.replace(/\./g, ',');
     };
 
-    const useNumber = (value: number | null | undefined) => {
+    const formatQty = (value: number | null | undefined) => {
         if (value === null || value === undefined) {
             return '0,00';
         }
@@ -32,5 +32,5 @@ export function formatNumber() {
         });
     };
 
-    return { useRupiah, useNumber, formatDate };
+    return { formatRupiah, formatQty, formatDate };
 }

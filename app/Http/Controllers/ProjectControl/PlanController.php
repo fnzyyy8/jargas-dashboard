@@ -8,6 +8,7 @@ use App\Http\Requests\ProjectControl\Plan\SyncPlanRequest;
 use App\Http\Requests\ProjectControl\Plan\UpdatePlanRequest;
 use App\Http\Resources\ProjectControl\Plan\PlanBoqInformationResource;
 use App\Http\Resources\ProjectControl\Plan\PlanResource;
+use App\Http\Resources\ProjectControl\Plan\PlanResourceV2;
 use App\Http\Resources\ProjectControl\Plan\PlanUpdateUnitPriceResource;
 use App\Models\ProjectControl\Boq;
 use App\Models\ProjectControl\Plan;
@@ -30,11 +31,14 @@ class PlanController extends Controller
     {
         $boq = $boq->load('project.priceList');
         $plans = $this->service->getGroupByBoqId($boq->id);
+        $plansV2 = $this->service->getAllByBoqId($boq->id);
         $planSections = PlanResource::collection($plans)->resolve();
+        $planSectionsV2 = PlanResourceV2::collection($plansV2)->resolve();
 
         return Inertia::render('projectControl/Plan/PlanPage', [
             'boq' => (new PlanBoqInformationResource($boq))->resolve(),
-            'planSections' => $planSections
+            'planSections' => $planSections,
+            'plans' => $planSectionsV2
         ]);
     }
 

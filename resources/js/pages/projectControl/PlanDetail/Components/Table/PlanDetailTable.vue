@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import type {
     ItemDetail,
     PlanDetail,
@@ -12,7 +12,7 @@ defineProps<{
     planDetails: PlanDetail[];
 }>();
 
-const { formatDate } = formatNumber();
+const { formatDate } = useFormatNumber();
 
 const emits = defineEmits<{
     (e: 'open-create'): void;

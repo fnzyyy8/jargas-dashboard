@@ -5,9 +5,11 @@ import { useBreadcrumb } from '@/composable/useBreadcrumb';
 
 import PlanVolumeForm from '@/pages/projectControl/Plan/Components/Form/PlanVolumeForm.vue';
 import PlanTable from '@/pages/projectControl/Plan/Components/Table/PlanTable.vue';
+import PlanTableV2 from '@/pages/projectControl/Plan/Components/Table/PlanTableV2.vue';
 import { usePlanActions } from '@/pages/projectControl/Plan/Composables/usePlanActions';
 import type {
     Boq,
+    Plan,
     PlanSection,
 } from '@/pages/projectControl/Plan/Types/plan.type';
 import { route } from 'ziggy-js';
@@ -15,6 +17,7 @@ import { route } from 'ziggy-js';
 const props = defineProps<{
     boq: Boq;
     planSections: PlanSection[];
+    plans: Plan[];
 }>();
 
 const { setBreadcrumbs } = useBreadcrumb();
@@ -88,8 +91,13 @@ const {
                 </div>
             </div>
         </AppCard>
-        <PlanTable
-            :planSections="planSections"
+<!--        <PlanTable-->
+<!--            :planSections="planSections"-->
+<!--            @open-volume="handleOpenVolume"-->
+<!--            @open-plan-detail="routeToPlanDetail"-->
+<!--        />-->
+        <PlanTableV2
+            :plans="plans"
             @open-volume="handleOpenVolume"
             @open-plan-detail="routeToPlanDetail"
         />

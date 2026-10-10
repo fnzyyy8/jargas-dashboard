@@ -3,14 +3,14 @@ import type {
     Boq,
     ItemDetail,
 } from '@/pages/projectControl/PlanDetail/Types/plan.detail';
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 
 defineProps<{
     boq: Boq;
     itemDetail: ItemDetail;
 }>();
 
-const { formatDate } = formatNumber();
+const { formatDate } = useFormatNumber();
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 import type { ECharts, EChartsOption } from 'echarts';
 import * as echarts from 'echarts';
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 
 interface ChartData {
     date: string;
@@ -25,7 +25,7 @@ const chartElement = ref<HTMLElement | null>(null);
 
 let chartInstance: ECharts | null = null;
 
-const { formatDate } = formatNumber();
+const { formatDate } = useFormatNumber();
 
 const chartOption = computed<EChartsOption>(() => ({
     tooltip: {

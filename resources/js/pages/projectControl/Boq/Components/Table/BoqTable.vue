@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import type { Boq } from '@/pages/projectControl/Boq/Types/boq.type';
 
 defineProps<{
@@ -23,7 +23,7 @@ const tHead = [
     'Aksi',
 ];
 
-const { useRupiah } = formatNumber();
+const { formatRupiah } = useFormatNumber();
 </script>
 
 <template>
@@ -52,8 +52,8 @@ const { useRupiah } = formatNumber();
                             <td>{{ boq.project_area }}</td>
                             <td>{{ boq.project_name }}</td>
                             <td>{{ boq.detailed_area }}</td>
-                            <td>{{ useRupiah(boq.project_budget) }}</td>
-                            <td>{{useRupiah(boq.planBudget)}}</td>
+                            <td>{{ formatRupiah(boq.project_budget) }}</td>
+                            <td>{{ formatRupiah(boq.planBudget) }}</td>
                             <td>
                                 <v-menu>
                                     <template v-slot:activator="{ props }">

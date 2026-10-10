@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import type { Section } from '@/pages/projectControl/Plan/Types/plan.type';
 
 defineProps<{
@@ -15,7 +15,7 @@ const isAllSelected = defineModel<boolean>('isAllSelected', {
 });
 
 const thead = ['Detail Pekerjaan', 'Harga', 'Satuan'];
-const { useRupiah } = formatNumber();
+const { formatRupiah } = useFormatNumber();
 </script>
 
 <template>
@@ -62,7 +62,7 @@ const { useRupiah } = formatNumber();
                                 />
                             </td>
                             <td>{{ unitPrice.name }}</td>
-                            <td>{{ useRupiah(unitPrice.price) }}</td>
+                            <td>{{ formatRupiah(unitPrice.price) }}</td>
                             <td>{{ unitPrice.unit }}</td>
                         </tr>
                         <template
@@ -89,7 +89,7 @@ const { useRupiah } = formatNumber();
                                     />
                                 </td>
                                 <td>{{ unitPrice.name }}</td>
-                                <td>{{ useRupiah(unitPrice.price) }}</td>
+                                <td>{{ formatRupiah(unitPrice.price) }}</td>
                                 <td>{{ unitPrice.unit }}</td>
                             </tr>
                             <template
@@ -116,7 +116,7 @@ const { useRupiah } = formatNumber();
                                         />
                                     </td>
                                     <td>{{ unitPrice.name }}</td>
-                                    <td>{{ useRupiah(unitPrice.price) }}</td>
+                                    <td>{{ formatRupiah(unitPrice.price) }}</td>
                                     <td>{{ unitPrice.unit }}</td>
                                 </tr>
                             </template>

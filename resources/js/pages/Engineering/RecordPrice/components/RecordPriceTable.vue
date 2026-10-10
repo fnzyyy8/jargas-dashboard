@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import type { RecordPrice } from '@/pages/Engineering/RecordPrice/types/record-price.type';
 
 const tableHead = [
@@ -18,7 +18,7 @@ defineProps<{
     recordPrices: RecordPrice[];
 }>();
 
-const { useRupiah, formatDate } = formatNumber();
+const { formatRupiah, formatDate } = useFormatNumber();
 </script>
 
 <template>
@@ -58,7 +58,7 @@ const { useRupiah, formatDate } = formatNumber();
                             {{ formatDate(recordPrice.date) }}
                         </td>
                         <td>
-                            {{ useRupiah(recordPrice.price) }}
+                            {{ formatRupiah(recordPrice.price) }}
                         </td>
                         <td>
                             {{ recordPrice.notes }}

@@ -33,8 +33,6 @@ class PlanDetailController extends Controller
         $itemDetail = (new ItemDetailPlanDetailResource($planDetail->first()))->resolve();
         $planDetails = PlanDetailResources::collection($this->service->getAllByPlan($plan->id))->resolve();
 
-
-
         return Inertia::render('projectControl/PlanDetail/PlanDetailPage', [
             'boq' => $boq,
             'itemDetail' => $itemDetail,

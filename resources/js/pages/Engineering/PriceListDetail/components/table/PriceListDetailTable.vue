@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatNumber } from '@/composable/ConvertRupiah';
+import { useFormatNumber } from '@/composable/useFormatNumber';
 import PriceListDetailMenu from '@/pages/Engineering/PriceListDetail/components/table/PriceListDetailMenu.vue';
 import type { Section } from '@/pages/Engineering/PriceListDetail/type/price-list-detail.type';
 
@@ -10,7 +10,7 @@ defineProps<{
     items: Section[];
 }>();
 
-const { useRupiah } = formatNumber();
+const { formatRupiah } = useFormatNumber();
 </script>
 
 <template>
@@ -45,7 +45,7 @@ const { useRupiah } = formatNumber();
                                 {{ item.unit }}
                             </td>
                             <td>
-                                {{ useRupiah(item.price) }}
+                                {{ formatRupiah(item.price) }}
                             </td>
                             <td>
                                 <PriceListDetailMenu
@@ -74,7 +74,7 @@ const { useRupiah } = formatNumber();
                                     {{ item.unit }}
                                 </td>
                                 <td>
-                                    {{ useRupiah(item.price) }}
+                                    {{ formatRupiah(item.price) }}
                                 </td>
                                 <td>
                                     <PriceListDetailMenu
@@ -101,7 +101,7 @@ const { useRupiah } = formatNumber();
                                 >
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.unit }}</td>
-                                    <td>{{ useRupiah(item.price) }}</td>
+                                    <td>{{ formatRupiah(item.price) }}</td>
                                     <td>
                                         <PriceListDetailMenu
                                             :id="item.id"
