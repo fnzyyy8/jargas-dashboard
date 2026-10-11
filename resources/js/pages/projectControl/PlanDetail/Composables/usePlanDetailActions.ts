@@ -9,6 +9,7 @@ export function usePlanDetailActions(boq: MaybeRefOrGetter<Boq>) {
     const isCreateOpen = ref(false);
     const date = ref<Date | null>(null);
 
+    const formDelete = useForm({});
     const form = useForm({
         plan_id: toValue(boq).planId,
         volume: 1,
@@ -43,6 +44,19 @@ export function usePlanDetailActions(boq: MaybeRefOrGetter<Boq>) {
         );
     };
 
+    const submitDelete = (id: number) => {
+        console.log(toValue(boq).id);
+        formDelete.delete(
+            route('plan.detail.delete', {
+                boq: toValue(boq).id,
+                id: id,
+            }),
+            {
+                preserveScroll: true,
+            },
+        );
+    };
+
     return {
         form,
         date,
@@ -50,5 +64,6 @@ export function usePlanDetailActions(boq: MaybeRefOrGetter<Boq>) {
         loading: form.processing,
         openCreateDialog,
         submitCreate,
+        submitDelete,
     };
 }

@@ -44,6 +44,7 @@ Route::prefix('/project-control')->group(function () {
             Route::controller(PlanDetailController::class)->prefix('/plan-detail')->name('detail.')->group(function () {
                 Route::get("/{plan}", 'index')->name('index');
                 Route::post('/{plan}', 'create')->name('create');
+                Route::delete("/{id}", 'delete')->name('delete');
             });
         });
     });

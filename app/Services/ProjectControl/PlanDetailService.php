@@ -8,6 +8,7 @@ use App\Repositories\ProjectControl\PlanRepository;
 use Illuminate\Support\Collection;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use RuntimeException;
 use InvalidArgumentException;
@@ -53,6 +54,19 @@ class PlanDetailService
         } catch (Throwable $e) {
 
             throw new RuntimeException('Failed to create plan detail', previous: $e);
+        }
+    }
+
+    public function delete(int $id): void
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                $plan = $this->repository->findById($id);
+                $this->repository->delete($plan);
+            });
+        } catch (Throwable $e) {
+            Log::error('Failed to delete plan detail', ['exception' => $e]);
+            throw new RuntimeException('Failed to delete plan detail', previous: $e);
         }
 
     }

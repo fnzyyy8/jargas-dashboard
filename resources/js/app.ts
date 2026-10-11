@@ -2,6 +2,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { createPinia } from 'pinia';
 import { createApp, h } from 'vue';
 import type { Component } from 'vue';
+import '@svar-ui/vue-grid/all.css';
 
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue';

@@ -61,4 +61,20 @@ class PlanDetailController extends Controller
         }
     }
 
+    public function delete(Boq $boq,int $id): RedirectResponse
+    {
+        logger()->info('Delete PlanDetail', [
+            'received_id' => $id,
+        ]);
+
+        try {
+            $this->service->delete($id);
+            return redirect()->back()->with('success', 'Plan Detail berhasil dihapus');
+
+        } catch (Throwable $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
 }

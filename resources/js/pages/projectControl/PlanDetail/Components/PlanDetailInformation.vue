@@ -3,59 +3,17 @@ import type {
     Boq,
     ItemDetail,
 } from '@/pages/projectControl/PlanDetail/Types/plan.detail';
-import { useFormatNumber } from '@/composable/useFormatNumber';
 
 defineProps<{
     boq: Boq;
     itemDetail: ItemDetail;
 }>();
 
-const { formatDate } = useFormatNumber();
 </script>
 
 <template>
     <v-card>
         <div class="flex flex-col gap-3 p-3">
-            <div class="flex flex-col gap-1">
-                <div class="grid grid-rows-2 gap-3">
-                    <div>
-                        <span>Project :</span>
-                        <h3>{{ boq.projectName }}</h3>
-                    </div>
-                    <div class="flex gap-5">
-                        <div>
-                            <span>Nomor SPK :</span>
-                            <h3>{{ boq.projectNumber }}</h3>
-                        </div>
-                        <v-divider vertical />
-                        <div>
-                            <span>Client :</span>
-                            <h3>{{ boq.client }}</h3>
-                        </div>
-                        <v-divider vertical />
-                        <div>
-                            <span>Area :</span>
-                            <h3>{{ boq.area }}</h3>
-                        </div>
-                        <v-divider vertical />
-                        <div>
-                            <span>Detailed Area :</span>
-                            <h3>{{ boq.detailedArea ?? '-' }}</h3>
-                        </div>
-                        <v-divider vertical />
-                        <div>
-                            <span>Start Date :</span>
-                            <h3>{{ formatDate(boq.startDate) ?? '-' }}</h3>
-                        </div>
-                        <v-divider vertical />
-                        <div>
-                            <span>End Date :</span>
-                            <h3>{{ formatDate(boq.endDate) ?? '-' }}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <v-divider />
             <div class="grid grid-cols-3">
                 <div>
                     <span>Section : </span>

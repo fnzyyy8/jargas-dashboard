@@ -4,6 +4,7 @@ import { useBreadcrumb } from '@/composable/useBreadcrumb';
 import PlanDetailForm from '@/pages/projectControl/PlanDetail/Components/Form/PlanDetailForm.vue';
 import PlanDetailInformation from '@/pages/projectControl/PlanDetail/Components/PlanDetailInformation.vue';
 import PlanDetailTable from '@/pages/projectControl/PlanDetail/Components/Table/PlanDetailTable.vue';
+import PlanGridTable from '@/pages/projectControl/PlanDetail/Components/Table/PlanGridTable.vue';
 import { usePlanDetailActions } from '@/pages/projectControl/PlanDetail/Composables/usePlanDetailActions';
 import type {
     Boq,
@@ -36,8 +37,15 @@ onMounted(() => {
     ]);
 });
 
-const { isCreateOpen, form, openCreateDialog, date, submitCreate, loading } =
-    usePlanDetailActions(() => props.boq);
+const {
+    isCreateOpen,
+    form,
+    date,
+    loading,
+    submitCreate,
+    openCreateDialog,
+    submitDelete,
+} = usePlanDetailActions(() => props.boq);
 </script>
 <template>
     <PlanDetailForm
@@ -50,10 +58,16 @@ const { isCreateOpen, form, openCreateDialog, date, submitCreate, loading } =
     />
     <div class="flex flex-col gap-3">
         <PlanDetailInformation :boq="boq" :itemDetail="itemDetail" />
+        <PlanGridTable
+            :boq="boq"
+            :itemDetail="itemDetail"
+            :planDetails="planDetails"
+        />
         <PlanDetailTable
             :itemDetail="itemDetail"
-            @open-create="openCreateDialog"
             :planDetails="planDetails"
+            @open-create="openCreateDialog"
+            @delete="(id) => submitDelete(id)"
         />
     </div>
 </template>

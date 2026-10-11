@@ -14,11 +14,11 @@ const props = defineProps<{
 }>();
 
 const headers = [
-    { title: 'Nama Pekerjaan', key: 'name', minWidth: '300px' },
-    { title: 'Harga', key: 'price', align: 'end' as const },
-    { title: 'Volume', key: 'volume', align: 'end' as const },
-    { title: 'plan (%)', key: 'percentage', align: 'end' as const },
-    { title: 'Total', key: 'total', align: 'end' as const },
+    { title: 'Nama Pekerjaan', key: 'name', width: '500px' },
+    { title: 'Harga', key: 'price', align: 'start' as const },
+    { title: 'Volume', key: 'volume', align: 'start' as const },
+    { title: 'plan (%)', key: 'percentage', align: 'center' as const },
+    { title: 'Total', key: 'total', align: 'start' as const },
     { title: 'Aksi', key: 'actions', sortable: false },
 ];
 
@@ -98,6 +98,7 @@ const { formatRupiah, formatQty } = useFormatNumber();
     <v-card>
         <div class="p-3">
             <v-data-table
+                fixed-header
                 v-model:opened="opened"
                 height="650"
                 :headers="headers"

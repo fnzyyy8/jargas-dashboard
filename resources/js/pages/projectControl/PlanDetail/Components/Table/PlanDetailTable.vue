@@ -14,8 +14,9 @@ defineProps<{
 
 const { formatDate } = useFormatNumber();
 
-const emits = defineEmits<{
+const emit = defineEmits<{
     (e: 'open-create'): void;
+    (e: 'delete', planDetailId: number): void;
 }>();
 </script>
 
@@ -43,11 +44,11 @@ const emits = defineEmits<{
                         prepend-icon="mdi-plus"
                         text="Tambah Rencana"
                         color="primary"
-                        @click="emits('open-create')"
+                        @click="emit('open-create')"
                     />
                 </div>
             </div>
-            <v-table height="400">
+            <v-table height="380">
                 <thead>
                     <tr>
                         <th v-for="(item, index) in tableHead" :key="index">
@@ -92,6 +93,7 @@ const emits = defineEmits<{
                                         prepend-icon="mdi-delete"
                                         title="Hapus"
                                         base-color="error"
+                                        @click="emit('delete', planDetail.id)"
                                     />
                                 </v-list>
                             </v-menu>
